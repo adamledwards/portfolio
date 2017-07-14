@@ -1,0 +1,37 @@
+.ProjectInfo {
+  display: block;
+  height: 590px;
+
+  background: #000;
+
+  font-size: 17px;
+  color: #fff;
+  letter-spacing: 1.59;
+  line-height: 32px;
+
+  overflow: hidden;
+}
+
+.ProjectInfo-row {
+  margin-top: 172px;
+  position: relative;
+}
+
+.ProjectInfo-addMetaButton {
+  position: absolute;
+  top: -30px;
+}
+
+.Meta {
+
+  &--edit input {
+    padding: 0;
+    width: 100%;
+    font-size: 17px;
+    color: #fff;
+    background-color: rgba(#fff, 0.1);
+
+    outline: 0;
+    border: none;
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "extends": [
+    "standard",
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "import",
+    "flowtype"
+  ],
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-uses-vars": [2],
+    "react/react-in-jsx-scope": [2],
+    "react/prop-types": [0]
+  },
+  "env": {
+       "browser": true,
+       "node": true
+   }
+}

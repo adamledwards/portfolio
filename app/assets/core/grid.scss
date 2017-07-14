@@ -1,0 +1,40 @@
+$bg: red;
+
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+
+  &--reverse {
+    flex-direction: row-reverse;
+  }
+
+  &--middle {
+    align-items: center;
+  }
+}
+
+@for $i from 1 through 12 {
+  $width: percentage($i / 12);
+  .col-md-#{$i} {
+      width: $width;
+      padding: 0 12.5px
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    padding: 0 50px;
+  }
+
+  @for $i from 1 through 12 {
+    $width: percentage($i / 12);
+    .col-lg-#{$i} {
+        width: $width;
+        padding: 0 12.5px
+    }
+  }
+}

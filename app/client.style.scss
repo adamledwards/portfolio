@@ -1,0 +1,32 @@
+@import 'assets/font-awesome/scss/font-awesome.scss';
+@import 'assets/fonts/fonts.scss';
+@import 'assets/core/grid.scss';
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Haas Grot Disp';
+  font-weight: normal;
+
+}
+
+button {
+  border: 0;
+  font-size: 15px;
+  padding: 5px;
+  background-color: #fff;
+
+  color: #888;
+  display: inline-block;
+
+  cursor: pointer;
+  &:focus,
+  &:hover {
+    background-color: #f3f3f3;
+  }
+}
+
+h1 {
+  font-family: 'Didot';
+  font-weight: normal;
+}

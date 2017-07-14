@@ -1,0 +1,12 @@
+[ignore]
+/build
+
+[include]
+
+[libs]
+
+[options]
+module.name_mapper='.*\(.scss\)' -> 'empty/object'
+module.name_mapper='^~\/\(.*\)$' -> '<PROJECT_ROOT>/app/\1'
+suppress_type=$FlowIssue
+suppress_comment=\\(.\\|\n\\)*\\$FlowIssue
