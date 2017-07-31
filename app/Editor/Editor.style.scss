@@ -1,5 +1,8 @@
 .EditorComponent {
   position: relative;
+  letter-spacing: 1.69px;
+  line-height: 30px;
+  font-size: 18px;
 }
 
 .EditorComponent-toolbar {
@@ -8,6 +11,15 @@
   background-color: #fff;
   top: -40px;
   box-shadow: 0px 1px 3px 0px rgba(220,220,220,1);
+
+  transition: opacity 300ms ease;
+  opacity: 0;
+  &.active {
+    opacity: 1;
+  }
+  &.active.suspend {
+    opacity: 0.5;
+  }
 }
 
 .EditorComponent-button {
@@ -30,4 +42,13 @@
     background-color: #888;
     color: #fff;
   }
+}
+
+.EditorSidebar-button {
+  @extend .EditorComponent-button;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+}
+
+.EditorSidebar-row {
+  justify-content: space-between;
 }

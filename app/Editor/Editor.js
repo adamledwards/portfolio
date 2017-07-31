@@ -1,88 +1,85 @@
 // @flow
 import React, { Component } from 'react'
-import { Editor, EditorState, RichUtils, CompositeDecorator, convertToRaw, convertFromRaw } from 'draft-js'
-import { findLinkEntities, Link, removeLink } from './toolbar/Link/Link.js'
+import { Editor, EditorState, RichUtils } from 'draft-js'
+import { removeLink } from './toolbar/Link/Link.js'
 import classNames from 'classnames'
 import LinkPrompt from './toolbar/Link/LinkPrompt.js'
+import { STYLES } from './constants.js'
+import type { Props, State, CharacterFormatList } from './Editor.types.js'
 import 'draft-js/dist/Draft.css'
 import './Editor.style.scss'
-import { STYLES } from './constants.js'
-
-type DisplayProps = {
-  info1Heading?: string,
-  info2Heading?: string,
-  canEdit: false
-}
-type CharacterFormatList = {
-  LINK?: 'LINK',
-  UNDERLINE?: 'UNDERLINE',
-  BOLD?: 'BOLD',
-  ITALIC?: 'ITALIC'
-}
-
-type State = {
-  editorState: EditorState,
-  focused: boolean,
-  hasSelection: boolean,
-  linkPrompt: boolean,
-  characterState: CharacterFormatList
-}
-
-type Props = DisplayProps
 
 class EditorComponent extends Component {
   props: Props
   state: State
-  addLink: () => void
-  handleKeyCommand: () => void
-  onChange: () => void
-  handleRemoveLink: () => void
+  entityKey: ?string
   editor: HTMLElement
   stylesMap: Object
   entityMap: Object
+  toolbarTimeout: number
+
+  static defaultProps = {
+    textColour: '#000000'
+  }
 
   constructor (props: Props) {
     super(props)
-    const compsiteDecorator = new CompositeDecorator([
-      {
-        strategy: findLinkEntities,
-        component: Link
-      }
-    ])
     this.state = {
-      editorState: EditorState.createEmpty(compsiteDecorator),
-      focused: false,
-      hasSelection: false,
+      showToolBar: false,
+      focus: false,
       linkPrompt: false,
       characterState: {}
     }
     this.stylesMap = {}
     this.entityMap = {}
-
-    this.addLink = () => this.setState({linkPrompt: true})
-    this.handleKeyCommand = this.handleKeyCommand.bind(this)
-    this.onChange = this.onChange.bind(this)
-    this.handleRemoveLink = this.handleRemoveLink.bind(this)
-    this.handleRemoveLink = this.handleRemoveLink.bind(this)
   }
 
-  onChange (editorState: EditorState, focus: boolean = false) {
-    let focusFunc
-    if (focus) {
-      focusFunc = () => {
-        setTimeout(() => {
-          this.editor.focus()
-        }, 0)
+  addLink = () => this.setState({linkPrompt: true})
+
+  handleOnFocus = () => {
+    clearTimeout(this.toolbarTimeout)
+    this.setState({showToolBar: true, focus: true})
+  }
+
+  handleOnBlur = () => {
+    this.setState({focus: false})
+    this.toolbarTimeout = setTimeout(() => {
+      this.setState({showToolBar: false})
+      // Save progress to sever
+    }, 5000)
+  }
+
+  handleOnChange = (editorState: EditorState, focus: boolean = false) => {
+    if (!this.props.readOnly) {
+      let focusFunc
+      if (focus) {
+        focusFunc = () => {
+          setTimeout(() => {
+            this.editor.focus()
+          }, 0)
+        }
       }
+
+      this.props.onChange(editorState)
+      this.setState(
+        {
+          linkPrompt: false
+        },
+      focusFunc)
     }
-    this.setState(
-      {
-        editorState,
-        hasSelection: !editorState.getSelection().isCollapsed(),
-        linkPrompt: false,
-        characterState: this.getCharacterData(editorState)
-      },
-    focusFunc)
+  }
+
+  handleKeyCommand = (command: string) => {
+    const newState = RichUtils.handleKeyCommand(this.props.editorState, command)
+    if (newState) {
+      this.handleOnChange(newState)
+      return 'handled'
+    }
+    return 'not-handled'
+  }
+
+  handleRemoveLink = () => {
+    this.handleOnChange(removeLink(this.props.editorState), true)
   }
 
   getCharacterData (editorState: EditorState): CharacterFormatList {
@@ -91,87 +88,83 @@ class EditorComponent extends Component {
     const anchorKey = selectionState.getAnchorKey()
     const contentState = editorState.getCurrentContent()
     const contentBlock = contentState.getBlockForKey(anchorKey)
-    const style = contentBlock.getInlineStyleAt(start)
 
-    if (this.selectedStyles !== style) {
-      this.selectedStyles = style
-      this.stylesMap = style.toJS().reduce(
-        (obj, key) => ({
-          [key]: true,
-          ...obj
-        }),
-        {})
-    }
     const entityKey = contentBlock.getEntityAt(start)
     if (this.entityKey !== entityKey) {
       this.entityKey = entityKey
       this.entityMap = {}
-      if (entityKey !== null) {
+      if (entityKey) {
         const entity = contentState.getEntity(entityKey)
         const type = entity.getType()
         this.entityMap = {[type]: true}
       }
     }
-    return {...this.entityMap, ...this.stylesMap}
-  }
-
-  handleKeyCommand (command) {
-    const newState = RichUtils.handleKeyCommand(this.state.editorState, command)
-    if (newState) {
-      this.onChange(newState)
-      return 'handled'
-    }
-    return 'not-handled'
+    return { ...this.entityMap }
   }
 
   toggleInlineStyle (style: string) {
-    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, style))
-  }
-
-  handleRemoveLink () {
-    this.onChange(removeLink(this.state.editorState), true)
+    this.handleOnChange(RichUtils.toggleInlineStyle(this.props.editorState, style))
   }
 
   renderToolbar () {
-    const { characterState } = this.state
+    const { showToolBar, focus } = this.state
+    const { editorState } = this.props
+    const characterState = this.getCharacterData(editorState)
+    const currentStyle: { has: () => boolean} = editorState.getCurrentInlineStyle()
+
     return (
-      <div className="EditorComponent-toolbar">
-        <button className="EditorComponent-button" onClick={this.addLink}>
+      <div className={classNames('EditorComponent-toolbar', {active: showToolBar, suspend: !focus})}>
+        <button
+          className={classNames('EditorComponent-button', { active: characterState['LINK'] })}
+          onClick={this.addLink}
+          disabled={!showToolBar}
+        >
           <i className="fa fa-link" aria-hidden="true" />
         </button>
-        <button className="EditorComponent-button" onClick={this.handleRemoveLink} >
+        <button className="EditorComponent-button" onClick={this.handleRemoveLink} disabled={!showToolBar}>
           <i className="fa fa-chain-broken" aria-hidden="true" />
         </button>
-        {STYLES.map(style => (
-          <button
-            key={style}
-            className={classNames('EditorComponent-button', { active: characterState[style] })}
-            onClick={() => this.toggleInlineStyle(style)}
-          >
+        {STYLES.map(style => {
+          const onToggle = (e: Event) => {
+            e.preventDefault()
+            this.toggleInlineStyle(style)
+          }
+          return (
+            <button
+              key={style}
+              className={classNames('EditorComponent-button', { active: currentStyle.has(style) })}
+              onMouseDown={onToggle}
+              disabled={!showToolBar}
+            >
             <i className={`fa fa-${style.toLowerCase()}`} aria-hidden="true" />
-          </button>
-        ))}
+            </button>
+          )
+        })}
       </div>
     )
   }
 
   render () {
+    const { editorState, textColour } = this.props
     return (
-      <div className="EditorComponent">
-        { this.state.hasSelection && this.renderToolbar() }
+      <div className="EditorComponent" style={{color: textColour}} onClick={(e: Event) => e.stopPropagation()}>
+        {this.renderToolbar()}
         { this.state.linkPrompt &&
           <LinkPrompt
-            editorState={this.state.editorState}
-            onChange={this.onChange}
+            editorState={editorState}
+            onChange={this.handleOnChange}
             onClose={() => this.setState({linkPrompt: false})}
           />
         }
         <Editor
           ref={(editor: HTMLElement) => { this.editor = editor } }
-          editorState={this.state.editorState}
+          editorState={editorState}
           handleKeyCommand={this.handleKeyCommand}
-          onChange={this.onChange}
+          onChange={this.handleOnChange}
           placeholder="Write something about the project Ash..."
+          onFocus={this.handleOnFocus}
+          onBlur={this.handleOnBlur}
+          readOnly={this.props.readOnly}
         />
       </div>
     )

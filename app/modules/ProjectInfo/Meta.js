@@ -11,7 +11,8 @@ type EditProps = {
   heading: string,
   text: string,
   onChange: Function,
-  onClose: Function
+  onClose: Function,
+  onRemove: Function
 }
 
 export const Meta = ({heading, text, onClick}: Props) => {
@@ -23,7 +24,7 @@ export const Meta = ({heading, text, onClick}: Props) => {
   )
 }
 
-export const MetaEdit = ({heading, text, onChange, onClose}: EditProps) => {
+export const MetaEdit = ({heading, text, onChange, onClose, onRemove}: EditProps) => {
   const handleOnChange = (event, key) => onChange(
     {
       heading,
@@ -35,7 +36,10 @@ export const MetaEdit = ({heading, text, onChange, onClose}: EditProps) => {
     <div className="col-lg-3 Meta Meta--edit">
       <input placeholder="Heading" value={heading} onChange={(event) => handleOnChange(event, 'heading')} type="text" />
       <input placeholder="Text" value={text} onChange={(event) => handleOnChange(event, 'text')} type="text" />
-      <button onClick={onClose} ><i className="fa fa-check" aria-hidden="true" />Done</button>
+      <div className="row">
+        <button onClick={onClose} ><i className="fa fa-check" aria-hidden="true" /></button>
+        <button onClick={onRemove} ><i className="fa fa-times" aria-hidden="true" /></button>
+      </div>
     </div>
   )
 }

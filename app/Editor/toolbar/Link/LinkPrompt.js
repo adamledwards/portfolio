@@ -1,8 +1,7 @@
+// @flow
 import React, { Component } from 'react'
 import { addLink } from './Link.js'
 import Modal from '~/Editor/toolbar/Modal'
-
-
 
 class LinkPrompt extends Component {
   constructor (props) {

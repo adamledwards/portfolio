@@ -2,6 +2,7 @@
 /build
 
 [include]
+/node_modules/draft-js
 
 [libs]
 

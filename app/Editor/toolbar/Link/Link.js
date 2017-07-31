@@ -1,9 +1,9 @@
 // @flow
 import React from 'react'
-
 import { EditorState, Modifier } from 'draft-js'
+import type { ContentBlock, ContentState } from 'draft-js'
 
-export function addLink (editorState: EditorState, href: string, text: string) {
+export function addLink (editorState: EditorState, href: string, text: string): EditorState {
   const contentState = editorState.getCurrentContent()
   const contentStateWithEntity = contentState.createEntity(
     'LINK',
@@ -24,7 +24,7 @@ export function addLink (editorState: EditorState, href: string, text: string) {
   return EditorState.push(editorState, newContentState, 'apply-entity')
 }
 
-export function removeLink (editorState: EditorState) {
+export function removeLink (editorState: EditorState): EditorState {
   const contentState = editorState.getCurrentContent()
   const newContentState = Modifier.applyEntity(
     contentState,
@@ -34,19 +34,19 @@ export function removeLink (editorState: EditorState) {
   return EditorState.push(editorState, newContentState, 'apply-entity')
 }
 
-export function findLinkEntities (contentBlock, callback, contentState) {
-  contentBlock.findEntityRanges(CharacterMetadata => {
-    const entityKey = CharacterMetadata.getEntity()
-    return (
-      entityKey !== null &&
-       contentState.getEntity(entityKey).getType() === 'LINK'
-    )
+export function findLinkEntities (contentBlock: ContentBlock, callback: (start: number, end: number) => void, contentState: ContentState): void {
+  contentBlock.findEntityRanges(characterMetadata => {
+    const entityKey = characterMetadata.getEntity()
+    if (entityKey) {
+      return contentState.getEntity(entityKey).getType() === 'LINK'
+    }
+    return false
   }, callback)
 }
 
-export const Link = (props) => {
-  const { href } = props.contentState.getEntity(props.entityKey).getData()
-  return <a href={href}>{props.children}</a>
+export const Link = ({ contentState, children, entityKey }: {contentState: ContentState, children: React$Element<any>, entityKey: string}) => {
+  const { href }:{ href: string} = contentState.getEntity(entityKey).getData()
+  return <a href={href}>{children}</a>
 }
 
 export default {

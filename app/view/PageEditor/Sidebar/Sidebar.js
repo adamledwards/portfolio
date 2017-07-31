@@ -5,6 +5,7 @@ class Sidebar extends Component {
   render () {
     return (
       <section className="PageEditor-Sidebar">
+        {this.props.sidebarElement ||
         <div>
           <span className="PageEditor-Sidebar-heading">Pages</span>
           <ul className="PageEditor-Sidebar-list">
@@ -14,6 +15,7 @@ class Sidebar extends Component {
             <li>Page 4</li>
           </ul>
         </div>
+        }
       </section>
     )
   }

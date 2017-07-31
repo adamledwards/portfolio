@@ -23,15 +23,32 @@
 }
 
 .Meta {
-
   &--edit input {
     padding: 0;
     width: 100%;
     font-size: 17px;
-    color: #fff;
+    color: currentColor;
     background-color: rgba(#fff, 0.1);
 
     outline: 0;
     border: none;
+  }
+
+  .PageEditor-Sidebar & {
+    width: 100%;
+  }
+}
+
+.ProjectInfoSidebar-metaList {
+  padding: 0;
+  margin: 0;
+  box-shadow: 0px 1px 3px 0px gainsboro;
+}
+
+.ProjectInfoSidebar-metaListItem {
+  padding: 5px 0;
+  list-style: none;
+  & + & {
+    border-top: 1px solid #ccc;
   }
 }
