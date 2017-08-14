@@ -82,6 +82,43 @@ class Hero extends Component {
       )
     }
   }
+  handleSidebarElement () {
+    if (this.props.canEdit) {
+      this.props.setSidebar(this.renderSidebar())
+    }
+  }
+
+  renderSidebar () {
+    return (
+      <HeroSidebar>
+        <HeroSidebarInput name="Title">
+          <input
+            type="text"
+            value={this.state.data.title}
+            onChange={(e) => this.setEditMode('title', null, {title: e.target.value})}
+            onBlur={() => this.setEditMode('title', false)}
+            placeholder="Insert Title"
+          />
+        </HeroSidebarInput>
+        <HeroSidebarInput name="Date">
+          <SelectInput
+            onChange={(e) => this.setEditMode('month', true, {month: e.target.value})}
+            value={this.state.data.month}
+            onBlur={() => this.setEditMode('month', false)}
+            autoFocus
+            options={getMonth()}
+          >
+          </SelectInput>
+          <SelectInput
+            onChange={(e) => this.setEditMode('year', true, {year: e.target.value})}
+            value={this.state.data.year}
+            onBlur={() => this.setEditMode('year', false)}
+            options={getYears()}
+          />
+        </HeroSidebarInput>
+      </HeroSidebar>
+    )
+  }
 
   renderH1 (title: string) {
     const titleEditMode = this.state.editMode.title
