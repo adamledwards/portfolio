@@ -15,18 +15,10 @@ class Text extends Component {
     this.state = {
       editorState: EditorState.createEmpty(),
     }
-
   }
 
   static defaultProps = {
     backgroundColor: '#EFEFEF'
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextState === this.state){
-      return nextProps.data !== this.props.data
-    }
-    return true
   }
 
   handleBackgroundColor (color) {
