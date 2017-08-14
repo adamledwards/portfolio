@@ -20,6 +20,9 @@ const SortableList = SortableContainer(({meta}) => {
 
 
 class ProjectInfoSidebar extends React.Component {
+  static defaultProps = {
+    meta: []
+  }
   onSortEnd = ({oldIndex, newIndex}) => {
     this.props.updateMeta(arrayMove(this.props.meta, oldIndex, newIndex))
   };
