@@ -8,6 +8,7 @@ const Components = {
   Hero: blockShallowCheck(Hero),
   ProjectInfo: blockShallowCheck(ProjectInfo),
   Text: blockShallowCheck(Text)
+  Text: blockShallowCheck(Text),
 }
 
 export default function blockRendererFn (block: string): React$Component<*> {
