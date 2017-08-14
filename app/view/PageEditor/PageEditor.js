@@ -57,6 +57,7 @@ class PageEditor extends Component {
           <button onClick={() => addBlock('Hero')}>Hero</button>
           <button onClick={() => addBlock('ProjectInfo')}>Project Info</button>
           <button onClick={() => addBlock('Text')}>Text</button>
+          <button onClick={() => addBlock('Credits')}>Credits</button>
           {this.renderBlocks()}
         </section>
       </section>
