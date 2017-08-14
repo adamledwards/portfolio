@@ -1,6 +1,9 @@
 // @flow
 import React, { Component } from 'react'
 import CONSTANTS from './constants.js'
+import { SelectInput } from './Components'
+import HeroSidebar, { HeroSidebarInput } from './HeroSidebar.js'
+import { getYears, getMonth } from './inputUtils.js'
 import './Hero.style.scss'
 
 type EditProps = {
@@ -38,7 +41,6 @@ class Hero extends Component {
   state: State;
 
   static defaultProps = {
-    title: 'Page Title',
     canEdit: false
   }
 
@@ -50,8 +52,13 @@ class Hero extends Component {
         month: false,
         year: false
       },
-      data: {}
+      data: {
+        title: ''
+      }
     }
+  }
+  componentDidUpdate () {
+    this.handleSidebarElement()
   }
 
   setEditMode (key: string, mode: boolean, data?: Object = {}): void {
@@ -68,7 +75,7 @@ class Hero extends Component {
           }
         },
         (state) => {
-          if (!mode && this.props.canEdit) {
+          if (mode === false && this.props.canEdit) {
             this.props.update(this.state.data)
           }
         }
@@ -78,7 +85,7 @@ class Hero extends Component {
 
   renderH1 (title: string) {
     const titleEditMode = this.state.editMode.title
-    if (titleEditMode) {
+    if (titleEditMode === true) {
       return <input
         className="Hero-h1 Hero-h1--input"
         type="text"
@@ -93,38 +100,24 @@ class Hero extends Component {
         className="Hero-h1"
         onClick={() => this.setEditMode('title', true, {title})}
       >
-      { title }
+      { titleEditMode !== null ? title : this.state.data.title }
     </h1>
     )
-  }
-
-  renderOptions (value: string | number, label?: string | number) {
-    return (<option key={value} value={value}>{label || value}</option>)
   }
 
   renderYear (year: number = 0) {
     const yearEditMode = this.state.editMode.year
     if (yearEditMode) {
-      const date: Date = new Date()
-      let yearOption = date.getFullYear()
-      const end = yearOption - 10
-      const options = []
-      for (; end <= yearOption; yearOption--) {
-        options.push(this.renderOptions(yearOption))
-      }
       return (
-        <select
+        <SelectInput
           onChange={(e) => this.setEditMode('year', true, {year: e.target.value})}
           value={this.state.data.year}
           onBlur={() => this.setEditMode('year', false)}
+          options={getYears()}
           autoFocus
-        >
-          { options }
-          <option value={0}>None</option>
-        </select>
+        />
       )
     }
-
     return (
       <span
         className="Hero-date"
@@ -138,21 +131,15 @@ class Hero extends Component {
   renderMonth (month?: number = -1) {
     const monthEditMode = this.state.editMode.month
     if (monthEditMode) {
-      const months = 12
-      const options = []
-      for (let i = 0; i < months; i++) {
-        options.push(this.renderOptions(i, CONSTANTS.MONTHS[i]))
-      }
       return (
-        <select
+        <SelectInput
           onChange={(e) => this.setEditMode('month', true, {month: e.target.value})}
           value={this.state.data.month}
           onBlur={() => this.setEditMode('month', false)}
           autoFocus
+          options={getMonth()}
         >
-          <option value={-1}>None</option>
-          { options }
-        </select>
+        </SelectInput>
       )
     }
 
@@ -167,9 +154,9 @@ class Hero extends Component {
   }
 
   render () {
-    const { title, year, month } = this.props
+    const { title = 'Insert Title', year, month } = this.props.data
     return (
-      <section className="Hero">
+      <section className="Hero" onClick={() => this.handleSidebarElement()}>
         <div className="row row--reverse middle">
           <div className="col-lg-6">
           { this.renderH1(title) }
