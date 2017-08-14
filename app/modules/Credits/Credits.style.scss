@@ -1,0 +1,66 @@
+.Credits {
+  display: block;
+  height: 590px;
+  margin-top: 65px;
+  background: #000;
+
+  font-size: 20px;
+  color: #fff;
+  letter-spacing: 1.59;
+  line-height: 32px;
+
+  overflow: hidden;
+}
+
+.Credits-row {
+  margin-top: 172px;
+  position: relative;
+}
+
+.Credits-addMetaButton {
+  position: absolute;
+  top: -30px;
+}
+
+.Credits .Meta {
+  margin-bottom: 20px;
+  &--edit input {
+    padding: 0;
+    width: 100%;
+    font-size: 20px;
+    color: currentColor;
+    background-color: rgba(#fff, 0.1);
+
+    outline: 0;
+    border: none;
+  }
+
+  .PageEditor-Sidebar & {
+    width: 100%;
+  }
+}
+
+.CreditsSidebar-metaList {
+  padding: 0;
+  margin: 0;
+  box-shadow: 0px 1px 3px 0px gainsboro;
+}
+
+.ProjectInfoSidebar-metaListItem {
+  padding: 5px 0;
+  list-style: none;
+  & + & {
+    border-top: 1px solid #ccc;
+  }
+}
+
+
+.Credits {
+  .Meta-row {
+    flex-direction: column;
+  }
+
+  .Meta-heading {
+    font-weight: bold;
+  }
+}
