@@ -4,7 +4,6 @@ import Sidebar from './Sidebar'
 import type { blockState } from '~/editor/store/blocks'
 import './PageEditor.style.scss'
 import { blockRendererFn } from '~/editor/components/BlockRenderer'
-import { OneImage, TwoImage } from '~/modules/images'
 import Footer from '~/modules/Footer'
 
 type Props = {
@@ -61,9 +60,8 @@ class PageEditor extends Component {
           <button onClick={() => addBlock('Text')}>Text</button>
           <button onClick={() => addBlock('Credits')}>Credits</button>
           <button onClick={() => addBlock('OtherArticles')}>More Articles</button>
+          <button onClick={() => addBlock('Images')}>Images</button>
           {this.renderBlocks()}
-          <OneImage />
-          <TwoImage />
           <Footer />
         </section>
       </section>
