@@ -3,9 +3,10 @@ import './Sidebar.style.scss'
 
 class Sidebar extends Component {
   render () {
+    const { sidebar } = this.props
     return (
       <section className="PageEditor-Sidebar">
-        {this.props.sidebarElement ||
+        {sidebar && sidebar.sidebarElement ||
         <div>
           <span className="PageEditor-Sidebar-heading">Pages</span>
           <ul className="PageEditor-Sidebar-list">
@@ -15,6 +16,10 @@ class Sidebar extends Component {
             <li>Page 4</li>
           </ul>
         </div>
+        }
+        {
+          (sidebar && sidebar.removeBlock) &&
+          <button onClick={sidebar.removeBlock}>Remove</button>
         }
       </section>
     )

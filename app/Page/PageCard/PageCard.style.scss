@@ -1,0 +1,23 @@
+.PageCard {
+  margin-top: 150px;
+  text-decoration: none;
+}
+
+.PageCard-image {
+  display: block;
+  width: 100%;
+}
+
+.PageCard-heading {
+  background: red;
+  
+  &:before {
+    content:"\2014";
+    display: block;
+  }
+}
+
+.PageCard-heading-item {
+  display: block;
+  font-size: 18px;
+}

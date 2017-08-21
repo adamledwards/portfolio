@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react'
 import { EditorState } from 'draft-js'
 import Editor, { compsiteDecorator, EditorSidebar } from '~/Editor'
-import MetaList from '~/modules/components/MetaList'
+import MetaList from '~/page/modules/components/MetaList'
 import ProjectInfoSidebar from './ProjectInfoSidebar.js'
 import { TEXTCOLOR } from './constants.js'
 import './ProjectInfo.style.scss'

@@ -4,11 +4,12 @@ import Sidebar from './Sidebar'
 import type { blockState } from '~/editor/store/blocks'
 import './PageEditor.style.scss'
 import { blockRendererFn } from '~/editor/components/BlockRenderer'
-import Footer from '~/modules/Footer'
+import Footer from '~/page/modules/Footer'
 
 type Props = {
   addBlock: (block: string, data?: Object) => void,
   changeBlock: (index: number, block: string, data?: Object) => void,
+  removeBlock: (index: number) => void,
   blocks: blockState
 }
 
@@ -21,6 +22,7 @@ class PageEditor extends Component {
       sidebarElement: null
     }
   }
+
   updateFn (index: number, block: string) {
     const { changeBlock } = this.props
     return (data: Object) => {
@@ -28,8 +30,15 @@ class PageEditor extends Component {
     }
   }
 
-  setSideBar (sidebarElement: React$Element<*>) {
-    this.setState({sidebarElement})
+  handleRemove = (index: number) => {
+    const { removeBlock } = this.props
+    this.setState({sidebar: null}, () => {
+      removeBlock(index)
+    })
+  }
+
+  setSideBar (sidebarElement: React$Element<*>, removeBlock: () => void) {
+    this.setState({sidebar : {sidebarElement, removeBlock}})
   }
 
   renderBlocks () {
@@ -41,8 +50,9 @@ class PageEditor extends Component {
           key={block + i}
           data={data}
           canEdit
-          setSidebar={(sidebarElement) => this.setSideBar(sidebarElement)}
+          setSidebar={(sidebarElement) => this.setSideBar(sidebarElement, () => this.handleRemove(i))}
           update={this.updateFn(i, block) }
+          remove={() => this.handleRemove(i)}
         />
       )
     })
@@ -50,10 +60,10 @@ class PageEditor extends Component {
 
   render () {
     const { addBlock } = this.props
-    const { sidebarElement } = this.state
+    const { sidebar, removeBlock} = this.state
     return (
       <section className="PageEditor">
-        <Sidebar sidebarElement={sidebarElement}/>
+        <Sidebar sidebar={sidebar} removeBlock={removeBlock}/>
         <section className="PageEditor-container">
           <button onClick={() => addBlock('Hero')}>Hero</button>
           <button onClick={() => addBlock('ProjectInfo')}>Project Info</button>

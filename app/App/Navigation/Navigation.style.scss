@@ -1,0 +1,19 @@
+.Navigation {
+  padding-top: 25px;
+  height: 42px;
+}
+
+.Navigation-list {
+  margin: 0;
+  padding: 0;
+
+  .align-left {
+    flex-grow: 2;
+    text-align: right;
+  }
+
+  li {
+    margin: 0 35px;
+    list-style: none;
+  }
+}

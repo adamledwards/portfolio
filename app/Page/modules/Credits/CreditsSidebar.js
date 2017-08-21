@@ -1,7 +1,7 @@
 import React from 'react'
 import { TwitterPicker } from 'react-color'
 import { Meta } from './Meta.js'
-import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
+import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
 import { COLOURS } from './constants.js'
 
 const SortableItem = SortableElement(({item}) =>
@@ -30,7 +30,7 @@ class ProjectInfoSidebar extends React.Component {
     const { backgroundColor, onChangeComplete, meta } = this.props
     return (
       <div>
-        <span className="PageEditor-Sidebar-heading">Project Info</span>
+        <span className="PageEditor-Sidebar-heading">Credits</span>
         <section className="PageEditor-Sidebar-section">
           <span className="PageEditor-Sidebar-subHeading">Background Colour</span>
           <TwitterPicker colors={COLOURS} color={backgroundColor} onChangeComplete={onChangeComplete} width="182" triangle="hide"/>

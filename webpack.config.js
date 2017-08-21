@@ -5,7 +5,8 @@ module.exports = {
   entry: './app/client.js',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'app.js'
+    filename: 'app.js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -37,7 +38,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'React',
-      template: './app/index.html.ejs'
+      template: './app/index.html.ejs',
+
     })
   ],
   resolve: {
@@ -47,8 +49,10 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'build'),
+    publicPath: '/',
     compress: true,
-    port: 9000
+    port: 9000,
+    historyApiFallback: true
   },
   devtool: 'source-map'
 }

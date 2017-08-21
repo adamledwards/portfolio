@@ -1,11 +1,14 @@
 // @flow
 import React, { Component } from 'react'
-import Hero from '~/modules/Hero'
+import Footer from '~/page/modules/Footer'
 
 class Page extends Component {
   render () {
     return (
-      <Hero title="Page Title"/>
+      <section>
+        <h1>Page</h1>
+        <Footer />
+      </section>
     )
   }
 }

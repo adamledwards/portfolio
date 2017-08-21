@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react'
-import MetaList from '~/modules/components/MetaList'
+import MetaList from '~/page/modules/components/MetaList'
 import CreditsSidebar from './CreditsSidebar.js'
 import { TEXTCOLOR } from './constants.js'
 import './Credits.style.scss'
