@@ -38,12 +38,13 @@ class App extends React.Component {
   }
 
   render () {
-    const regex = /(?!\()\w+(?=\))/g
+
     const { Component, params = {} } = this.state
     let classname
     if (typeof Component === 'function') {
       if (Component.displayName) {
-        const displayName = Component.displayName.match(regex)
+        // remove bracket displayName e.g Connect(Component)
+        const displayName = Component.displayName.match(/(?!\()\w+(?=\))/g)
         classname = displayName === null ? displayName : displayName[0]
       } else {
         classname = Component.name
