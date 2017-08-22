@@ -1,10 +1,10 @@
 // @flow
-import Hero from '~/page/modules/Hero'
-import ProjectInfo from '~/page/modules/ProjectInfo'
-import Text from '~/page/modules/Text'
-import Credits from '~/page/modules/Credits'
-import OtherArticles from '~/page/modules/OtherArticles'
-import Images from '~/page/modules/Images'
+import Hero from '~/Blocks/Hero'
+import ProjectInfo from '~/Blocks/ProjectInfo'
+import Text from '~/Blocks/Text'
+import Credits from '~/Blocks/Credits'
+import OtherArticles from '~/Blocks/OtherArticles'
+import Images from '~/Blocks/Images'
 import blockShallowCheck from '~/utils/blockShallowCheck.js'
 
 const Components = {

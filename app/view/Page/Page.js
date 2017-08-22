@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import Footer from '~/page/modules/Footer'
+import Footer from '~/Blocks/Footer'
 
 class Page extends Component {
   render () {

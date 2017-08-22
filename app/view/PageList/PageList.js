@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
-import Footer from '~/page/modules/Footer'
-import PageCard from '~/page/PageCard'
+import Footer from '~/Blocks/Footer'
+import PageCard from '~/PageCard'
 import './PageList.style.scss'
 
 

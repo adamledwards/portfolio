@@ -4,7 +4,7 @@ import Sidebar from './Sidebar'
 import type { blockState } from '~/editor/store/blocks'
 import './PageEditor.style.scss'
 import { blockRendererFn } from '~/editor/components/BlockRenderer'
-import Footer from '~/page/modules/Footer'
+import Footer from '~/Blocks/Footer'
 
 type Props = {
   addBlock: (block: string, data?: Object) => void,
