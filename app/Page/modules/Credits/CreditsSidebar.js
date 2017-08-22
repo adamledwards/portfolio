@@ -1,6 +1,6 @@
 import React from 'react'
 import { TwitterPicker } from 'react-color'
-import { Meta } from './Meta.js'
+import { Meta } from '~/page/modules/components/MetaList'
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
 import { COLOURS } from './constants.js'
 

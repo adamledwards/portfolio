@@ -1,6 +1,7 @@
 .Navigation {
   padding-top: 25px;
   height: 42px;
+  color: #fff;
 }
 
 .Navigation-list {
@@ -16,4 +17,8 @@
     margin: 0 35px;
     list-style: none;
   }
+   a {
+     color: #fff;
+     text-decoration: none;
+   }
 }

@@ -1,2 +1,2 @@
 // @flow
-export {default} from './PageCard.js'
+export { default } from './PageCard.js'

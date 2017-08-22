@@ -7,7 +7,7 @@ class PageCard extends Component {
 
   render() {
     return (
-      <Link className="col-lg-4" href="">
+      <Link className="col-lg-4 PageCard-link" href="">
         <div className="PageCard">
           <img className="PageCard-image" src="http://via.placeholder.com/500x770" />
           <div className="PageCard-heading">

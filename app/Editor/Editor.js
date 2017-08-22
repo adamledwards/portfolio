@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { Editor, EditorState, RichUtils } from 'draft-js'
+import { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js'
 import { removeLink } from './toolbar/Link/Link.js'
 import classNames from 'classnames'
 import LinkPrompt from './toolbar/Link/LinkPrompt.js'
@@ -45,8 +45,9 @@ class EditorComponent extends Component {
     this.setState({focus: false})
     this.toolbarTimeout = setTimeout(() => {
       this.setState({showToolBar: false})
-      // Save progress to sever
     }, 5000)
+    const contentState = this.props.editorState.getCurrentContent()
+    console.log(convertToRaw(contentState))
   }
 
   handleOnChange = (editorState: EditorState, focus: boolean = false) => {

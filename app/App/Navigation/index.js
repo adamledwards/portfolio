@@ -8,7 +8,7 @@ const Navigation = () => (
     <div className="container">
       <div className="row">
         <div className="col-lg-6">
-          <Logo/>
+          <Logo fill="#fff"/>
         </div>
         <div className="col-lg-6">
           <ul className="Navigation-list row">

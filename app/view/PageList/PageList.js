@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import Footer from '~/page/modules/Footer'
 import PageCard from '~/page/PageCard'
+import './PageList.style.scss'
 
 
 class PageList extends Component {
@@ -12,7 +13,7 @@ class PageList extends Component {
       card.push(<PageCard key={i}/>)
     }
     return (
-      <section>
+      <section className="PageList">
         <div className="container">
           <div className="row">
             {card}

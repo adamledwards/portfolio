@@ -70,13 +70,17 @@ class MetaList extends PureComponent {
     })
   }
 
-  handleMetaRemove (index: number) {
-    const { meta } = this.props
-    const newMeta = [
-      ...meta.slice(0, index),
-      ...meta.slice(index + 1)
-    ]
-    this.updateMeta(newMeta)
+  handleMetaRemove (isNew: boolean, index: number) {
+    if(!isNew) {
+      const { meta } = this.props
+      const newMeta = [
+        ...meta.slice(0, index),
+        ...meta.slice(index + 1)
+      ]
+      this.updateMeta(newMeta)
+    } else {
+      this.setState({editMode: {meta: null}})
+    }
   }
 
   handleMetaClose (index: number, isNew: boolean) {
@@ -109,7 +113,7 @@ class MetaList extends PureComponent {
         {...meta}
         onClose={() => this.handleMetaClose(index, isNew)}
         onChange={this.handleMetaChange}
-        onRemove={() => this.handleMetaRemove(index)}
+        onRemove={() => this.handleMetaRemove(isNew, index)}
       />
     )
   }

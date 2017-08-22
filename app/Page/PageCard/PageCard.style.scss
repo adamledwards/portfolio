@@ -1,5 +1,15 @@
 .PageCard {
   margin-top: 150px;
+  background: #000000;
+
+  &:nth-child(even) {
+    padding-top: 30px;
+  }
+}
+
+.PageCard-link {
+  text-decoration: none;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -9,15 +19,24 @@
 }
 
 .PageCard-heading {
-  background: red;
-  
+  text-decoration: none;
   &:before {
-    content:"\2014";
+    content: "\2014";
     display: block;
+    padding: 50px 0 40px 0;
+  }
+
+  .PageCard-link:nth-child(even) & {
+    padding-top: 40px;
+    margin-top: -40px;
+    background: black;
+    z-index: 1;
+    position: relative;
   }
 }
 
 .PageCard-heading-item {
   display: block;
   font-size: 18px;
+  line-height: 30px;
 }

@@ -27,18 +27,18 @@ module.exports = {
       },
       {
         test: /\.(eot|ttf|otf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file-loader?name=build/assets/fonts/[name].[ext]'
+        loader: 'file-loader?name=assets/fonts/[name].[ext]'
       },
       {
         test: /\.(jpg|jpeg|png|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file-loader?name=build/assets/images/[name].[ext]'
+        loader: 'file-loader?name=assets/images/[name].[ext]'
       }
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'React',
-      template: './app/index.html.ejs',
+      template: './app/index.html.ejs'
 
     })
   ],
@@ -48,7 +48,6 @@ module.exports = {
     }
   },
   devServer: {
-    contentBase: path.join(__dirname, 'build'),
     publicPath: '/',
     compress: true,
     port: 9000,
