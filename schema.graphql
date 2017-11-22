@@ -1,0 +1,394 @@
+# Page block
+type Block {
+  # The ID of an object
+  id: ID!
+  page: Page
+  blockType: String
+  editor: JSON
+
+  # Go live date for project this will apprear in the listing
+  date: String
+
+  # Client that the project was for
+  title: String
+
+  # Colour
+  colour: String
+
+  # meta data
+  metaConnection(after: String, first: Int, before: String, last: Int): MetaConnection
+
+  # files
+  fileConnection(after: String, first: Int, before: String, last: Int): FileConnection
+}
+
+# attach file to block
+input BlockFileTypeInput {
+  # Block id field
+  blockId: ID
+
+  # Scope of image
+  scope: String
+}
+
+# Page block
+input BlockInput {
+  pageId: ID
+  blockType: String
+  editor: JSON
+
+  # Go live date for project this will apprear in the listing
+  date: String
+
+  # Client that the project was for
+  title: String
+
+  # Colour
+  colour: String
+}
+
+# A connection to a list of items.
+type BlocksConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [BlocksEdge]
+}
+
+# An edge in a connection.
+type BlocksEdge {
+  # The item at the end of the edge
+  node: Block
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+# Page block
+input BlockUpdateInput {
+  ID: ID
+  editor: JSON
+
+  # Go live date for project this will apprear in the listing
+  date: String
+
+  # Client that the project was for
+  title: String
+
+  # block colour
+  colour: String
+}
+
+input createBlockInput {
+  blockInput: BlockInput
+  clientMutationId: String
+}
+
+type createBlockPayload {
+  blockEdge: BlocksEdge
+  clientMutationId: String
+}
+
+input createMetaInput {
+  metaInput: MetaTypeCreateInput
+  clientMutationId: String
+}
+
+type createMetaPayload {
+  metaEdge: MetaEdge
+  clientMutationId: String
+}
+
+input CreatePageInput {
+  pageInput: PageInput
+  clientMutationId: String
+}
+
+type CreatePagePayload {
+  page: Page
+  clientMutationId: String
+}
+
+# File store
+type File {
+  # The ID of an object
+  id: ID!
+  path: String
+  fullPath: String
+  contentType: String
+  scope: String
+  size: Int
+}
+
+# A connection to a list of items.
+type FileConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [FileEdge]
+}
+
+# An edge in a connection.
+type FileEdge {
+  # The item at the end of the edge
+  node: File
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+# The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+scalar JSON
+
+# Meta fiels
+type Meta implements Node {
+  # The ID of an object
+  id: ID!
+
+  # key
+  field1: String
+
+  # value
+  field2: String
+
+  # position
+  position: Int
+}
+
+# A connection to a list of items.
+type MetaConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [MetaEdge]
+}
+
+# An edge in a connection.
+type MetaEdge {
+  # The item at the end of the edge
+  node: Meta
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+# Meta
+input MetaTypeCreateInput {
+  # block id
+  blockId: ID
+
+  # field1
+  field1: String
+
+  # field2
+  field2: String
+
+  # position
+  position: Int = 0
+}
+
+# Meta update
+input MetaTypeUpdateInput {
+  # Meta id
+  id: ID
+
+  # field1
+  field1: String
+
+  # field2
+  field2: String
+
+  # position
+  position: Int
+}
+
+type Mutation {
+  createPage(input: CreatePageInput!): CreatePagePayload
+  updatePage(input: UpdatePageInput!): UpdatePagePayload
+  createBlock(input: createBlockInput!): createBlockPayload
+  removeBlock(input: removeBlockInput!): removeBlockPayload
+  updateBlock(input: updateBlockInput!): updateBlockPayload
+  createMeta(input: createMetaInput!): createMetaPayload
+  updateMeta(input: updateMetaInput!): updateMetaPayload
+  removeMeta(input: removeMetaInput!): removeMetaPayload
+  uploadFile(input: UploadFileInput!): UploadFilePayload
+  uploadBlockFile(input: UploadBlockFileInput!): UploadBlockFilePayload
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+# Project Page
+type Page implements Node {
+  # The ID of an object
+  id: ID!
+
+  # Title of project
+  title: String
+
+  # Description of project
+  description: String
+
+  # Go live date for project this will apprear in the listing
+  projectGoLive: String
+
+  # Client that the project was for
+  client: String
+
+  # Flag to indicate if the page should be made public
+  published: Boolean
+
+  # position to of page
+  position: Int
+
+  # Listing image file
+  listingImage: File
+
+  # page blocks
+  blockConnection(after: String, first: Int, before: String, last: Int): BlocksConnection
+}
+
+# A connection to a list of items.
+type PageConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [PageEdge]
+}
+
+# An edge in a connection.
+type PageEdge {
+  # The item at the end of the edge
+  node: Page
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+# input fields for page
+input PageInput {
+  # Title of project
+  title: String
+
+  # Description of project
+  description: String
+
+  # Go live date for project this will apprear in the listing
+  projectGoLive: String
+
+  # Client that the project was for
+  client: String
+
+  # Flag to indicate if the page should be made public
+  published: Boolean = false
+  position: Int
+}
+
+type Query {
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+  pages(after: String, first: Int, before: String, last: Int): PageConnection
+}
+
+input removeBlockInput {
+  id: ID
+  clientMutationId: String
+}
+
+type removeBlockPayload {
+  deletedId: ID
+  block: Block
+  clientMutationId: String
+}
+
+input removeMetaInput {
+  id: ID
+  clientMutationId: String
+}
+
+type removeMetaPayload {
+  # deleted meta Id
+  deletedId: ID
+
+  # deleted meta item
+  meta: Meta
+  clientMutationId: String
+}
+
+input updateBlockInput {
+  blockInput: BlockUpdateInput
+  clientMutationId: String
+}
+
+type updateBlockPayload {
+  block: Block
+  clientMutationId: String
+}
+
+input updateMetaInput {
+  metaInput: MetaTypeUpdateInput
+  clientMutationId: String
+}
+
+type updateMetaPayload {
+  updateMeta: Meta
+  metaConnection(after: String, first: Int, before: String, last: Int): MetaConnection
+  clientMutationId: String
+}
+
+input UpdatePageInput {
+  id: ID
+  pageInput: PageInput
+  clientMutationId: String
+}
+
+type UpdatePagePayload {
+  page: Page
+  clientMutationId: String
+}
+
+input UploadBlockFileInput {
+  blockFileInput: BlockFileTypeInput
+  clientMutationId: String
+}
+
+type UploadBlockFilePayload {
+  deletedIds: [ID]
+  file: FileEdge
+  clientMutationId: String
+}
+
+input UploadFileInput {
+  clientMutationId: String
+}
+
+type UploadFilePayload {
+  file: [File]
+  clientMutationId: String
+}
+

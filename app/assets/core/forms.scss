@@ -1,0 +1,12 @@
+input[type="text"]{
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  outline: none;
+
+  font-size: 20px;
+  margin-top: 20px;
+  &:focus {
+    border-color: #000;
+  }
+}

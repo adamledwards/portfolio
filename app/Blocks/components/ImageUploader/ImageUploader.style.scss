@@ -1,0 +1,20 @@
+
+.ImageUploaderWrapper {
+  position: relative;
+}
+
+.ImageUploaderWrapper-dragging {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 70px;
+  color: #fff;
+  font-family: 'Didot';
+}
