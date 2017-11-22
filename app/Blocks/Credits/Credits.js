@@ -1,14 +1,10 @@
 // @flow
 import React, { PureComponent } from 'react'
-import MetaList from '~/Blocks/components/MetaList'
+import MetaList, { MetaSortable } from '~/Blocks/components/MetaList'
+import { createFragmentContainer, graphql } from 'react-relay'
 import CreditsSidebar from './CreditsSidebar.js'
 import { TEXTCOLOR } from './constants.js'
 import './Credits.style.scss'
-
-type MetaType = {
-  heading: string,
-  text: string
-}
 
 type DisplayProps = {
   canEdit: boolean,
@@ -32,71 +28,37 @@ class Credits extends PureComponent {
   addMeta: () => void
   handleMetaRemove: () => void
   onChange: () => void
-  static defaultProps = {
-    data: {
-      meta: []
-    },
-    canEdit: false
-  }
-
-  constructor (props: Props) {
-    super(props)
-    this.state = {
-      meta: {
-        heading: '',
-        text: ''
-      },
-      editMode: {
-        meta: null
-      }
-    }
-    this.handleBackgroundColor = this.handleBackgroundColor.bind(this)
-  }
 
   componentDidUpdate () {
-    const options = {editor: this.state.editor}
-    this.handleSidebarElement(options)
+    this.handleSidebarElement()
   }
 
-  update = (meta: Array<MetaType>) => {
-    this.setState({
-      meta: {
-        heading: '',
-        text: ''
-      },
-      editMode: {
-        meta: null
-      }
-    }, () => this.props.update({ ...this.props.data, meta }))
+  update = (nextData: {colour: string}) => {
+    this.props.update(nextData)
   }
 
-  handleSidebarElement (options = {}) {
+  handleSidebarElement () {
     if (this.props.canEdit) {
-      this.props.setSidebar(this.renderSidebar(options))
+      this.props.setSidebar(this.renderSidebar())
     }
-  }
-
-  handleBackgroundColor (color) {
-    this.props.update({meta: this.props.data.meta, backgroundColor: color.hex})
   }
 
   renderSidebar (options) {
-    const { backgroundColor, meta } = this.props.data
-    const { editorState } = this.state
+    const { block } = this.props
+    const backgroundColor = block.colour || '#000000'
     return (
       <CreditsSidebar
         backgroundColor={backgroundColor}
-        onChangeComplete={this.handleBackgroundColor}
-        meta={meta}
-        updateMeta={this.update}
+        update={this.update}
         >
+        <MetaSortable block={this.props.block} />
       </CreditsSidebar>
     )
   }
 
   render () {
-    const { backgroundColor = '#EFEFEF', meta } = this.props.data
-
+    const { block } = this.props
+    const backgroundColor = block.colour || '#EFEFEF'
     return (
       <section className="Credits container" onClick={() => this.handleSidebarElement({editor: false})} style={{backgroundColor, color: TEXTCOLOR[backgroundColor.toLowerCase()]}}>
         <div className="row Credits-row">
@@ -104,7 +66,7 @@ class Credits extends PureComponent {
             <h3>Credits</h3>
           </div>
           <div className="col-lg-6">
-            <MetaList meta={meta} update={this.update}/>
+            <MetaList block={block} />
           </div>
         </div>
       </section>
@@ -112,4 +74,15 @@ class Credits extends PureComponent {
   }
 }
 
-export default Credits
+export default createFragmentContainer(
+  Credits,
+  {
+    block: graphql`
+      fragment Credits_block on Block {
+        colour
+        ...MetaList_block
+        ...MetaSortable_block
+      }
+    `,
+  }
+);

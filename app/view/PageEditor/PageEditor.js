@@ -5,72 +5,113 @@ import type { blockState } from '~/editor/store/blocks'
 import './PageEditor.style.scss'
 import { blockRendererFn } from '~/editor/components/BlockRenderer'
 import Footer from '~/Blocks/Footer'
+import { graphql } from 'react-relay'
+import type { PageEditorQueryResponse } from './__generated__/PageEditorQuery.graphql.js'
+import { createBlock, removeBlock, updateBlock } from '~/utils/mutation'
+
 
 type Props = {
   addBlock: (block: string, data?: Object) => void,
   changeBlock: (index: number, block: string, data?: Object) => void,
   removeBlock: (index: number) => void,
-  blocks: blockState
+  blocks: blockState,
+  page: PageEditorQueryResponse
 }
 
 class PageEditor extends Component {
   props: Props
 
+  static query = graphql`
+    query PageEditorQuery ($id: ID!) {
+      page: node(id: $id) {
+        ... on Page {
+          id
+          title
+          client
+          description
+          projectGoLive
+          position
+          published
+          blockConnection(first: 10) @connection(key: "PageEditor_blockConnection") {
+            edges {
+              block: node {
+                id
+                blockType
+                ...Hero_block
+                ...ProjectInfo_block
+                ...Credits_block
+                ...Text_block
+              }
+            }
+          }
+        }
+      }
+    }
+  `
+
   constructor(props) {
     super(props)
     this.state = {
-      sidebarElement: null
+      sidebarElement: null,
+      pageTitle: '',
+      client: '',
+      month: '',
+      year: '',
+      day: '',
     }
   }
 
-  updateFn (index: number, block: string) {
-    const { changeBlock } = this.props
+  addBlock (type: string) {
+    createBlock({blockType: type, pageId: this.props.page.id})
+  }
+
+  updateFn (ID: string, block: string) {
     return (data: Object) => {
-      changeBlock(index, block, data)
+      updateBlock({ID, ...data})
     }
   }
 
-  handleRemove = (index: number) => {
-    const { removeBlock } = this.props
+  handleRemove = (id: string) => {
     this.setState({sidebar: null}, () => {
-      removeBlock(index)
+      removeBlock(id)
     })
   }
 
-  setSideBar (sidebarElement: React$Element<*>, removeBlock: () => void) {
-    this.setState({sidebar : {sidebarElement, removeBlock}})
+  setSideBar (sidebarElement: React$Element<*>, blockId: string) {
+    this.setState({sidebar: {sidebarElement, blockId}})
   }
 
   renderBlocks () {
-    const { blocks } = this.props
-    return blocks.map(({block, data}, i) => {
-      const Block = blockRendererFn(block)
+    const blocks = this.props.page.blockConnection.edges
+    const validBlocks = blocks.filter(({ block }) => block && typeof blockRendererFn(block.blockType) === 'function')
+    return validBlocks.map(({ block }, i) => {
+      const Block = blockRendererFn(block.blockType)
       return (
         <Block
-          key={block + i}
-          data={data}
+          key={block.id + i}
+          block={block}
           canEdit
-          setSidebar={(sidebarElement) => this.setSideBar(sidebarElement, () => this.handleRemove(i))}
-          update={this.updateFn(i, block) }
-          remove={() => this.handleRemove(i)}
+          setSidebar={(sidebarElement) => this.setSideBar(sidebarElement, block.id)}
+          update={this.updateFn(block.id) }
+          remove={() => this.handleRemove(block.id)}
         />
       )
     })
   }
 
   render () {
-    const { addBlock } = this.props
-    const { sidebar, removeBlock} = this.state
+    const { sidebar, removeBlock } = this.state
+
     return (
       <section className="PageEditor">
-        <Sidebar sidebar={sidebar} removeBlock={removeBlock}/>
+        <Sidebar sidebar={sidebar} handleRemove={this.handleRemove}/>
         <section className="PageEditor-container">
-          <button onClick={() => addBlock('Hero')}>Hero</button>
-          <button onClick={() => addBlock('ProjectInfo')}>Project Info</button>
-          <button onClick={() => addBlock('Text')}>Text</button>
-          <button onClick={() => addBlock('Credits')}>Credits</button>
-          <button onClick={() => addBlock('OtherArticles')}>More Articles</button>
-          <button onClick={() => addBlock('Images')}>Images</button>
+          <button onClick={() => this.addBlock('Hero')}>Hero</button>
+          <button onClick={() => this.addBlock('ProjectInfo')}>Project Info</button>
+          <button onClick={() => this.addBlock('Text')}>Text</button>
+          <button onClick={() => this.addBlock('Credits')}>Credits</button>
+          <button onClick={() => this.addBlock('OtherArticles')}>More Articles</button>
+          <button onClick={() => this.addBlock('Images')}>Images</button>
           {this.renderBlocks()}
           <Footer />
         </section>
@@ -78,5 +119,9 @@ class PageEditor extends Component {
     )
   }
 }
+
+export const PageEditorNew = (props) => (
+  <PageEditor {...props} isNew={true} />
+)
 
 export default PageEditor

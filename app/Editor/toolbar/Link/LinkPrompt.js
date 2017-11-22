@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { addLink } from './Link.js'
 import Modal from '~/Editor/toolbar/Modal'
+import './LinkPrompt.style.scss'
 
 class LinkPrompt extends Component {
   constructor (props) {
@@ -50,17 +51,15 @@ class LinkPrompt extends Component {
     return (
       <Modal>
         <div className="row">
-          <h3>Edit Link</h3>
+          <span className="Modal-header">Edit Link</span>
         </div>
         <div className="row">
-          <span>Web Address</span>
-          <input type="text" value={this.state.url} onChange={this.onUrlChange} />
+          <input placeholder="Web Address" type="text" value={this.state.url} onChange={this.onUrlChange} />
         </div>
         <div className="row">
-          <span>Text to display</span>
-          <input value={this.state.selectionText} onChange={this.onTextChange} type="text" />
+          <input placeholder="Text to display" value={this.state.selectionText} onChange={this.onTextChange} type="text" />
         </div>
-        <div className="row">
+        <div className="LinkPrompt-actions row">
           <button onClick={this.handleAddLink}>OK</button>
           <button onClick={onClose}>Cancel</button>
         </div>

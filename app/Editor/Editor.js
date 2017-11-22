@@ -1,13 +1,16 @@
 // @flow
 import React, { Component } from 'react'
-import { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js'
+import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js'
+import { createFragmentContainer, graphql } from 'react-relay'
 import { removeLink } from './toolbar/Link/Link.js'
 import classNames from 'classnames'
 import LinkPrompt from './toolbar/Link/LinkPrompt.js'
-import { STYLES } from './constants.js'
+import { STYLES, compsiteDecorator } from './constants.js'
 import type { Props, State, CharacterFormatList } from './Editor.types.js'
+import EditorSidebar from './EditorSidebar.js'
 import 'draft-js/dist/Draft.css'
 import './Editor.style.scss'
+
 
 class EditorComponent extends Component {
   props: Props
@@ -28,10 +31,17 @@ class EditorComponent extends Component {
       showToolBar: false,
       focus: false,
       linkPrompt: false,
-      characterState: {}
+      characterState: {},
+      editorState: this.getEditorState(),
     }
     this.stylesMap = {}
     this.entityMap = {}
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.block.editor != nextProps.block.editor) {
+      this.setState({editorState: this.getEditorState(nextProps)})
+    }
   }
 
   addLink = () => this.setState({linkPrompt: true})
@@ -46,8 +56,8 @@ class EditorComponent extends Component {
     this.toolbarTimeout = setTimeout(() => {
       this.setState({showToolBar: false})
     }, 5000)
-    const contentState = this.props.editorState.getCurrentContent()
-    console.log(convertToRaw(contentState))
+    const contentState = this.state.editorState.getCurrentContent()
+    this.props.update({editor: convertToRaw(contentState) })
   }
 
   handleOnChange = (editorState: EditorState, focus: boolean = false) => {
@@ -60,18 +70,22 @@ class EditorComponent extends Component {
           }, 0)
         }
       }
-
-      this.props.onChange(editorState)
       this.setState(
         {
+          editorState,
           linkPrompt: false
         },
-      focusFunc)
+      () => {
+        focusFunc && focusFunc()
+        if (this.props.sidebarUpdate) {
+          this.props.sidebarUpdate(this.state.focus ? this.rednderSidebar() : null)
+        }
+      })
     }
   }
 
   handleKeyCommand = (command: string) => {
-    const newState = RichUtils.handleKeyCommand(this.props.editorState, command)
+    const newState = RichUtils.handleKeyCommand(this.state.editorState, command)
     if (newState) {
       this.handleOnChange(newState)
       return 'handled'
@@ -80,7 +94,19 @@ class EditorComponent extends Component {
   }
 
   handleRemoveLink = () => {
-    this.handleOnChange(removeLink(this.props.editorState), true)
+    this.handleOnChange(removeLink(this.state.editorState), true)
+  }
+
+
+  rednderSidebar() {
+    return <EditorSidebar onChange={this.handleOnChange} editorState={this.state.editorState} />
+  }
+
+  getEditorState(props = this.props) {
+    const { block } = props
+    return block.editor ?
+    EditorState.createWithContent(convertFromRaw(block.editor), compsiteDecorator):
+    EditorState.createEmpty(compsiteDecorator);
   }
 
   getCharacterData (editorState: EditorState): CharacterFormatList {
@@ -104,12 +130,11 @@ class EditorComponent extends Component {
   }
 
   toggleInlineStyle (style: string) {
-    this.handleOnChange(RichUtils.toggleInlineStyle(this.props.editorState, style))
+    this.handleOnChange(RichUtils.toggleInlineStyle(this.state.editorState, style))
   }
 
   renderToolbar () {
-    const { showToolBar, focus } = this.state
-    const { editorState } = this.props
+    const { showToolBar, focus, editorState } = this.state
     const characterState = this.getCharacterData(editorState)
     const currentStyle: { has: () => boolean} = editorState.getCurrentInlineStyle()
 
@@ -146,7 +171,8 @@ class EditorComponent extends Component {
   }
 
   render () {
-    const { editorState, textColour } = this.props
+    const { textColour } = this.props
+    const { editorState } = this.state
     return (
       <div className="EditorComponent" style={{color: textColour}} onClick={(e: Event) => e.stopPropagation()}>
         {this.renderToolbar()}
@@ -172,4 +198,14 @@ class EditorComponent extends Component {
   }
 }
 
-export default EditorComponent
+export default createFragmentContainer(
+  EditorComponent,
+  {
+    block: graphql`
+      fragment Editor_block on Block {
+        id
+        editor
+      }
+    `,
+  }
+);

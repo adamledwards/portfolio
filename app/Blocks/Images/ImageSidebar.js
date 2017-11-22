@@ -4,7 +4,7 @@ import { OneSvg, TwoSvg } from './assets'
 
 class ImageSidebar extends React.Component {
   render () {
-    const { updateCount } = this.props
+    const { update } = this.props
     return (
       <div>
         <span className="PageEditor-Sidebar-heading">Image Block</span>
@@ -12,12 +12,12 @@ class ImageSidebar extends React.Component {
           <span className="PageEditor-Sidebar-subHeading">Image Type</span>
           <ul className="ImageSidebar-list">
             <li>
-              <button onClick={() => updateCount(1)}>
+              <button onClick={() => update({imageCount: 1})}>
                 <OneSvg />
               </button>
             </li>
             <li>
-              <button onClick={() => updateCount(2)}>
+              <button onClick={() => update({imageCount: 2})}>
                 <TwoSvg />
               </button>
             </li>

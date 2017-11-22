@@ -1,46 +1,37 @@
 // @flow
 import React, { Component } from 'react'
-import { EditorState } from 'draft-js'
-import Editor, { compsiteDecorator, EditorSidebar } from '~/Editor'
+import { createFragmentContainer, graphql } from 'react-relay'
+import Editor from '~/Editor'
 import TextSidebar from './TextSidebar.js'
 import { TEXTCOLOR } from './constants.js'
 import './Text.style.scss'
 
 class Text extends Component {
-  constructor(props) {
+
+  constructor (props: Props) {
     super(props)
-    this.handleSidebarElement = this.handleSidebarElement.bind(this)
-    this.handleBackgroundColor = this.handleBackgroundColor.bind(this)
-    this.onChange = (editorState) => this.setState({editorState}, () => this.handleSidebarElement({editor: true}))
     this.state = {
-      editorState: EditorState.createEmpty(),
+      editorSidebar: null
     }
   }
 
-  static defaultProps = {
-    backgroundColor: '#EFEFEF'
-  }
-
-  handleBackgroundColor (color) {
-    this.props.update({backgroundColor: color.hex})
+  componentDidUpdate(prevProps, prevState) {
     this.handleSidebarElement()
   }
 
+  update = (nextData: {colour: string, editor: Object}) => {
+    this.props.update(nextData)
+  }
+
   renderSidebar (options) {
-    const { backgroundColor } = this.props.data
-    const { editorState } = this.state
+    const { block } = this.props
+    const backgroundColor = block.colour || '#000000'
     return (
       <TextSidebar
         backgroundColor={backgroundColor}
-        onChangeComplete={this.handleBackgroundColor}
-        >
-        {
-          options.editor &&
-          <EditorSidebar
-            editorState={editorState}
-            onChange={this.onChange}
-          />
-      }
+        update={this.update}
+      >
+        { this.state.editorSidebar }
       </TextSidebar>
     )
   }
@@ -53,18 +44,19 @@ class Text extends Component {
   }
 
   render () {
-    const { backgroundColor } = this.props.data
-    const { editorState } = this.state
+    const { block } = this.props
+    const backgroundColor = block.colour || '#EFEFEF'
     return (
       <section className="Text container" onClick={() => this.handleSidebarElement({editor: false})}>
         <div className="row Text-row" style={{backgroundColor}}>
           <div className="col-lg-6">
             <Editor
+              block={block}
               readOnly={!this.props.canEdit}
-              editorState={editorState}
-              onChange={this.onChange}
+              update={this.update}
               textColour={TEXTCOLOR[backgroundColor]}
-              />
+              sidebarUpdate={(sidebar) => this.setState({editorSidebar: sidebar}) }
+            />
           </div>
         </div>
       </section>
@@ -73,4 +65,14 @@ class Text extends Component {
 
 }
 
-export default Text
+export default createFragmentContainer(
+  Text,
+  {
+    block: graphql`
+      fragment Text_block on Block {
+        colour
+        ...Editor_block
+      }
+    `,
+  }
+);

@@ -8,13 +8,18 @@ import ImageSidebar from './ImageSidebar.js'
 class Images extends Component {
   props: DisplayProps
 
-  updateCount = (imageCount: number) => {
-    this.props.update({ ...this.props.data, imageCount})
+  update = (nextData: {imageCount: number}) => {
+    const data = this.props.data
+    const {
+      imageCount = data.imageCount
+    } = nextData
+    this.props.update({imageCount})
   }
+
   renderSidebar () {
     return (
       <ImageSidebar
-        updateCount={this.updateCount}
+        update={this.update}
       />
     )
   }

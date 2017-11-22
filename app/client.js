@@ -2,9 +2,11 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import { Provider } from 'react-redux'
+import { QueryRenderer } from 'react-relay'
 import Navigation from '~/App/Navigation'
 import initStore from '~/utils/store.js'
 import history from '~/utils/history.js'
+import environment from '~/utils/relay.js'
 import router from './routes.js'
 import './client.style.scss'
 
@@ -26,7 +28,6 @@ class App extends React.Component {
   }
 
   componentDidMount () {
-    console.log(history.location);
     this.gotoPath(history.location.pathname)
     this.unlisten = history.listen((location, action) => {
       this.gotoPath(location.pathname)
@@ -37,6 +38,25 @@ class App extends React.Component {
     router.resolve({ path: pathname }).then(route => this.setState(route))
   }
 
+  renderQueryRenderer() {
+    const { Component, params = {} } = this.state
+    return (
+      <QueryRenderer
+        environment={environment}
+        query={Component.query}
+        variables={params}
+        render={
+          ({error, props}) => {
+            if (error) {
+              return <div>{error.message}</div>
+            } else if (props) {
+              return <Component {...props} params={params} />
+            }
+            return null
+          }}
+      />
+    )
+  }
   render () {
 
     const { Component, params = {} } = this.state
@@ -54,7 +74,7 @@ class App extends React.Component {
         <Provider store={store}>
           <section className={`App App--${classname}`}>
             <Navigation/>
-            <Component params={params} />
+            {Component.query ? this.renderQueryRenderer() : <Component params={params} />}
           </section>
         </Provider>
       )

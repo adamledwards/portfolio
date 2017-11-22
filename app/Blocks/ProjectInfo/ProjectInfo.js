@@ -1,8 +1,8 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { EditorState } from 'draft-js'
-import Editor, { compsiteDecorator, EditorSidebar } from '~/Editor'
-import MetaList from '~/Blocks/components/MetaList'
+import { createFragmentContainer, graphql } from 'react-relay'
+import Editor from '~/Editor'
+import MetaList, { MetaSortable } from '~/Blocks/components/MetaList'
 import ProjectInfoSidebar from './ProjectInfoSidebar.js'
 import { TEXTCOLOR } from './constants.js'
 import './ProjectInfo.style.scss'
@@ -45,83 +45,56 @@ class ProjectInfo extends PureComponent {
   constructor (props: Props) {
     super(props)
     this.state = {
-      editorState: EditorState.createEmpty(compsiteDecorator),
-      editor: false,
-      meta: {
-        heading: '',
-        text: ''
-      },
-      editMode: {
-        meta: null
-      }
+      editorSidebar: null
     }
-    this.handleBackgroundColor = this.handleBackgroundColor.bind(this)
-    this.onChange = (editorState) => this.setState({editorState, editor: true})
   }
 
   componentDidUpdate () {
-    const options = {editor: this.state.editor}
-    this.handleSidebarElement(options)
+    this.handleSidebarElement()
   }
 
-  update = (meta: Array<MetaType>) => {
-    this.setState({
-      meta: {
-        heading: '',
-        text: ''
-      },
-      editMode: {
-        meta: null
-      }
-    }, () => this.props.update({ ...this.props.data, meta }))
+  update = (nextData: {colour: string, editor: Object}) => {
+    this.props.update(nextData)
   }
 
-  handleSidebarElement (options = {}) {
+  handleSidebarElement () {
     if (this.props.canEdit) {
-      this.props.setSidebar(this.renderSidebar(options))
+      this.props.setSidebar(this.renderSidebar())
     }
   }
 
-  handleBackgroundColor (color) {
-    this.props.update({meta: this.props.data.meta, backgroundColor: color.hex})
-  }
-
-  renderSidebar (options) {
-    const { backgroundColor, meta } = this.props.data
-    const { editorState } = this.state
+  renderSidebar () {
+    const { block } = this.props
+    const backgroundColor = block.colour || '#000000'
+    console.log(this.state.editorSidebar)
     return (
       <ProjectInfoSidebar
         backgroundColor={backgroundColor}
-        onChangeComplete={this.handleBackgroundColor}
-        meta={meta}
-        updateMeta={this.updateMeta}
+        update={this.update}
         >
-        {options.editor &&
-          <EditorSidebar
-            editorState={editorState}
-            onChange={this.onChange}
-          />
-        }
+        { this.state.editorSidebar }
+        <MetaSortable block={this.props.block} />
       </ProjectInfoSidebar>
     )
   }
 
   render () {
-    const { editorState } = this.state
-    const { backgroundColor = '#000000', meta } = this.props.data
+    const { block } = this.props
+    const backgroundColor = block.colour || '#000000'
     return (
       <section className="ProjectInfo container" onClick={() => this.handleSidebarElement({editor: false})} style={{backgroundColor, color: TEXTCOLOR[backgroundColor]}}>
         <div className="row ProjectInfo-row">
           <div className="col-lg-6">
-            <MetaList meta={meta} update={this.update}/>
+            <MetaList block={block} />
           </div>
           <div className="col-lg-6">
             <Editor
+              block={block}
               readOnly={!this.props.canEdit}
-              editorState={editorState}
-              onChange={this.onChange}
+              update={this.update}
               textColour={TEXTCOLOR[backgroundColor]}
-              />
+              sidebarUpdate={(sidebar) => this.setState({editorSidebar: sidebar}) }
+            />
           </div>
         </div>
       </section>
@@ -129,4 +102,16 @@ class ProjectInfo extends PureComponent {
   }
 }
 
-export default ProjectInfo
+export default createFragmentContainer(
+  ProjectInfo,
+  {
+    block: graphql`
+      fragment ProjectInfo_block on Block {
+        colour
+        ...MetaList_block
+        ...MetaSortable_block
+        ...Editor_block
+      }
+    `,
+  }
+);

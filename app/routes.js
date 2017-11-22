@@ -1,7 +1,6 @@
 // @flow
-import React from 'react'
 import Router from 'universal-router'
-import PageEditor from '~/view/PageEditor'
+import PageEditor, { NewPage } from '~/view/PageEditor'
 import PageList from '~/view/PageList'
 import Page from '~/view/Page'
 
@@ -11,14 +10,17 @@ const routes = [
     Component: PageList
   },
   {
-    path: '/page/:permlink',
-    Component: Page
-  },
-  {
+    name: 'pageWithID',
     path: '/page/:id',
     Component: Page
   },
   {
+    name: 'newPage',
+    path: '/page/new/edit',
+    Component: NewPage
+  },
+  {
+    name: 'editPage',
     path: '/page/:id/edit',
     Component: PageEditor
   }

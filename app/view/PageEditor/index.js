@@ -1,5 +1,6 @@
 // @flow
 import PageEditor from './PageEditor.js'
+import NewPage from './NewPage.js'
 import { addBlock, removeBlock, changeBlock } from '~/editor/store/blocks'
 import { connect } from 'react-redux'
 import type { Dispatch } from 'redux'
@@ -15,4 +16,5 @@ const mapActionsToProps = (dispatch: Dispatch<*>) => ({
   changeBlock: (index: number, block: string, data?: Object) => dispatch(changeBlock(index, block, data))
 })
 
-export default connect(mapStateToProps, mapActionsToProps)(PageEditor)
+export default PageEditor
+export { NewPage }

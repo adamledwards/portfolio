@@ -1,6 +1,9 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { Meta, MetaEdit, type MetaType } from './Meta.js'
+import { createFragmentContainer, graphql } from 'react-relay'
+import Meta, { MetaEdit } from './Meta.js'
+import createMeta from '~/utils/mutation/CreateMeta.js'
+import updateMeta from '~/utils/mutation/updateMeta.js'
 
 type State = {
   meta: MetaType,
@@ -14,139 +17,86 @@ type Props = {
 }
 
 class MetaList extends PureComponent {
-  state: State
-  props: Props
-  static defaultProps = {
-    meta: []
-  }
-  constructor (props: Props) {
-    super(props)
-    this.state = {
-      meta: {
-        heading: '',
-        text: ''
-      },
-      editMode: {
-        meta: null
-      }
-    }
-  }
-  updateMeta = (meta: Array<MetaType>) => {
-    this.setState({
-      meta: {
-        heading: '',
-        text: ''
-      },
-      editMode: {
-        meta: null
-      }
-    }, () => this.props.update(meta))
+  state = {
+    addNew: false
   }
 
-  addMeta = () => {
+  addNewMeta = () => {
     this.setState({
-      meta: {
-        heading: '',
-        text: ''
-      },
-      editMode: {
-        meta: -1
-      }
+      addNew: true,
+      heading: '',
+      text: '',
+      metaReadOnly: false
     })
   }
 
-  handleMetaChange = (meta: MetaType) => {
-    this.setState({meta})
+  cancelNewMeta = () => {
+    this.setState({addNew: false})
   }
 
-  handleMetaClick (index: number, props: MetaType) {
-    this.setState({
-      meta: {
-        ...props
-      },
-      editMode: {
-        meta: index
-      }
-    })
+  handleOnChange = (event, key) => {
+    this.setState({[key]: event.target.value})
   }
 
-  handleMetaRemove (isNew: boolean, index: number) {
-    if(!isNew) {
-      const { meta } = this.props
-      const newMeta = [
-        ...meta.slice(0, index),
-        ...meta.slice(index + 1)
-      ]
-      this.updateMeta(newMeta)
-    } else {
-      this.setState({editMode: {meta: null}})
-    }
+  commitMeta = (event, key) => {
+    const { block } = this.props
+    const { heading, text } = this.state
+    this.setState({ metaReadOnly: true })
+    return createMeta({
+      blockId: block.id,
+      field1: heading,
+      field2: text
+    }).then(this.cancelNewMeta)
   }
 
-  handleMetaClose (index: number, isNew: boolean) {
-    const { meta } = this.props
-    let newMeta
-    if (isNew) {
-      newMeta = [
-        this.state.meta,
-        ...meta
-      ]
-    } else {
-      newMeta = [
-        ...meta.slice(0, index),
-        this.state.meta,
-        ...meta.slice(index + 1)
-      ]
-    }
-    this.updateMeta(newMeta)
-  }
-
-  renderMetaRead (index: number, meta: MetaType) {
-    return <Meta key={index} {...meta} onClick={() => this.handleMetaClick(index, meta)} />
-  }
-
-  renderMetaWrite (index: number, isNew: boolean = false) {
-    const { meta } = this.state
-    return (
-      <MetaEdit
-        key={isNew ? -1 : index}
-        {...meta}
-        onClose={() => this.handleMetaClose(index, isNew)}
-        onChange={this.handleMetaChange}
-        onRemove={() => this.handleMetaRemove(isNew, index)}
-      />
-    )
+  renderEdit () {
+    const { heading, text, metaReadOnly } = this.state
+    return <MetaEdit
+      readOnly={metaReadOnly}
+      heading={heading}
+      text={text}
+      handleOnChange={this.handleOnChange}
+      onClose={this.commitMeta}
+      onRemove={() => this.setState({addNew: false})}
+    />
   }
 
   render () {
-    const { meta } = this.props
-    const { editMode } = this.state
-    const { meta: metaEditMode } = editMode
-    let newMetaElement
-
-    const metaElements = meta.map((props: MetaType, i) => {
-      return metaEditMode === i
-      ? this.renderMetaWrite(i)
-    : this.renderMetaRead(i, props)
-    })
-
-    const isNew = metaEditMode === -1
-    if (isNew) {
-      newMetaElement = this.renderMetaWrite(0, isNew)
-    }
+    const { block } = this.props
+    const { addNew } = this.state
+    console.log(block)
     return (
       <div>
         <button
           className="ProjectInfo-addMetaButton"
-          onClick={this.addMeta}>
+          onClick={this.addNewMeta}>
             <i className="fa fa-plus"/>
           </button>
         <div className="row Meta-row">
-          { [newMetaElement, ...metaElements] }
+          { addNew && this.renderEdit() }
+          {block.metaConnection.edges.map((item) => <Meta blockId={block.id} key={item.node.id} item={item.node} />)}
         </div>
       </div>
     )
   }
 }
 
-export default MetaList
+
+export default createFragmentContainer(
+  MetaList,
+  {
+    block: graphql`
+      fragment MetaList_block on Block {
+        id
+        metaConnection (first: 10) @connection(key: "PageEditor_metaConnection") {
+          edges {
+            node {
+              id
+              ...Meta_item
+            }
+          }
+        }
+      }
+    `,
+  }
+);

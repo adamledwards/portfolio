@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import { removeBlock } from '~/utils/mutation'
 import './Sidebar.style.scss'
 
 class Sidebar extends Component {
   render () {
-    const { sidebar } = this.props
+    const { sidebar, handleRemove } = this.props
     return (
       <section className="PageEditor-Sidebar">
         {sidebar && sidebar.sidebarElement ||
@@ -35,8 +36,8 @@ class Sidebar extends Component {
         </div>
         }
         {
-          (sidebar && sidebar.removeBlock) &&
-          <button onClick={sidebar.removeBlock}>Remove</button>
+          (sidebar && sidebar.blockId) &&
+          <button onClick={() => handleRemove(sidebar.blockId)}>Remove</button>
         }
       </section>
     )

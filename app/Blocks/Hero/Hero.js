@@ -1,9 +1,11 @@
 // @flow
 import React, { Component } from 'react'
-import CONSTANTS from './constants.js'
-import { SelectInput } from './Components'
+import moment from 'moment'
 import HeroSidebar, { HeroSidebarInput } from './HeroSidebar.js'
-import { getYears, getMonth } from './inputUtils.js'
+import HeroDate from './components/HeroDate.js'
+import { createFragmentContainer, graphql } from 'react-relay'
+import { ImageUploaderWrapper } from '~/Blocks/components/ImageUploader'
+
 import './Hero.style.scss'
 
 type EditProps = {
@@ -61,6 +63,11 @@ class Hero extends Component {
     this.handleSidebarElement()
   }
 
+  _update = (payload) => {
+     const { title, date } = this.props.block
+    this.props.update({title, date, ...payload})
+  }
+
   setEditMode (key: string, mode: boolean, data?: Object = {}): void {
     if (this.props.canEdit) {
       this.setState(
@@ -76,12 +83,14 @@ class Hero extends Component {
         },
         (state) => {
           if (mode === false && this.props.canEdit) {
-            this.props.update(this.state.data)
+            const { title } = this.state.data
+            this._update({ title })
           }
         }
       )
     }
   }
+
   handleSidebarElement () {
     if (this.props.canEdit) {
       this.props.setSidebar(this.renderSidebar())
@@ -101,20 +110,7 @@ class Hero extends Component {
           />
         </HeroSidebarInput>
         <HeroSidebarInput name="Date">
-          <SelectInput
-            onChange={(e) => this.setEditMode('month', true, {month: e.target.value})}
-            value={this.state.data.month}
-            onBlur={() => this.setEditMode('month', false)}
-            autoFocus
-            options={getMonth()}
-          >
-          </SelectInput>
-          <SelectInput
-            onChange={(e) => this.setEditMode('year', true, {year: e.target.value})}
-            value={this.state.data.year}
-            onBlur={() => this.setEditMode('year', false)}
-            options={getYears()}
-          />
+          <HeroDate date={this.props.block.date} alwaysEdit={true} canEdit update={this._update} />
         </HeroSidebarInput>
       </HeroSidebar>
     )
@@ -142,71 +138,55 @@ class Hero extends Component {
     )
   }
 
-  renderYear (year: number = 0) {
-    const yearEditMode = this.state.editMode.year
-    if (yearEditMode) {
-      return (
-        <SelectInput
-          onChange={(e) => this.setEditMode('year', true, {year: e.target.value})}
-          value={this.state.data.year}
-          onBlur={() => this.setEditMode('year', false)}
-          options={getYears()}
-          autoFocus
-        />
-      )
-    }
-    return (
-      <span
-        className="Hero-date"
-        onClick={() => this.setEditMode('year', true, {year})}
-      >
-      {year || 'YYYY'}
-      </span>
-    )
-  }
-
-  renderMonth (month?: number = -1) {
-    const monthEditMode = this.state.editMode.month
-    if (monthEditMode) {
-      return (
-        <SelectInput
-          onChange={(e) => this.setEditMode('month', true, {month: e.target.value})}
-          value={this.state.data.month}
-          onBlur={() => this.setEditMode('month', false)}
-          autoFocus
-          options={getMonth()}
-        >
-        </SelectInput>
-      )
-    }
-
-    return (
-      <span
-        className="Hero-date"
-        onClick={() => this.setEditMode('month', true, {month})}
-      >
-      { CONSTANTS.MONTHS[month] || 'MM' }
-      </span>
-    )
-  }
-
   render () {
-    const { title = 'Insert Title', year, month } = this.props.data
+    const { title = 'Insert Title', block, canEdit } = this.props
+    let style = {}
+    console.log(block.fileConnection)
+    const { node: file } = block.fileConnection.edges[0]
+    if (file) {
+      style = {
+        backgroundImage: `url(${file.fullPath})`,
+        backgroundColor: 'transparent'
+      }
+    }
+
+    style.backgroundImage
     return (
-      <section className="Hero" onClick={() => this.handleSidebarElement()}>
-        <div className="row row--reverse middle">
-          <div className="col-lg-6">
-          { this.renderH1(title) }
-          <div className="Hero-date">
-            { this.renderMonth(month) }
-            &nbsp;&nbsp;
-            { this.renderYear(year) }
+      <ImageUploaderWrapper block={block} scope="hero">
+        <section className="Hero" onClick={() => this.handleSidebarElement()} style={style}>
+          <div className="row row--reverse middle">
+            <div className="col-lg-6">
+            { this.renderH1(block.title) }
+            <div className="Hero-date">
+              <HeroDate date={block.date} canEdit={canEdit} update={this.props.update} />
+            </div>
+            </div>
           </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </ImageUploaderWrapper>
     )
   }
 }
 
-export default Hero
+export default createFragmentContainer(
+  Hero,
+  {
+    block: graphql`
+      fragment Hero_block on Block {
+        id
+        title
+        date
+        fileConnection (first: 1000) @connection(key: "Block_fileConnection") {
+          edges {
+            node {
+              id
+              fullPath
+              scope
+            }
+          }
+        }
+        ...ImageUploader_block
+      }
+    `,
+  }
+);
