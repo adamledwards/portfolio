@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash cf2117e9c3fd2c53fdd7368148de9b80
+ * @relayHash 82b1e99a6abfedd122bbda07570453fb
  */
 
 /* eslint-disable */
@@ -24,6 +24,7 @@ export type UploadBlockFileMutationResponse = {|
     +deletedIds: ?$ReadOnlyArray<?string>;
     +file: ?{|
       +__typename: string;
+      +cursor: string;
       +node: ?{|
         +id: string;
         +fullPath: ?string;
@@ -44,6 +45,7 @@ mutation UploadBlockFileMutation(
     deletedIds
     file {
       __typename
+      cursor
       node {
         id
         fullPath
@@ -110,6 +112,13 @@ const batch /*: ConcreteBatch*/ = {
                 "alias": null,
                 "args": null,
                 "name": "__typename",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "cursor",
                 "storageKey": null
               },
               {
@@ -215,6 +224,13 @@ const batch /*: ConcreteBatch*/ = {
                 "storageKey": null
               },
               {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "cursor",
+                "storageKey": null
+              },
+              {
                 "kind": "LinkedField",
                 "alias": null,
                 "args": null,
@@ -254,7 +270,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation UploadBlockFileMutation(\n  $input: UploadBlockFileInput!\n) {\n  uploadBlockFile(input: $input) {\n    clientMutationId\n    deletedIds\n    file {\n      __typename\n      node {\n        id\n        fullPath\n        scope\n      }\n    }\n  }\n}\n"
+  "text": "mutation UploadBlockFileMutation(\n  $input: UploadBlockFileInput!\n) {\n  uploadBlockFile(input: $input) {\n    clientMutationId\n    deletedIds\n    file {\n      __typename\n      cursor\n      node {\n        id\n        fullPath\n        scope\n      }\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

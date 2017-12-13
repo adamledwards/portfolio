@@ -17,6 +17,13 @@ mutation CreateBlockMutation($block: createBlockInput!) {
             }
           }
         }
+        fileConnection (first: 2) @connection(key: "Block_fileConnection") {
+          edges {
+            node {
+              id
+            }
+          }
+        }
       }
     }
   }

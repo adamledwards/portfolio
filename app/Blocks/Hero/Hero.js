@@ -4,7 +4,7 @@ import moment from 'moment'
 import HeroSidebar, { HeroSidebarInput } from './HeroSidebar.js'
 import HeroDate from './components/HeroDate.js'
 import { createFragmentContainer, graphql } from 'react-relay'
-import { ImageUploaderWrapper } from '~/Blocks/components/ImageUploader'
+import ImageUploaderWrapper from '~/Blocks/components/ImageUploader'
 
 import './Hero.style.scss'
 
@@ -61,6 +61,10 @@ class Hero extends Component {
   }
   componentDidUpdate () {
     this.handleSidebarElement()
+  }
+
+  validFileConnection (fileConnection) {
+    return !!fileConnection && fileConnection.edges.length
   }
 
   _update = (payload) => {
@@ -139,24 +143,23 @@ class Hero extends Component {
   }
 
   render () {
-    const { title = 'Insert Title', block, canEdit } = this.props
+    const { block, canEdit } = this.props
     let style = {}
-    console.log(block.fileConnection)
-    const { node: file } = block.fileConnection.edges[0]
-    if (file) {
+
+    if (this.validFileConnection(block.fileConnection)) {
+      const { node } = block.fileConnection.edges[0]
       style = {
-        backgroundImage: `url(${file.fullPath})`,
+        backgroundImage: `url(${node.fullPath})`,
         backgroundColor: 'transparent'
       }
     }
 
-    style.backgroundImage
     return (
       <ImageUploaderWrapper block={block} scope="hero">
         <section className="Hero" onClick={() => this.handleSidebarElement()} style={style}>
           <div className="row row--reverse middle">
             <div className="col-lg-6">
-            { this.renderH1(block.title) }
+            { this.renderH1(block.title || 'Insert title') }
             <div className="Hero-date">
               <HeroDate date={block.date} canEdit={canEdit} update={this.props.update} />
             </div>
@@ -176,7 +179,7 @@ export default createFragmentContainer(
         id
         title
         date
-        fileConnection (first: 1000) @connection(key: "Block_fileConnection") {
+        fileConnection (first: 2) @connection(key: "Block_fileConnection") {
           edges {
             node {
               id

@@ -20,8 +20,7 @@ class ImageUploader extends Component {
   }
 }
 
-
-export class ImageUploaderWrapper extends Component {
+class ImageUploaderWrapper extends Component {
   props: Props
 
   constructor(props) {
@@ -57,8 +56,6 @@ export class ImageUploaderWrapper extends Component {
         event.dataTransfer.files
       )
     }
-
-    console.log(event.dataTransfer.files)
     this.setState({dragging: false})
   }
 
@@ -72,7 +69,7 @@ export class ImageUploaderWrapper extends Component {
     </div>
   }
 
-  render() {
+  render () {
     const { dragging } = this.state
     return (
       <div
@@ -84,11 +81,11 @@ export class ImageUploaderWrapper extends Component {
         {this.props.children}
         { dragging && this.renderDragOver()}
       </div>
-    );
+    )
   }
 }
 
-export default createFragmentContainer(ImageUploader, {
+export default createFragmentContainer(ImageUploaderWrapper, {
   block: graphql`
     fragment ImageUploader_block on Block {
       id

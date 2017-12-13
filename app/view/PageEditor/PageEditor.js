@@ -1,9 +1,8 @@
 // @flow
 import React, { Component } from 'react'
 import Sidebar from './Sidebar'
-import type { blockState } from '~/editor/store/blocks'
 import './PageEditor.style.scss'
-import { blockRendererFn } from '~/editor/components/BlockRenderer'
+import { blockRendererFn } from '~/Blocks/utils/blockRenderer'
 import Footer from '~/Blocks/Footer'
 import { graphql } from 'react-relay'
 import type { PageEditorQueryResponse } from './__generated__/PageEditorQuery.graphql.js'
@@ -41,6 +40,8 @@ class PageEditor extends Component {
                 ...ProjectInfo_block
                 ...Credits_block
                 ...Text_block
+                ...Images_block
+                ...ImageUploader_block
               }
             }
           }
@@ -111,7 +112,7 @@ class PageEditor extends Component {
           <button onClick={() => this.addBlock('Text')}>Text</button>
           <button onClick={() => this.addBlock('Credits')}>Credits</button>
           <button onClick={() => this.addBlock('OtherArticles')}>More Articles</button>
-          <button onClick={() => this.addBlock('Images')}>Images</button>
+          <button onClick={() => this.addBlock('Images-1')}>Images</button>
           {this.renderBlocks()}
           <Footer />
         </section>

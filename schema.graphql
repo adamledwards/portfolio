@@ -73,6 +73,9 @@ input BlockUpdateInput {
   # Go live date for project this will apprear in the listing
   date: String
 
+  # change block type
+  blockType: String
+
   # Client that the project was for
   title: String
 

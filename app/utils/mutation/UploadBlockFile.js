@@ -10,6 +10,7 @@ const mutation = graphql`
       deletedIds,
       file {
          __typename
+        cursor
         node {
           id
           fullPath
@@ -30,15 +31,17 @@ export default function uploadBlockFile (blockFile: {scope: string, blockId: str
           const uploadBlockFileRoot = store.getRootField('uploadBlockFile')
           const deletedIds = uploadBlockFileRoot.getValue('deletedIds')
           const fileEdge = uploadBlockFileRoot.getLinkedRecord('file')
+          const node = fileEdge.getLinkedRecord('node')
           const blockProxy = store.get(blockFile.blockId)
           const connection = ConnectionHandler.getConnection(blockProxy, 'Block_fileConnection')
-          // connection.getLinkedRecords('edges').forEach(r => {
-          //   const fileEdgeProxy = r.getLinkedRecord('node')
-          //   if (deletedIds.indexOf(fileEdgeProxy.getDataID()) > -1) {
-          //     store.delete(r.getDataID())
-          //   }
-          // })
-          ConnectionHandler.insertEdgeBefore(connection, fileEdge)
+          deletedIds.forEach(id => ConnectionHandler.deleteNode(connection, id))
+          const newEdge = ConnectionHandler.createEdge(
+            store,
+            connection,
+            node,
+            fileEdge.getValue('__typename')
+          )
+          ConnectionHandler.insertEdgeBefore(connection, newEdge)
         },
         onCompleted: (response, errors) => {
           resolve(response.uploadBlockFile)

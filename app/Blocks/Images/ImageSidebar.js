@@ -12,12 +12,12 @@ class ImageSidebar extends React.Component {
           <span className="PageEditor-Sidebar-subHeading">Image Type</span>
           <ul className="ImageSidebar-list">
             <li>
-              <button onClick={() => update({imageCount: 1})}>
+              <button onClick={() => update({blockType: 'Images-1'})}>
                 <OneSvg />
               </button>
             </li>
             <li>
-              <button onClick={() => update({imageCount: 2})}>
+              <button onClick={() => update({blockType: 'Images-2'})}>
                 <TwoSvg />
               </button>
             </li>

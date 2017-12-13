@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 8fe2512933166dbabf4fe0a9988478e1
+ * @relayHash 2e4fc10c2a9659bb8c413ba6e849a0ba
  */
 
 /* eslint-disable */
@@ -15,6 +15,7 @@ export type UpdateBlockMutationVariables = {|
       ID?: ?string;
       editor?: ?any;
       date?: ?string;
+      blockType?: ?string;
       title?: ?string;
       colour?: ?string;
     };
