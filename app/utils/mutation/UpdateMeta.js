@@ -4,7 +4,7 @@ import { ConnectionHandler } from 'relay-runtime'
 import environment from '~/utils/relay.js'
 
 const mutation = graphql`
-  mutation UpdateMetaMutation($meta: updateMetaInput!) {
+  mutation updateMetaMutation($meta: updateMetaInput!) {
     updateMeta(input: $meta) {
       metaConnection {
         edges {
@@ -23,7 +23,6 @@ const mutation = graphql`
 export default function updateMeta (meta, blockId) {
 
   return new Promise((resolve, reject) => {
-
     commitMutation(environment, {
       mutation,
       variables: {meta: { metaInput: meta }},

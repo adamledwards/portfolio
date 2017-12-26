@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 61f014d48e494d03b7c5a933b52ddb67
+ * @relayHash 4427d5b6a7b00ca11400374949079515
  */
 
 /* eslint-disable */
@@ -9,13 +9,13 @@
 
 /*::
 import type {ConcreteBatch} from 'relay-runtime';
-export type RemoveMetaMutationVariables = {|
+export type removeMetaMutationVariables = {|
   meta: {
     id?: ?string;
     clientMutationId?: ?string;
   };
 |};
-export type RemoveMetaMutationResponse = {|
+export type removeMetaMutationResponse = {|
   +removeMeta: ?{|
     +deletedId: ?string;
   |};
@@ -24,7 +24,7 @@ export type RemoveMetaMutationResponse = {|
 
 
 /*
-mutation RemoveMetaMutation(
+mutation removeMetaMutation(
   $meta: removeMetaInput!
 ) {
   removeMeta(input: $meta) {
@@ -45,7 +45,7 @@ const batch /*: ConcreteBatch*/ = {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "RemoveMetaMutation",
+    "name": "removeMetaMutation",
     "selections": [
       {
         "kind": "LinkedField",
@@ -78,7 +78,7 @@ const batch /*: ConcreteBatch*/ = {
   "id": null,
   "kind": "Batch",
   "metadata": {},
-  "name": "RemoveMetaMutation",
+  "name": "removeMetaMutation",
   "query": {
     "argumentDefinitions": [
       {
@@ -89,7 +89,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ],
     "kind": "Root",
-    "name": "RemoveMetaMutation",
+    "name": "removeMetaMutation",
     "operation": "mutation",
     "selections": [
       {
@@ -119,7 +119,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation RemoveMetaMutation(\n  $meta: removeMetaInput!\n) {\n  removeMeta(input: $meta) {\n    deletedId\n  }\n}\n"
+  "text": "mutation removeMetaMutation(\n  $meta: removeMetaInput!\n) {\n  removeMeta(input: $meta) {\n    deletedId\n  }\n}\n"
 };
 
 module.exports = batch;

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d81256a69d6256d516d192f91b7f7e80
+ * @relayHash c4801d78bd5f468a5695550ec6d57bbc
  */
 
 /* eslint-disable */
@@ -9,7 +9,7 @@
 
 /*::
 import type {ConcreteBatch} from 'relay-runtime';
-export type CreatePageMutationVariables = {|
+export type createPageMutationVariables = {|
   input: {
     pageInput?: ?{
       title?: ?string;
@@ -22,7 +22,7 @@ export type CreatePageMutationVariables = {|
     clientMutationId?: ?string;
   };
 |};
-export type CreatePageMutationResponse = {|
+export type createPageMutationResponse = {|
   +createPage: ?{|
     +page: ?{|
       +id: string;
@@ -36,7 +36,7 @@ export type CreatePageMutationResponse = {|
 
 
 /*
-mutation CreatePageMutation(
+mutation createPageMutation(
   $input: CreatePageInput!
 ) {
   createPage(input: $input) {
@@ -62,7 +62,7 @@ const batch /*: ConcreteBatch*/ = {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "CreatePageMutation",
+    "name": "createPageMutation",
     "selections": [
       {
         "kind": "LinkedField",
@@ -127,7 +127,7 @@ const batch /*: ConcreteBatch*/ = {
   "id": null,
   "kind": "Batch",
   "metadata": {},
-  "name": "CreatePageMutation",
+  "name": "createPageMutation",
   "query": {
     "argumentDefinitions": [
       {
@@ -138,7 +138,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ],
     "kind": "Root",
-    "name": "CreatePageMutation",
+    "name": "createPageMutation",
     "operation": "mutation",
     "selections": [
       {
@@ -200,7 +200,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation CreatePageMutation(\n  $input: CreatePageInput!\n) {\n  createPage(input: $input) {\n    page {\n      id\n      title\n      projectGoLive\n      client\n    }\n  }\n}\n"
+  "text": "mutation createPageMutation(\n  $input: CreatePageInput!\n) {\n  createPage(input: $input) {\n    page {\n      id\n      title\n      projectGoLive\n      client\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

@@ -4,7 +4,7 @@ import { ConnectionHandler } from 'relay-runtime'
 import environment from '~/utils/relay.js'
 
 const mutation = graphql`
-  mutation UploadBlockFileMutation($input: UploadBlockFileInput!) {
+  mutation uploadBlockFileMutation($input: UploadBlockFileInput!) {
     uploadBlockFile(input: $input) {
       clientMutationId,
       deletedIds,

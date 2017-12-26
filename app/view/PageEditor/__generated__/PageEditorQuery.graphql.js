@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 38292a86e05c5a260bf26576b5a305d8
+ * @relayHash c5cb8c1c645ccd1ca9dfa6f948a450c4
  */
 
 /* eslint-disable */
@@ -20,9 +20,10 @@ export type PageEditorQueryResponse = {|
     +published?: ?boolean;
     +blockConnection?: ?{|
       +edges: ?$ReadOnlyArray<?{|
-        +block: ?{|
+        +node: ?{|
           +id: string;
           +blockType: ?string;
+          +position: ?number;
         |};
       |}>;
     |};
@@ -47,9 +48,11 @@ query PageEditorQuery(
       published
       blockConnection(first: 10) {
         edges {
-          block: node {
+          node {
+            __typename
             id
             blockType
+            position
             ...Hero_block
             ...ProjectInfo_block
             ...Credits_block
@@ -58,10 +61,6 @@ query PageEditorQuery(
             ...ImageUploader_block
           }
           cursor
-          node {
-            __typename
-            id
-          }
         }
         pageInfo {
           endCursor
@@ -288,7 +287,7 @@ const batch /*: ConcreteBatch*/ = {
                     "selections": [
                       {
                         "kind": "LinkedField",
-                        "alias": "block",
+                        "alias": null,
                         "args": null,
                         "concreteType": "Block",
                         "name": "node",
@@ -306,6 +305,13 @@ const batch /*: ConcreteBatch*/ = {
                             "alias": null,
                             "args": null,
                             "name": "blockType",
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "args": null,
+                            "name": "position",
                             "storageKey": null
                           },
                           {
@@ -337,6 +343,13 @@ const batch /*: ConcreteBatch*/ = {
                             "kind": "FragmentSpread",
                             "name": "ImageUploader_block",
                             "args": null
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "args": null,
+                            "name": "__typename",
+                            "storageKey": null
                           }
                         ],
                         "storageKey": null
@@ -346,24 +359,6 @@ const batch /*: ConcreteBatch*/ = {
                         "alias": null,
                         "args": null,
                         "name": "cursor",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Block",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "__typename",
-                            "storageKey": null
-                          }
-                        ],
                         "storageKey": null
                       }
                     ],
@@ -534,12 +529,19 @@ const batch /*: ConcreteBatch*/ = {
                     "selections": [
                       {
                         "kind": "LinkedField",
-                        "alias": "block",
+                        "alias": null,
                         "args": null,
                         "concreteType": "Block",
                         "name": "node",
                         "plural": false,
                         "selections": [
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "args": null,
+                            "name": "__typename",
+                            "storageKey": null
+                          },
                           {
                             "kind": "ScalarField",
                             "alias": null,
@@ -552,6 +554,13 @@ const batch /*: ConcreteBatch*/ = {
                             "alias": null,
                             "args": null,
                             "name": "blockType",
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "args": null,
+                            "name": "position",
                             "storageKey": null
                           },
                           {
@@ -830,31 +839,6 @@ const batch /*: ConcreteBatch*/ = {
                         "args": null,
                         "name": "cursor",
                         "storageKey": null
-                      },
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Block",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "__typename",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "id",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
                       }
                     ],
                     "storageKey": null
@@ -910,7 +894,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "query PageEditorQuery(\n  $id: ID!\n) {\n  page: node(id: $id) {\n    __typename\n    ... on Page {\n      id\n      title\n      client\n      description\n      projectGoLive\n      position\n      published\n      blockConnection(first: 10) {\n        edges {\n          block: node {\n            id\n            blockType\n            ...Hero_block\n            ...ProjectInfo_block\n            ...Credits_block\n            ...Text_block\n            ...Images_block\n            ...ImageUploader_block\n          }\n          cursor\n          node {\n            __typename\n            id\n          }\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Hero_block on Block {\n  id\n  title\n  date\n  fileConnection(first: 2) {\n    edges {\n      node {\n        __typename\n        id\n        fullPath\n        scope\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  ...ImageUploader_block\n}\n\nfragment ProjectInfo_block on Block {\n  colour\n  ...MetaList_block\n  ...MetaSortable_block\n  ...Editor_block\n}\n\nfragment Credits_block on Block {\n  colour\n  ...MetaList_block\n  ...MetaSortable_block\n}\n\nfragment Text_block on Block {\n  colour\n  ...Editor_block\n}\n\nfragment Images_block on Block {\n  blockType\n  fileConnection(first: 2) {\n    edges {\n      node {\n        __typename\n        id\n        fullPath\n        scope\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  ...ImageUploader_block\n}\n\nfragment ImageUploader_block on Block {\n  id\n}\n\nfragment Editor_block on Block {\n  id\n  editor\n}\n\nfragment MetaList_block on Block {\n  id\n  metaConnection(first: 10) {\n    edges {\n      node {\n        __typename\n        id\n        ...Meta_item\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment MetaSortable_block on Block {\n  id\n  metaConnection(first: 10) {\n    edges {\n      node {\n        __typename\n        id\n        field1\n        field2\n        position\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Meta_item on Meta {\n  id\n  field1\n  field2\n  position\n}\n"
+  "text": "query PageEditorQuery(\n  $id: ID!\n) {\n  page: node(id: $id) {\n    __typename\n    ... on Page {\n      id\n      title\n      client\n      description\n      projectGoLive\n      position\n      published\n      blockConnection(first: 10) {\n        edges {\n          node {\n            __typename\n            id\n            blockType\n            position\n            ...Hero_block\n            ...ProjectInfo_block\n            ...Credits_block\n            ...Text_block\n            ...Images_block\n            ...ImageUploader_block\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Hero_block on Block {\n  id\n  title\n  date\n  fileConnection(first: 2) {\n    edges {\n      node {\n        __typename\n        id\n        fullPath\n        scope\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  ...ImageUploader_block\n}\n\nfragment ProjectInfo_block on Block {\n  colour\n  ...MetaList_block\n  ...MetaSortable_block\n  ...Editor_block\n}\n\nfragment Credits_block on Block {\n  colour\n  ...MetaList_block\n  ...MetaSortable_block\n}\n\nfragment Text_block on Block {\n  colour\n  ...Editor_block\n}\n\nfragment Images_block on Block {\n  blockType\n  fileConnection(first: 2) {\n    edges {\n      node {\n        __typename\n        id\n        fullPath\n        scope\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  ...ImageUploader_block\n}\n\nfragment ImageUploader_block on Block {\n  id\n}\n\nfragment Editor_block on Block {\n  id\n  editor\n}\n\nfragment MetaList_block on Block {\n  id\n  metaConnection(first: 10) {\n    edges {\n      node {\n        __typename\n        id\n        ...Meta_item\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment MetaSortable_block on Block {\n  id\n  metaConnection(first: 10) {\n    edges {\n      node {\n        __typename\n        id\n        field1\n        field2\n        position\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Meta_item on Meta {\n  id\n  field1\n  field2\n  position\n}\n"
 };
 
 module.exports = batch;

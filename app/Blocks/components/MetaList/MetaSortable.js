@@ -20,7 +20,6 @@ const Sortable = SortableContainer(({block}) => {
   )
 })
 
-
 class MetaSortable extends Component {
   onSortEnd = ({oldIndex, newIndex}) => {
     const { block } = this.props

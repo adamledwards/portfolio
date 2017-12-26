@@ -3,7 +3,7 @@ import { commitMutation, graphql } from 'react-relay'
 import environment from '~/utils/relay.js'
 
 const mutation = graphql`
-  mutation UpdateBlockMutation($block: updateBlockInput!) {
+  mutation updateBlockMutation($block: updateBlockInput!) {
     updateBlock(input: $block) {
       block {
         id

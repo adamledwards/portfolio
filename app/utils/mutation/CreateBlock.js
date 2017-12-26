@@ -4,7 +4,7 @@ import environment from '~/utils/relay.js'
 import type { CreateBlockMutationVariables } from './__generated__/CreateBlockMutation.graphql.js'
 
 const mutation = graphql`
-mutation CreateBlockMutation($block: createBlockInput!) {
+mutation createBlockMutation($block: createBlockInput!) {
   createBlock(input: $block) {
     blockEdge {
       node {

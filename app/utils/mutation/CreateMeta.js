@@ -3,7 +3,7 @@ import { commitMutation, graphql } from 'react-relay'
 import environment from '~/utils/relay.js'
 
 const mutation = graphql`
-  mutation CreateMetaMutation ($meta: createMetaInput!) {
+  mutation createMetaMutation ($meta: createMetaInput!) {
     createMeta(input: $meta){
       metaEdge {
         node {

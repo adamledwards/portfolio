@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import type { blockState } from '~/editor/store/blocks'
-import { blockRendererFn } from '~/editor/components/BlockRenderer'
+import { blockRendererFn } from '~/Blocks/utils/blockRenderer'
 import Footer from '~/Blocks/Footer'
 import { graphql } from 'react-relay'
 

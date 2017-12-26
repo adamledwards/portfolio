@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2e4fc10c2a9659bb8c413ba6e849a0ba
+ * @relayHash 56f7c0ef661023ae1879cede43f1d0be
  */
 
 /* eslint-disable */
@@ -9,7 +9,7 @@
 
 /*::
 import type {ConcreteBatch} from 'relay-runtime';
-export type UpdateBlockMutationVariables = {|
+export type updateBlockMutationVariables = {|
   block: {
     blockInput?: ?{
       ID?: ?string;
@@ -22,7 +22,7 @@ export type UpdateBlockMutationVariables = {|
     clientMutationId?: ?string;
   };
 |};
-export type UpdateBlockMutationResponse = {|
+export type updateBlockMutationResponse = {|
   +updateBlock: ?{|
     +block: ?{|
       +id: string;
@@ -38,7 +38,7 @@ export type UpdateBlockMutationResponse = {|
 
 
 /*
-mutation UpdateBlockMutation(
+mutation updateBlockMutation(
   $block: updateBlockInput!
 ) {
   updateBlock(input: $block) {
@@ -66,7 +66,7 @@ const batch /*: ConcreteBatch*/ = {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "UpdateBlockMutation",
+    "name": "updateBlockMutation",
     "selections": [
       {
         "kind": "LinkedField",
@@ -145,7 +145,7 @@ const batch /*: ConcreteBatch*/ = {
   "id": null,
   "kind": "Batch",
   "metadata": {},
-  "name": "UpdateBlockMutation",
+  "name": "updateBlockMutation",
   "query": {
     "argumentDefinitions": [
       {
@@ -156,7 +156,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ],
     "kind": "Root",
-    "name": "UpdateBlockMutation",
+    "name": "updateBlockMutation",
     "operation": "mutation",
     "selections": [
       {
@@ -232,7 +232,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation UpdateBlockMutation(\n  $block: updateBlockInput!\n) {\n  updateBlock(input: $block) {\n    block {\n      id\n      blockType\n      editor\n      date\n      title\n      colour\n    }\n  }\n}\n"
+  "text": "mutation updateBlockMutation(\n  $block: updateBlockInput!\n) {\n  updateBlock(input: $block) {\n    block {\n      id\n      blockType\n      editor\n      date\n      title\n      colour\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

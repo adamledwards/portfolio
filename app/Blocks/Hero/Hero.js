@@ -54,9 +54,7 @@ class Hero extends Component {
         month: false,
         year: false
       },
-      data: {
-        title: ''
-      }
+      title: ''
     }
   }
   componentDidUpdate () {
@@ -68,7 +66,7 @@ class Hero extends Component {
   }
 
   _update = (payload) => {
-     const { title, date } = this.props.block
+    const { title, date } = this.props.block
     this.props.update({title, date, ...payload})
   }
 
@@ -76,10 +74,7 @@ class Hero extends Component {
     if (this.props.canEdit) {
       this.setState(
         {
-          data: {
-            ...this.state.data,
-            ...data
-          },
+          ...data,
           editMode: {
             ...this.state.editMode,
             [key]: mode
@@ -87,7 +82,7 @@ class Hero extends Component {
         },
         (state) => {
           if (mode === false && this.props.canEdit) {
-            const { title } = this.state.data
+            const { title } = this.state
             this._update({ title })
           }
         }
@@ -107,9 +102,10 @@ class Hero extends Component {
         <HeroSidebarInput name="Title">
           <input
             type="text"
-            value={this.state.data.title}
+            value={this.state.title}
             onChange={(e) => this.setEditMode('title', null, {title: e.target.value})}
             onBlur={() => this.setEditMode('title', false)}
+            onFocus={e => e.target.select()}
             placeholder="Insert Title"
           />
         </HeroSidebarInput>
@@ -126,9 +122,10 @@ class Hero extends Component {
       return <input
         className="Hero-h1 Hero-h1--input"
         type="text"
-        value={this.state.data.title}
+        value={this.state.title}
         onChange={(e) => this.setEditMode('title', true, {title: e.target.value})}
         onBlur={() => this.setEditMode('title', false)}
+        onFocus={e => e.target.select()}
         autoFocus
         />
     }
@@ -137,7 +134,7 @@ class Hero extends Component {
         className="Hero-h1"
         onClick={() => this.setEditMode('title', true, {title})}
       >
-      { titleEditMode !== null ? title : this.state.data.title }
+      { titleEditMode !== null ? title : this.state.title }
     </h1>
     )
   }

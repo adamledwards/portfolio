@@ -4,7 +4,7 @@ import environment from '~/utils/relay.js'
 import type { RemoveBlockMutationVariables } from './__generated__/RemoveBlockMutation.graphql.js'
 
 const mutation = graphql`
-mutation RemoveBlockMutation($block: removeBlockInput!) {
+mutation removeBlockMutation($block: removeBlockInput!) {
   removeBlock(input: $block) {
     deletedId
   }

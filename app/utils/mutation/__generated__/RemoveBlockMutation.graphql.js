@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 8832be6687d7cac31008420ae262be97
+ * @relayHash 619b5a2b6ffb5d0d4969159352334cca
  */
 
 /* eslint-disable */
@@ -9,13 +9,13 @@
 
 /*::
 import type {ConcreteBatch} from 'relay-runtime';
-export type RemoveBlockMutationVariables = {|
+export type removeBlockMutationVariables = {|
   block: {
     id?: ?string;
     clientMutationId?: ?string;
   };
 |};
-export type RemoveBlockMutationResponse = {|
+export type removeBlockMutationResponse = {|
   +removeBlock: ?{|
     +deletedId: ?string;
   |};
@@ -24,7 +24,7 @@ export type RemoveBlockMutationResponse = {|
 
 
 /*
-mutation RemoveBlockMutation(
+mutation removeBlockMutation(
   $block: removeBlockInput!
 ) {
   removeBlock(input: $block) {
@@ -45,7 +45,7 @@ const batch /*: ConcreteBatch*/ = {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "RemoveBlockMutation",
+    "name": "removeBlockMutation",
     "selections": [
       {
         "kind": "LinkedField",
@@ -78,7 +78,7 @@ const batch /*: ConcreteBatch*/ = {
   "id": null,
   "kind": "Batch",
   "metadata": {},
-  "name": "RemoveBlockMutation",
+  "name": "removeBlockMutation",
   "query": {
     "argumentDefinitions": [
       {
@@ -89,7 +89,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ],
     "kind": "Root",
-    "name": "RemoveBlockMutation",
+    "name": "removeBlockMutation",
     "operation": "mutation",
     "selections": [
       {
@@ -119,7 +119,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation RemoveBlockMutation(\n  $block: removeBlockInput!\n) {\n  removeBlock(input: $block) {\n    deletedId\n  }\n}\n"
+  "text": "mutation removeBlockMutation(\n  $block: removeBlockInput!\n) {\n  removeBlock(input: $block) {\n    deletedId\n  }\n}\n"
 };
 
 module.exports = batch;

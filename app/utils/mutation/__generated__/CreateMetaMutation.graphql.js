@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 87cfda7a9293e3e702cf9680e3ef35a9
+ * @relayHash eb9fb968196fc34405e060eeeaafddae
  */
 
 /* eslint-disable */
@@ -9,7 +9,7 @@
 
 /*::
 import type {ConcreteBatch} from 'relay-runtime';
-export type CreateMetaMutationVariables = {|
+export type createMetaMutationVariables = {|
   meta: {
     metaInput?: ?{
       blockId?: ?string;
@@ -20,7 +20,7 @@ export type CreateMetaMutationVariables = {|
     clientMutationId?: ?string;
   };
 |};
-export type CreateMetaMutationResponse = {|
+export type createMetaMutationResponse = {|
   +createMeta: ?{|
     +metaEdge: ?{|
       +node: ?{|
@@ -35,7 +35,7 @@ export type CreateMetaMutationResponse = {|
 
 
 /*
-mutation CreateMetaMutation(
+mutation createMetaMutation(
   $meta: createMetaInput!
 ) {
   createMeta(input: $meta) {
@@ -62,7 +62,7 @@ const batch /*: ConcreteBatch*/ = {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "CreateMetaMutation",
+    "name": "createMetaMutation",
     "selections": [
       {
         "kind": "LinkedField",
@@ -131,7 +131,7 @@ const batch /*: ConcreteBatch*/ = {
   "id": null,
   "kind": "Batch",
   "metadata": {},
-  "name": "CreateMetaMutation",
+  "name": "createMetaMutation",
   "query": {
     "argumentDefinitions": [
       {
@@ -142,7 +142,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ],
     "kind": "Root",
-    "name": "CreateMetaMutation",
+    "name": "createMetaMutation",
     "operation": "mutation",
     "selections": [
       {
@@ -208,7 +208,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation CreateMetaMutation(\n  $meta: createMetaInput!\n) {\n  createMeta(input: $meta) {\n    metaEdge {\n      node {\n        id\n        field1\n        field2\n      }\n    }\n  }\n}\n"
+  "text": "mutation createMetaMutation(\n  $meta: createMetaInput!\n) {\n  createMeta(input: $meta) {\n    metaEdge {\n      node {\n        id\n        field1\n        field2\n      }\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 00cc654df06dd1e6fa85267dd17c0d21
+ * @relayHash 01d4f36a863565846e0613b7a788a1e8
  */
 
 /* eslint-disable */
@@ -9,7 +9,7 @@
 
 /*::
 import type {ConcreteBatch} from 'relay-runtime';
-export type UpdateMetaMutationVariables = {|
+export type updateMetaMutationVariables = {|
   meta: {
     metaInput?: ?{
       id?: ?string;
@@ -20,7 +20,7 @@ export type UpdateMetaMutationVariables = {|
     clientMutationId?: ?string;
   };
 |};
-export type UpdateMetaMutationResponse = {|
+export type updateMetaMutationResponse = {|
   +updateMeta: ?{|
     +metaConnection: ?{|
       +edges: ?$ReadOnlyArray<?{|
@@ -38,7 +38,7 @@ export type UpdateMetaMutationResponse = {|
 
 
 /*
-mutation UpdateMetaMutation(
+mutation updateMetaMutation(
   $meta: updateMetaInput!
 ) {
   updateMeta(input: $meta) {
@@ -68,7 +68,7 @@ const batch /*: ConcreteBatch*/ = {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "UpdateMetaMutation",
+    "name": "updateMetaMutation",
     "selections": [
       {
         "kind": "LinkedField",
@@ -155,7 +155,7 @@ const batch /*: ConcreteBatch*/ = {
   "id": null,
   "kind": "Batch",
   "metadata": {},
-  "name": "UpdateMetaMutation",
+  "name": "updateMetaMutation",
   "query": {
     "argumentDefinitions": [
       {
@@ -166,7 +166,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ],
     "kind": "Root",
-    "name": "UpdateMetaMutation",
+    "name": "updateMetaMutation",
     "operation": "mutation",
     "selections": [
       {
@@ -250,7 +250,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation UpdateMetaMutation(\n  $meta: updateMetaInput!\n) {\n  updateMeta(input: $meta) {\n    metaConnection {\n      edges {\n        node {\n          id\n          field1\n          field2\n          position\n        }\n      }\n    }\n  }\n}\n"
+  "text": "mutation updateMetaMutation(\n  $meta: updateMetaInput!\n) {\n  updateMeta(input: $meta) {\n    metaConnection {\n      edges {\n        node {\n          id\n          field1\n          field2\n          position\n        }\n      }\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

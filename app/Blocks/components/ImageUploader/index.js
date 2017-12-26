@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import uploadBlockFile from '~/utils/mutation/UploadBlockFile.js'
+import uploadBlockFile from '~/utils/mutation/uploadBlockFile.js'
 import './ImageUploader.style.scss'
 import { graphql, createFragmentContainer } from 'react-relay'
 type Props = {
@@ -10,13 +10,13 @@ type Props = {
 class ImageUploader extends Component {
   props: Props
 
-  render() {
+  render () {
     return (
       <div>
         <p>Drag Image or select file to upload</p>
         <input type="file" name="file" />
       </div>
-    );
+    )
   }
 }
 

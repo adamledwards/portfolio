@@ -2,7 +2,7 @@ import { commitMutation, graphql } from 'react-relay'
 import environment from '~/utils/relay.js'
 
 const mutation = graphql`
-  mutation CreatePageMutation($input: CreatePageInput!) {
+  mutation createPageMutation($input: CreatePageInput!) {
     createPage(input: $input) {
       page {
         id,

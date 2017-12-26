@@ -2,12 +2,11 @@
 import React, { Component } from 'react'
 import Sidebar from './Sidebar'
 import './PageEditor.style.scss'
-import { blockRendererFn } from '~/Blocks/utils/blockRenderer'
+import { BlockSortable, blockRendererFn } from '~/Blocks/utils/blockRenderer'
 import Footer from '~/Blocks/Footer'
 import { graphql } from 'react-relay'
 import type { PageEditorQueryResponse } from './__generated__/PageEditorQuery.graphql.js'
-import { createBlock, removeBlock, updateBlock } from '~/utils/mutation'
-
+import { createBlock, removeBlock, updateBlock, updatePosition } from '~/utils/mutation'
 
 type Props = {
   addBlock: (block: string, data?: Object) => void,
@@ -33,9 +32,10 @@ class PageEditor extends Component {
           published
           blockConnection(first: 10) @connection(key: "PageEditor_blockConnection") {
             edges {
-              block: node {
+              node {
                 id
                 blockType
+                position
                 ...Hero_block
                 ...ProjectInfo_block
                 ...Credits_block
@@ -50,7 +50,7 @@ class PageEditor extends Component {
     }
   `
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       sidebarElement: null,
@@ -78,31 +78,40 @@ class PageEditor extends Component {
     })
   }
 
-  setSideBar (sidebarElement: React$Element<*>, blockId: string) {
+  onSortEnd = ({oldIndex, newIndex}) => {
+    const blocks = this.getBlock()
+    const block = blocks[oldIndex].node
+    updatePosition(block.id, newIndex, this.props.page.id)
+  }
+
+  setSideBar = (sidebarElement: React$Element<*>, blockId: string) => {
     this.setState({sidebar: {sidebarElement, blockId}})
   }
 
-  renderBlocks () {
+  getBlock() {
     const blocks = this.props.page.blockConnection.edges
-    const validBlocks = blocks.filter(({ block }) => block && typeof blockRendererFn(block.blockType) === 'function')
-    return validBlocks.map(({ block }, i) => {
-      const Block = blockRendererFn(block.blockType)
-      return (
-        <Block
-          key={block.id + i}
-          block={block}
-          canEdit
-          setSidebar={(sidebarElement) => this.setSideBar(sidebarElement, block.id)}
-          update={this.updateFn(block.id) }
-          remove={() => this.handleRemove(block.id)}
-        />
-      )
+    return [...blocks].sort((blockA, blockB) => { 
+      if (!blockA.node || !blockB.node) {
+        return 0
+      }
+      return blockA.node.position - blockB.node.position
     })
   }
 
-  render () {
-    const { sidebar, removeBlock } = this.state
+  renderBlocks () {
+    return <BlockSortable
+      pressDelay={500}
+      blocks={this.getBlock()}
+      setSideBar={this.setSideBar}
+      updateFn={this.updateFn}
+      handleRemove={this.handleRemove}
+      onSortEnd={this.onSortEnd}
+      helperClass="is-sorting"
+    />
+  }
 
+  render () {
+    const { sidebar } = this.state
     return (
       <section className="PageEditor">
         <Sidebar sidebar={sidebar} handleRemove={this.handleRemove}/>

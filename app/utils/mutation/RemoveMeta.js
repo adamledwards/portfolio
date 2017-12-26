@@ -4,7 +4,7 @@ import environment from '~/utils/relay.js'
 import { ConnectionHandler } from 'relay-runtime';
 
 const mutation = graphql`
-mutation RemoveMetaMutation($meta: removeMetaInput!) {
+mutation removeMetaMutation($meta: removeMetaInput!) {
   removeMeta(input: $meta) {
     deletedId
   }

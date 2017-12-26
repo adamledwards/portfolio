@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 82b1e99a6abfedd122bbda07570453fb
+ * @relayHash c4ac0b2a5986b8e5a7357b3892f88f44
  */
 
 /* eslint-disable */
@@ -9,7 +9,7 @@
 
 /*::
 import type {ConcreteBatch} from 'relay-runtime';
-export type UploadBlockFileMutationVariables = {|
+export type uploadBlockFileMutationVariables = {|
   input: {
     blockFileInput?: ?{
       blockId?: ?string;
@@ -18,7 +18,7 @@ export type UploadBlockFileMutationVariables = {|
     clientMutationId?: ?string;
   };
 |};
-export type UploadBlockFileMutationResponse = {|
+export type uploadBlockFileMutationResponse = {|
   +uploadBlockFile: ?{|
     +clientMutationId: ?string;
     +deletedIds: ?$ReadOnlyArray<?string>;
@@ -37,7 +37,7 @@ export type UploadBlockFileMutationResponse = {|
 
 
 /*
-mutation UploadBlockFileMutation(
+mutation uploadBlockFileMutation(
   $input: UploadBlockFileInput!
 ) {
   uploadBlockFile(input: $input) {
@@ -68,7 +68,7 @@ const batch /*: ConcreteBatch*/ = {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "UploadBlockFileMutation",
+    "name": "uploadBlockFileMutation",
     "selections": [
       {
         "kind": "LinkedField",
@@ -165,7 +165,7 @@ const batch /*: ConcreteBatch*/ = {
   "id": null,
   "kind": "Batch",
   "metadata": {},
-  "name": "UploadBlockFileMutation",
+  "name": "uploadBlockFileMutation",
   "query": {
     "argumentDefinitions": [
       {
@@ -176,7 +176,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ],
     "kind": "Root",
-    "name": "UploadBlockFileMutation",
+    "name": "uploadBlockFileMutation",
     "operation": "mutation",
     "selections": [
       {
@@ -270,7 +270,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation UploadBlockFileMutation(\n  $input: UploadBlockFileInput!\n) {\n  uploadBlockFile(input: $input) {\n    clientMutationId\n    deletedIds\n    file {\n      __typename\n      cursor\n      node {\n        id\n        fullPath\n        scope\n      }\n    }\n  }\n}\n"
+  "text": "mutation uploadBlockFileMutation(\n  $input: UploadBlockFileInput!\n) {\n  uploadBlockFile(input: $input) {\n    clientMutationId\n    deletedIds\n    file {\n      __typename\n      cursor\n      node {\n        id\n        fullPath\n        scope\n      }\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

@@ -2,8 +2,7 @@
 import React, { PureComponent } from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
 import Meta, { MetaEdit } from './Meta.js'
-import createMeta from '~/utils/mutation/CreateMeta.js'
-import updateMeta from '~/utils/mutation/updateMeta.js'
+import createMeta from '~/utils/mutation/createMeta.js'
 
 type State = {
   meta: MetaType,
@@ -64,7 +63,6 @@ class MetaList extends PureComponent {
   render () {
     const { block } = this.props
     const { addNew } = this.state
-    console.log(block)
     return (
       <div>
         <button

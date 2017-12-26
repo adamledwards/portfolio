@@ -15,6 +15,9 @@ type Block {
   # Colour
   colour: String
 
+  # position
+  position: Int
+
   # meta data
   metaConnection(after: String, first: Int, before: String, last: Int): MetaConnection
 
@@ -219,6 +222,7 @@ type Mutation {
   removeMeta(input: removeMetaInput!): removeMetaPayload
   uploadFile(input: UploadFileInput!): UploadFilePayload
   uploadBlockFile(input: UploadBlockFileInput!): UploadBlockFilePayload
+  updateBlockPosition(input: updateBlockPositionInput!): updateBlockPositionPayload
 }
 
 # An object with an ID
@@ -350,6 +354,18 @@ input updateBlockInput {
 
 type updateBlockPayload {
   block: Block
+  clientMutationId: String
+}
+
+input updateBlockPositionInput {
+  id: ID
+  position: Int
+  clientMutationId: String
+}
+
+type updateBlockPositionPayload {
+  blockEdge: BlocksEdge
+  blockConnection(after: String, first: Int, before: String, last: Int): BlocksConnection
   clientMutationId: String
 }
 

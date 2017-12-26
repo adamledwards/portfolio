@@ -6,3 +6,43 @@
 .PageEditor-container {
   padding-left: 200px;
 }
+
+
+
+.is-sorting {
+ & .soc {
+    animation-name: wobble;
+    animation-iteration-count: infinite;
+    animation-duration: 600ms;
+  }
+}
+
+@keyframes wobble {
+  from {
+    transform: none;
+  }
+
+  15% {
+    transform: translate3d(-5px, 0, 0) rotate(-1deg);
+  }
+
+  30% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  45% {
+    transform: translate3d(5px, 0, 0) rotate(1deg);
+  }
+
+  60% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  75% {
+    transform: translate3d(-5px, 0, 0) rotate(-1deg);
+  }
+
+  to {
+    transform: none;
+  }
+}
