@@ -7,8 +7,39 @@
   padding-left: 200px;
 }
 
+.PageEditor-options {
+  height: 0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  transition: height 300ms ease;
+  &.show-block {
+    height: 200px;
+  }
+}
 
+.PageEditor-options-wrapper {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 75px;
+  opacity: 0;
+  .show-block  & {
+    transition: opacity 150ms 200ms ease;
 
+    opacity: 1;
+  }
+  
+}
+
+.PageEditor-options-toggle {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  margin-top: -25px; 
+
+}
 .is-sorting {
  & .soc {
     animation-name: wobble;

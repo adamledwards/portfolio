@@ -6,12 +6,14 @@ import createMeta from '~/utils/mutation/createMeta.js'
 
 type State = {
   meta: MetaType,
+  canEdit: boolean,
   editMode: {
     meta: null | number
   }
 }
 
 type Props = {
+  canEdit: boolean,
   meta: Array<MetaType>
 }
 
@@ -61,24 +63,25 @@ class MetaList extends PureComponent {
   }
 
   render () {
-    const { block } = this.props
+    const { block, canEdit } = this.props
     const { addNew } = this.state
     return (
       <div>
-        <button
-          className="ProjectInfo-addMetaButton"
-          onClick={this.addNewMeta}>
-            <i className="fa fa-plus"/>
+        { canEdit &&
+          <button
+            className="ProjectInfo-addMetaButton"
+            onClick={this.addNewMeta}>
+              <i className="fa fa-plus"/>
           </button>
+        }
         <div className="row Meta-row">
           { addNew && this.renderEdit() }
-          {block.metaConnection.edges.map((item) => <Meta blockId={block.id} key={item.node.id} item={item.node} />)}
+          {block.metaConnection.edges.map((item) => <Meta readOnly={!canEdit} blockId={block.id} key={item.node.id} item={item.node} />)}
         </div>
       </div>
     )
   }
 }
-
 
 export default createFragmentContainer(
   MetaList,

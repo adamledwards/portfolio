@@ -40,8 +40,9 @@ class Meta extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      edit: false ,
+      edit: false,
     }
+    this.updateMeta = props.readOnly ? void (0) : this._updateMeta.bind(this)
   }
 
   handleEdit = () => {
@@ -61,7 +62,7 @@ class Meta extends Component {
     this.setState({edit: false})
   }
 
-  updateMeta = (event, key) => {
+  _updateMeta (event, key) {
     const { heading, text } = this.state
     const { item, blockId } = this.props
     this.setState({ edit: false })
@@ -101,6 +102,9 @@ class Meta extends Component {
   }
 
   render () {
+    if (this.props.readOnly) {
+      return this.renderRead()
+    }
     return this.state.edit ? this.renderEdit() : this.renderRead()
   }
 }

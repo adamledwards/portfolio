@@ -71,6 +71,9 @@ class ImageUploaderWrapper extends Component {
 
   render () {
     const { dragging } = this.state
+    if (!this.props.canEdit) {
+      return this.props.children
+    }
     return (
       <div
         className="ImageUploaderWrapper"

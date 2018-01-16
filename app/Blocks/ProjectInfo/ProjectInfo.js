@@ -66,7 +66,6 @@ class ProjectInfo extends PureComponent {
   renderSidebar () {
     const { block } = this.props
     const backgroundColor = block.colour || '#000000'
-    console.log(this.state.editorSidebar)
     return (
       <ProjectInfoSidebar
         backgroundColor={backgroundColor}
@@ -79,13 +78,16 @@ class ProjectInfo extends PureComponent {
   }
 
   render () {
-    const { block } = this.props
+    const { block, canEdit } = this.props
     const backgroundColor = block.colour || '#000000'
     return (
-      <section className="ProjectInfo container" onClick={() => this.handleSidebarElement({editor: false})} style={{backgroundColor, color: TEXTCOLOR[backgroundColor]}}>
+      <section className="ProjectInfo container" 
+        onClick={canEdit ? () => this.handleSidebarElement({editor: false}) : void (0)}
+        style={{backgroundColor, color: TEXTCOLOR[backgroundColor]}}
+      >
         <div className="row ProjectInfo-row">
           <div className="col-lg-6">
-            <MetaList block={block} />
+            <MetaList block={block} canEdit={canEdit} />
           </div>
           <div className="col-lg-6">
             <Editor

@@ -32,11 +32,13 @@ class Images extends Component {
   }
 
   renderOneImage (images = []) {
-    return <OneImage images={images} block={this.props.block} />
+    const { canEdit, block } = this.props
+    return <OneImage images={images} canEdit={canEdit} block={block} />
   }
 
   renderTwoImage (images = []) {
-    return <TwoImage images={images} block={this.props.block} />
+    const { canEdit, block } = this.props
+    return <TwoImage images={images} canEdit={canEdit} block={block} />
   }
 
   render () {
@@ -79,4 +81,4 @@ export default createFragmentContainer(
       }
     `,
   }
-);
+)

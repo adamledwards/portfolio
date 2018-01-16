@@ -4,11 +4,9 @@ import { createFragmentContainer, graphql } from 'react-relay'
 import { Link } from '~/utils/history.js'
 import './PageCard.style.scss'
 
-
 class PageCard extends Component {
 
   render() {
-
     const { page } = this.props
     return (
       <Link className="col-lg-4 PageCard-link" route="pageWithID" params={{id: page.id}}>
@@ -20,8 +18,8 @@ class PageCard extends Component {
             </div>
           </div>
           <div className="PageCard-heading">
-            <span className="PageCard-heading-item">Heading 1</span>
-            <span className="PageCard-heading-item">Heading 2</span>
+            <span className="PageCard-heading-item">{page.client}</span>
+            <span className="PageCard-heading-item">{page.description}</span>
           </div>
         </div>
       </Link>
@@ -29,14 +27,13 @@ class PageCard extends Component {
   }
 }
 
-
-
-
 export default createFragmentContainer(PageCard, {
   page: graphql`
     fragment PageCard_page on Page {
       id
-      title,
+      title
+      client
+      description
       listingImage {
         id
         fullPath

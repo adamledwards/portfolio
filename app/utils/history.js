@@ -7,24 +7,25 @@ import router from '~/routes.js'
 const url = generateUrls(router)
 const history = createHistory()
 
-
-
 export const navigate = (route: string, params: Object = {}): void => {
-  console.log(url(route, params))
   history.push(url(route, params))
 }
 
-export const Link = (props) => (
-  <a
-    {...props}
-    onClick={
-      (e: Event) => {
-        e.preventDefault()
-        navigate(props.route, props.params)
+export const Link = ({className, ...props}) => {
+  const href = url(props.route, props.params)
+  return (
+    <a
+      className={className}
+      href={href}
+      onClick={
+        (e: Event) => {
+          e.preventDefault()
+          history.push(href)
+        }
       }
-    }
-  >
-    {props.children}
-  </a>
-)
+    >
+      {props.children}
+    </a>
+  )
+}
 export default history

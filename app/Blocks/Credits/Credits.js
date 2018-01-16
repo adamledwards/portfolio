@@ -57,7 +57,7 @@ class Credits extends PureComponent {
   }
 
   render () {
-    const { block } = this.props
+    const { block, canEdit } = this.props
     const backgroundColor = block.colour || '#EFEFEF'
     return (
       <section className="Credits container" onClick={() => this.handleSidebarElement({editor: false})} style={{backgroundColor, color: TEXTCOLOR[backgroundColor.toLowerCase()]}}>
@@ -66,7 +66,7 @@ class Credits extends PureComponent {
             <h3>Credits</h3>
           </div>
           <div className="col-lg-6">
-            <MetaList block={block} />
+            <MetaList block={block} canEdit={canEdit} />
           </div>
         </div>
       </section>

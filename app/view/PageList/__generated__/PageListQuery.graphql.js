@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash a8eb9fb1f438f34dd97efbdf089d6916
+ * @relayHash 2bee1ca73c27876bdebb48fb6908df63
  */
 
 /* eslint-disable */
@@ -34,6 +34,8 @@ query PageListQuery {
 fragment PageCard_page on Page {
   id
   title
+  client
+  description
   listingImage {
     id
     fullPath
@@ -138,6 +140,20 @@ const batch /*: ConcreteBatch*/ = {
                     "storageKey": null
                   },
                   {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "client",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "description",
+                    "storageKey": null
+                  },
+                  {
                     "kind": "LinkedField",
                     "alias": null,
                     "args": null,
@@ -173,7 +189,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "query PageListQuery {\n  pages {\n    edges {\n      node {\n        ...PageCard_page\n        id\n      }\n    }\n  }\n}\n\nfragment PageCard_page on Page {\n  id\n  title\n  listingImage {\n    id\n    fullPath\n  }\n}\n"
+  "text": "query PageListQuery {\n  pages {\n    edges {\n      node {\n        ...PageCard_page\n        id\n      }\n    }\n  }\n}\n\nfragment PageCard_page on Page {\n  id\n  title\n  client\n  description\n  listingImage {\n    id\n    fullPath\n  }\n}\n"
 };
 
 module.exports = batch;

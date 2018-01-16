@@ -30,11 +30,13 @@ const mutation = graphql`
 function sharedUpdater (pageProxy, connection, id, position) {
   connection.getLinkedRecords('edges').forEach(edge => {
     const node = edge.getLinkedRecord('node')
-    const currentPosition = node.getValue('position')
-    if (node.getValue('position') > position && node.getDataID() !== id) {
-      node.setValue(currentPosition + 1, 'position')
+    if (node) {
+      const currentPosition = node.getValue('position')
+      if (node.getValue('position') > position && node.getDataID() !== id) {
+        node.setValue(currentPosition + 1, 'position')
+      }
+      edge.getLinkedRecord('node')
     }
-    edge.getLinkedRecord('node')
   })
 }
 

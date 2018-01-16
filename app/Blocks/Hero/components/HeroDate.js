@@ -8,13 +8,11 @@ import moment from 'moment'
 type EditProps = {
   canEdit: true,
   date: string,
-  alwaysEdit: boolean
 }
 
 type DisplayProps = {
   canEdit: false,
   date: string,
-  alwaysEdit: boolean
 }
 
 type Props = EditProps | DisplayProps
@@ -31,21 +29,21 @@ class HeroDate extends Component {
 
   constructor (props: Props) {
     super(props)
-    const mDate = props.date ? moment(props.date) : moment()
+    const momentDate = props.date ? moment(props.date) : moment()
 
     this.state = {
-      edit: props.alwaysEdit || false,
-      month: mDate.month(),
-      year: mDate.year()
+      edit: false,
+      month: momentDate.month(),
+      year: momentDate.year()
     }
     this.onBlur = this.onBlur.bind(this)
   }
 
   componentWillReceiveProps (nextProps: Props) {
-    const mDate = moment(nextProps.date)
+    const momentDate = moment(nextProps.date)
     this.setState({
-      month: mDate.month(),
-      year: mDate.year()
+      month: momentDate.month(),
+      year: momentDate.year()
     })
   }
 
@@ -61,11 +59,11 @@ class HeroDate extends Component {
   }
 
   enableEdit = () => {
-    if (this.props.alwaysEdit === true) return
+    if (this.props.canEdit === false) return
     this.setState({edit: true}, () => document.addEventListener('click', this.onBlur))
   }
   disableEdit = () => {
-    if (this.props.alwaysEdit === true) return
+    if (this.props.canEdit === false) return
     this.setState({edit: false}, () => document.removeEventListener('click', this.onBlur))
   }
 
@@ -74,7 +72,6 @@ class HeroDate extends Component {
       const { year, month } = prevState
       const newState = {year, month, ...partialDate}
       const newDate = moment(newState)
-      debugger
       if (newDate.isValid()) {
         this.props.update({date: newDate.toISOString()})
         newState.date = newDate
@@ -130,12 +127,21 @@ class HeroDate extends Component {
   }
 
   render () {
-    const mDate = moment(this.props.date)
+    const momentDate = moment(this.props.date)
+    if (!this.props.canEdit) {
+      return (
+        <div>
+          <span className="Hero-date">{CONSTANTS.MONTHS[momentDate.month()]}</span>
+          &nbsp;&nbsp;
+          <span className="Hero-date">{momentDate.year()}</span>
+        </div>
+      )
+    }
     return (
       <div>
-        { this.renderMonth(mDate.month()) }
+        {this.renderMonth(momentDate.month())}
         &nbsp;&nbsp;
-        { this.renderYear(mDate.year()) }
+        {this.renderYear(momentDate.year())}
       </div>
     )
   }

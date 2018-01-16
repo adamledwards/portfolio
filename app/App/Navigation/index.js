@@ -12,7 +12,7 @@ const Navigation = () => (
         </div>
         <div className="col-lg-6">
           <ul className="Navigation-list row">
-            <li><Link href="/page/id/edit">selected work</Link></li>
+            <li>selected work</li>
             <li>profile</li>
             <li>misc</li>
             <li className="align-left">email me</li>

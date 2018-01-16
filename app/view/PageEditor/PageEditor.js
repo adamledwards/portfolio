@@ -4,6 +4,7 @@ import Sidebar from './Sidebar'
 import './PageEditor.style.scss'
 import { BlockSortable, blockRendererFn } from '~/Blocks/utils/blockRenderer'
 import Footer from '~/Blocks/Footer'
+import OtherAricles from '~/Blocks/OtherArticles'
 import { graphql } from 'react-relay'
 import type { PageEditorQueryResponse } from './__generated__/PageEditorQuery.graphql.js'
 import { createBlock, removeBlock, updateBlock, updatePosition } from '~/utils/mutation'
@@ -24,12 +25,8 @@ class PageEditor extends Component {
       page: node(id: $id) {
         ... on Page {
           id
-          title
-          client
-          description
-          projectGoLive
-          position
-          published
+          ...Sidebar_page
+          ...OtherArticles_page
           blockConnection(first: 10) @connection(key: "PageEditor_blockConnection") {
             edges {
               node {
@@ -53,17 +50,20 @@ class PageEditor extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      sorting: false,
       sidebarElement: null,
       pageTitle: '',
       client: '',
       month: '',
       year: '',
       day: '',
+      showBlockOptions: false
     }
   }
 
   addBlock (type: string) {
     createBlock({blockType: type, pageId: this.props.page.id})
+    this.setState({showBlockOptions: false})
   }
 
   updateFn (ID: string, block: string) {
@@ -81,16 +81,23 @@ class PageEditor extends Component {
   onSortEnd = ({oldIndex, newIndex}) => {
     const blocks = this.getBlock()
     const block = blocks[oldIndex].node
+    this.setState({sorting: false})
     updatePosition(block.id, newIndex, this.props.page.id)
   }
 
-  setSideBar = (sidebarElement: React$Element<*>, blockId: string) => {
-    this.setState({sidebar: {sidebarElement, blockId}})
+  onSortStart = ({oldIndex, newIndex}) => {
+    this.setState({sorting: true})
   }
 
-  getBlock() {
+  setSideBar = (sidebarElement: React$Element<*>, blockId: string, title: string) => {
+    this.setState({sidebar: {sidebarElement, blockId, title}})
+  }
+
+  getBlock () {
     const blocks = this.props.page.blockConnection.edges
-    return [...blocks].sort((blockA, blockB) => { 
+    return [...blocks].filter((block) => {
+      return block.node
+    }).sort((blockA, blockB) => { 
       if (!blockA.node || !blockB.node) {
         return 0
       }
@@ -105,24 +112,35 @@ class PageEditor extends Component {
       setSideBar={this.setSideBar}
       updateFn={this.updateFn}
       handleRemove={this.handleRemove}
+      onSortStart={this.onSortStart}
       onSortEnd={this.onSortEnd}
       helperClass="is-sorting"
     />
   }
 
   render () {
-    const { sidebar } = this.state
+    const { sidebar, sorting, showBlockOptions } = this.state
     return (
-      <section className="PageEditor">
-        <Sidebar sidebar={sidebar} handleRemove={this.handleRemove}/>
+      <section className={`PageEditor${sorting ? ' sorting' : ''}`}>
+        <Sidebar sidebar={sidebar} clearSidebar={() => this.setState({sidebar: null})} handleRemove={this.handleRemove} page={this.props.page}/>
         <section className="PageEditor-container">
-          <button onClick={() => this.addBlock('Hero')}>Hero</button>
-          <button onClick={() => this.addBlock('ProjectInfo')}>Project Info</button>
-          <button onClick={() => this.addBlock('Text')}>Text</button>
-          <button onClick={() => this.addBlock('Credits')}>Credits</button>
-          <button onClick={() => this.addBlock('OtherArticles')}>More Articles</button>
-          <button onClick={() => this.addBlock('Images-1')}>Images</button>
           {this.renderBlocks()}
+          <div className={`PageEditor-options${showBlockOptions ? ' show-block' : ''}`}>
+            <button
+              className="PageEditor-options-toggle"
+              onClick={() => this.setState({showBlockOptions: !showBlockOptions})}
+            >
+              <i className={`fa fa-${showBlockOptions ? 'minus' : 'plus'}`} />
+            </button>
+            <div className="PageEditor-options-wrapper">
+              <button className="PageEditor-options-btn" onClick={() => this.addBlock('Hero')}>Hero</button>
+              <button className="PageEditor-options-btn" onClick={() => this.addBlock('ProjectInfo')}>Project Info</button>
+              <button className="PageEditor-options-btn" onClick={() => this.addBlock('Text')}>Text</button>
+              <button className="PageEditor-options-btn" onClick={() => this.addBlock('Credits')}>Credits</button>
+              <button className="PageEditor-options-btn" onClick={() => this.addBlock('Images-1')}>Images</button>
+            </div>
+          </div>
+          <OtherAricles page={this.props.page}/>
           <Footer />
         </section>
       </section>

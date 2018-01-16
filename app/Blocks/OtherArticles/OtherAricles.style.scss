@@ -1,6 +1,38 @@
 .OtherAricles {
-  padding: 50px 0 100px;
+  padding: 50px 0 85px;
+  background-color: #EFEFEF;
   img {
     width: 100%;
+  }
+}
+
+.OtherAricles-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+
+  img {
+    display: block;
+  }
+}
+
+
+.OtherAricles-hover {
+  background-color: #0000FF;
+  opacity: 0.85;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateY(100%);
+  transition: transform 300ms ease;
+  will-change: transform;
+
+  .OtherAricles-card:hover & {
+    transition: transform 300ms ease;
+    transform: translateY(0);
   }
 }

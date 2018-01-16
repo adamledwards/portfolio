@@ -10,17 +10,38 @@ import Images from '~/Blocks/Images'
 import blockShallowCheck from '~/utils/blockShallowCheck.js'
 
 const Components = {
-  Hero: blockShallowCheck(Hero),
-  ProjectInfo: blockShallowCheck(ProjectInfo),
-  Text: blockShallowCheck(Text),
-  Credits: blockShallowCheck(Credits),
-  OtherArticles: blockShallowCheck(OtherArticles),
-  'Images-1': blockShallowCheck(Images),
-  'Images-2': blockShallowCheck(Images)
+  Hero: {
+    component: blockShallowCheck(Hero),
+    name: 'Hero'
+  },
+  ProjectInfo: {
+    component: blockShallowCheck(ProjectInfo),
+    name: 'Project Info'
+  },
+  Text: {
+    component: blockShallowCheck(Text),
+    name: 'Text'
+  },
+  Credits: {
+    component: blockShallowCheck(Credits),
+    name: 'Credits'
+  },
+  OtherArticles: {
+    component: blockShallowCheck(OtherArticles),
+    name: 'Other Articles'
+  },
+  'Images-1': {
+    component: blockShallowCheck(Images),
+    name: 'Image full width'
+  },
+  'Images-2': {
+    component: blockShallowCheck(Images),
+    name: 'Image 2 up'
+  }
 }
 
 const SortableComponents = Object.keys(Components).reduce((accumulator, block) => {
-  const Component = Components[block]
+  const { component: Component, name } = Components[block]
 
   accumulator[block] = SortableElement((props) => {
     return (
@@ -31,30 +52,32 @@ const SortableComponents = Object.keys(Components).reduce((accumulator, block) =
       </div>
     )
   })
+  accumulator[block].displayName = `SortableElement(${Component.displayName})`
+  accumulator[block].friendlyName = name
   return accumulator
 }, {})
 
-const blockRendererFn = (block: string, edit = false): React$Component<*> => {
+export const blockRenderMap = (block: string, edit = false): React$Component<*> => {
   if (edit) {
     return SortableComponents[block]
   }
-  return Components[block]
+  return Components[block].component
 }
 
 export const BlockSortable = SortableContainer(({blocks, setSideBar, updateFn, handleRemove}) => {
   return (
     <section>
       {blocks
-      .filter(({ node }) => node && typeof blockRendererFn(node.blockType) === 'function')
+      .filter(({ node }) => node && typeof blockRenderMap(node.blockType) === 'function')
       .map(({ node }, i) => {
-        const Block = blockRendererFn(node.blockType, true)
+        const Block = blockRenderMap(node.blockType, true)
         return (
           <Block
             key={node.id + i}
             index={i}
             block={node}
             canEdit
-            setSidebar={(sidebarElement) => setSideBar(sidebarElement, node.id)}
+            setSidebar={(sidebarElement) => setSideBar(sidebarElement, node.id, Block.friendlyName)}
             update={updateFn(node.id)}
             remove={() => handleRemove(node.id)}
           />

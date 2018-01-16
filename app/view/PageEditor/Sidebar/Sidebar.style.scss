@@ -3,8 +3,10 @@
   height: 100%;
   position: fixed;
   left: 0;
+  top: 0;
   background: #fff;
   border-right: 1px solid #ccc;
+  overflow: auto;
 }
 
 .PageEditor-Sidebar-heading {
@@ -25,8 +27,15 @@
 .PageEditor-Sidebar-section {
   padding: 10px 8px 20px;
   border-bottom: #ccc 1px solid;
+  width: 100%;
+  overflow: hidden;
 }
-
+.PageEditor-Sidebar-blockTitle {
+  display: flex;
+  button {
+    margin-right: 10px;
+  }
+}
 .PageEditor-Sidebar-list {
   margin: 0;
   padding: 0;
@@ -44,4 +53,58 @@
 
 .PageEditor-Sidebar input[type="text"] {
   width: 100%;
+}
+
+
+.Sidebar-items {
+  margin: 0;
+  padding: 0;
+
+  [data-published="false"] {
+    color: #cc0f0f
+  }
+
+  [data-published="true"] {
+    color: #0fcc0f
+  }
+
+  dt.item-header {
+    font-weight: bold;
+    padding: 5px 0;
+    margin-top: 20px;
+  }
+
+  .item-value-btn {
+    outline: none;
+    background: transparent;
+    &:hover {
+      background: transparent;
+      color: #003580;
+    }
+  }
+
+  dd.item-value {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    
+    &.column {
+      flex-direction: column;
+    }
+  }
+
+  .item-value-textInput,
+  .item-value-fileInput {
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    &:disabled {
+      color: #ccc;
+    }
+  }
+  img {
+    display: block;
+    width: 100%;
+  }
 }

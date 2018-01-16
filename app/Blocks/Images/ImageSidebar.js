@@ -7,7 +7,6 @@ class ImageSidebar extends React.Component {
     const { update } = this.props
     return (
       <div>
-        <span className="PageEditor-Sidebar-heading">Image Block</span>
         <section className="PageEditor-Sidebar-section">
           <span className="PageEditor-Sidebar-subHeading">Image Type</span>
           <ul className="ImageSidebar-list">

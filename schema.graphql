@@ -107,13 +107,18 @@ type createMetaPayload {
 }
 
 input CreatePageInput {
-  pageInput: PageInput
+  pageInput: PageUpdateInput
   clientMutationId: String
 }
 
 type CreatePagePayload {
   page: Page
   clientMutationId: String
+}
+
+enum Direction {
+  FORWARD
+  BACKWARDS
 }
 
 # File store
@@ -257,8 +262,17 @@ type Page implements Node {
   # Listing image file
   listingImage: File
 
+  # Listing image file Small
+  listingImageSmall: File
+
   # page blocks
   blockConnection(after: String, first: Int, before: String, last: Int): BlocksConnection
+
+  # Get next or previous page
+  nextPage(
+    # use FOWARDS or BACKWARDS to get next or previous page
+    direction: Direction
+  ): Page
 }
 
 # A connection to a list of items.
@@ -309,7 +323,26 @@ input PageInput {
   client: String
 
   # Flag to indicate if the page should be made public
-  published: Boolean = false
+  published: Boolean
+  position: Int
+}
+
+# input fields for page
+input PageUpdateInput {
+  # Title of project
+  title: String
+
+  # Description of project
+  description: String
+
+  # Go live date for project this will apprear in the listing
+  projectGoLive: String
+
+  # Client that the project was for
+  client: String
+
+  # Flag to indicate if the page should be made public
+  published: Boolean
   position: Int
 }
 

@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import moment from 'moment'
 import HeroSidebar, { HeroSidebarInput } from './HeroSidebar.js'
 import HeroDate from './components/HeroDate.js'
 import { createFragmentContainer, graphql } from 'react-relay'
@@ -42,6 +41,7 @@ class Hero extends Component {
   props: Props;
   state: State;
 
+  static friendlyName = 'Hero'
   static defaultProps = {
     canEdit: false
   }
@@ -54,7 +54,7 @@ class Hero extends Component {
         month: false,
         year: false
       },
-      title: ''
+      title: props.block.title
     }
   }
   componentDidUpdate () {
@@ -152,11 +152,18 @@ class Hero extends Component {
     }
 
     return (
-      <ImageUploaderWrapper block={block} scope="hero">
-        <section className="Hero" onClick={() => this.handleSidebarElement()} style={style}>
+      <ImageUploaderWrapper block={block} scope="hero" canEdit={canEdit}>
+        <section className="Hero" 
+          onClick={canEdit ? () => this.handleSidebarElement() : void (0)} 
+          style={style}
+        >
           <div className="row row--reverse middle">
             <div className="col-lg-6">
-            { this.renderH1(block.title || 'Insert title') }
+            {
+              canEdit
+              ? this.renderH1(block.title || 'Insert title')
+              : <h1 className="Hero-h1">{ block.title }</h1>
+            }
             <div className="Hero-date">
               <HeroDate date={block.date} canEdit={canEdit} update={this.props.update} />
             </div>

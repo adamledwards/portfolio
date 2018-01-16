@@ -12,7 +12,6 @@ class HeroSidebar extends React.Component {
   render () {
     return (
       <div>
-        <span className="PageEditor-Sidebar-heading">Hero</span>
         {this.props.children}
       </div>
     )

@@ -10,7 +10,6 @@ class ProjectInfoSidebar extends React.Component {
     const { backgroundColor, update } = this.props
     return (
       <div>
-        <span className="PageEditor-Sidebar-heading">Credits</span>
         <section className="PageEditor-Sidebar-section">
           <span className="PageEditor-Sidebar-subHeading">Background Colour</span>
           <TwitterPicker colors={COLOURS} color={backgroundColor} onChangeComplete={({hex}) => update({colour: hex})} width="182" triangle="hide"/>
@@ -20,6 +19,5 @@ class ProjectInfoSidebar extends React.Component {
     )
   }
 }
-
 
 export default ProjectInfoSidebar

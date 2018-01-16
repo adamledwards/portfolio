@@ -9,14 +9,24 @@ function fetchQuery(
   operation,
   variables,
   cacheConfig,
-  uploadables,
+  uploadables
 ) {
   let config
   if (uploadables) {
-    const formData = new FormData();
+    const formData = new FormData()
     formData.append('query', operation.text)
     formData.append('variables', JSON.stringify(variables))
-    formData.append('file', uploadables.item(0))
+    if (Array.isArray(uploadables)) {
+      for (let i = 0; uploadables.length > i; i++) {
+        formData.append(
+          uploadables[i].name,
+          uploadables[i].file.item(0)
+        )
+      }
+    } else {
+      formData.append('file', uploadables.item(0))
+    }
+
     config = {
       method: 'POST',
       body: formData

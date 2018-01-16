@@ -44,15 +44,15 @@ class Text extends Component {
   }
 
   render () {
-    const { block } = this.props
+    const { block, canEdit } = this.props
     const backgroundColor = block.colour || '#EFEFEF'
     return (
-      <section className="Text container" onClick={() => this.handleSidebarElement({editor: false})}>
+      <section className="Text container" onClick={canEdit ? () => this.handleSidebarElement({editor: false}) : void (0)}>
         <div className="row Text-row" style={{backgroundColor}}>
           <div className="col-lg-6">
             <Editor
               block={block}
-              readOnly={!this.props.canEdit}
+              readOnly={!canEdit}
               update={this.update}
               textColour={TEXTCOLOR[backgroundColor]}
               sidebarUpdate={(sidebar) => this.setState({editorSidebar: sidebar}) }

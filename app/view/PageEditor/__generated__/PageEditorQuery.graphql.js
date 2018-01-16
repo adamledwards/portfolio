@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash c5cb8c1c645ccd1ca9dfa6f948a450c4
+ * @relayHash 2948b3c00fa68f14d3512560e10631f7
  */
 
 /* eslint-disable */
@@ -12,12 +12,6 @@ import type {ConcreteBatch} from 'relay-runtime';
 export type PageEditorQueryResponse = {|
   +page: ?{|
     +id?: string;
-    +title?: ?string;
-    +client?: ?string;
-    +description?: ?string;
-    +projectGoLive?: ?string;
-    +position?: ?number;
-    +published?: ?boolean;
     +blockConnection?: ?{|
       +edges: ?$ReadOnlyArray<?{|
         +node: ?{|
@@ -40,12 +34,8 @@ query PageEditorQuery(
     __typename
     ... on Page {
       id
-      title
-      client
-      description
-      projectGoLive
-      position
-      published
+      ...Sidebar_page
+      ...OtherArticles_page
       blockConnection(first: 10) {
         edges {
           node {
@@ -69,6 +59,42 @@ query PageEditorQuery(
       }
     }
     id
+  }
+}
+
+fragment Sidebar_page on Page {
+  id
+  title
+  client
+  description
+  projectGoLive
+  published
+  listingImage {
+    id
+    fullPath
+  }
+  listingImageSmall {
+    id
+    fullPath
+  }
+}
+
+fragment OtherArticles_page on Page {
+  previous: nextPage(direction: BACKWARDS) {
+    id
+    title
+    listingImageSmall {
+      id
+      fullPath
+    }
+  }
+  next: nextPage(direction: FORWARD) {
+    id
+    title
+    listingImageSmall {
+      id
+      fullPath
+    }
   }
 }
 
@@ -228,46 +254,14 @@ const batch /*: ConcreteBatch*/ = {
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "title",
-                "storageKey": null
+                "kind": "FragmentSpread",
+                "name": "Sidebar_page",
+                "args": null
               },
               {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "client",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "description",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "projectGoLive",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "position",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "published",
-                "storageKey": null
+                "kind": "FragmentSpread",
+                "name": "OtherArticles_page",
+                "args": null
               },
               {
                 "kind": "LinkedField",
@@ -466,7 +460,7 @@ const batch /*: ConcreteBatch*/ = {
                 "kind": "ScalarField",
                 "alias": null,
                 "args": null,
-                "name": "title",
+                "name": "published",
                 "storageKey": null
               },
               {
@@ -494,15 +488,172 @@ const batch /*: ConcreteBatch*/ = {
                 "kind": "ScalarField",
                 "alias": null,
                 "args": null,
-                "name": "position",
+                "name": "title",
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
+                "kind": "LinkedField",
                 "alias": null,
                 "args": null,
-                "name": "published",
+                "concreteType": "File",
+                "name": "listingImage",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "fullPath",
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": null
+              },
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "args": null,
+                "concreteType": "File",
+                "name": "listingImageSmall",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "fullPath",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "kind": "LinkedField",
+                "alias": "previous",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "direction",
+                    "value": "BACKWARDS",
+                    "type": "Direction"
+                  }
+                ],
+                "concreteType": "Page",
+                "name": "nextPage",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "title",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "File",
+                    "name": "listingImageSmall",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "args": null,
+                        "name": "id",
+                        "storageKey": null
+                      },
+                      {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "args": null,
+                        "name": "fullPath",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "nextPage{\"direction\":\"BACKWARDS\"}"
+              },
+              {
+                "kind": "LinkedField",
+                "alias": "next",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "direction",
+                    "value": "FORWARD",
+                    "type": "Direction"
+                  }
+                ],
+                "concreteType": "Page",
+                "name": "nextPage",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "title",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "File",
+                    "name": "listingImageSmall",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "args": null,
+                        "name": "id",
+                        "storageKey": null
+                      },
+                      {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "args": null,
+                        "name": "fullPath",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "nextPage{\"direction\":\"FORWARD\"}"
               },
               {
                 "kind": "LinkedField",
@@ -894,7 +1045,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "query PageEditorQuery(\n  $id: ID!\n) {\n  page: node(id: $id) {\n    __typename\n    ... on Page {\n      id\n      title\n      client\n      description\n      projectGoLive\n      position\n      published\n      blockConnection(first: 10) {\n        edges {\n          node {\n            __typename\n            id\n            blockType\n            position\n            ...Hero_block\n            ...ProjectInfo_block\n            ...Credits_block\n            ...Text_block\n            ...Images_block\n            ...ImageUploader_block\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Hero_block on Block {\n  id\n  title\n  date\n  fileConnection(first: 2) {\n    edges {\n      node {\n        __typename\n        id\n        fullPath\n        scope\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  ...ImageUploader_block\n}\n\nfragment ProjectInfo_block on Block {\n  colour\n  ...MetaList_block\n  ...MetaSortable_block\n  ...Editor_block\n}\n\nfragment Credits_block on Block {\n  colour\n  ...MetaList_block\n  ...MetaSortable_block\n}\n\nfragment Text_block on Block {\n  colour\n  ...Editor_block\n}\n\nfragment Images_block on Block {\n  blockType\n  fileConnection(first: 2) {\n    edges {\n      node {\n        __typename\n        id\n        fullPath\n        scope\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  ...ImageUploader_block\n}\n\nfragment ImageUploader_block on Block {\n  id\n}\n\nfragment Editor_block on Block {\n  id\n  editor\n}\n\nfragment MetaList_block on Block {\n  id\n  metaConnection(first: 10) {\n    edges {\n      node {\n        __typename\n        id\n        ...Meta_item\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment MetaSortable_block on Block {\n  id\n  metaConnection(first: 10) {\n    edges {\n      node {\n        __typename\n        id\n        field1\n        field2\n        position\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Meta_item on Meta {\n  id\n  field1\n  field2\n  position\n}\n"
+  "text": "query PageEditorQuery(\n  $id: ID!\n) {\n  page: node(id: $id) {\n    __typename\n    ... on Page {\n      id\n      ...Sidebar_page\n      ...OtherArticles_page\n      blockConnection(first: 10) {\n        edges {\n          node {\n            __typename\n            id\n            blockType\n            position\n            ...Hero_block\n            ...ProjectInfo_block\n            ...Credits_block\n            ...Text_block\n            ...Images_block\n            ...ImageUploader_block\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Sidebar_page on Page {\n  id\n  title\n  client\n  description\n  projectGoLive\n  published\n  listingImage {\n    id\n    fullPath\n  }\n  listingImageSmall {\n    id\n    fullPath\n  }\n}\n\nfragment OtherArticles_page on Page {\n  previous: nextPage(direction: BACKWARDS) {\n    id\n    title\n    listingImageSmall {\n      id\n      fullPath\n    }\n  }\n  next: nextPage(direction: FORWARD) {\n    id\n    title\n    listingImageSmall {\n      id\n      fullPath\n    }\n  }\n}\n\nfragment Hero_block on Block {\n  id\n  title\n  date\n  fileConnection(first: 2) {\n    edges {\n      node {\n        __typename\n        id\n        fullPath\n        scope\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  ...ImageUploader_block\n}\n\nfragment ProjectInfo_block on Block {\n  colour\n  ...MetaList_block\n  ...MetaSortable_block\n  ...Editor_block\n}\n\nfragment Credits_block on Block {\n  colour\n  ...MetaList_block\n  ...MetaSortable_block\n}\n\nfragment Text_block on Block {\n  colour\n  ...Editor_block\n}\n\nfragment Images_block on Block {\n  blockType\n  fileConnection(first: 2) {\n    edges {\n      node {\n        __typename\n        id\n        fullPath\n        scope\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  ...ImageUploader_block\n}\n\nfragment ImageUploader_block on Block {\n  id\n}\n\nfragment Editor_block on Block {\n  id\n  editor\n}\n\nfragment MetaList_block on Block {\n  id\n  metaConnection(first: 10) {\n    edges {\n      node {\n        __typename\n        id\n        ...Meta_item\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment MetaSortable_block on Block {\n  id\n  metaConnection(first: 10) {\n    edges {\n      node {\n        __typename\n        id\n        field1\n        field2\n        position\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Meta_item on Meta {\n  id\n  field1\n  field2\n  position\n}\n"
 };
 
 module.exports = batch;

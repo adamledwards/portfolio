@@ -1,7 +1,7 @@
 import React from 'react'
 import ImageUploaderWrapper from '~/Blocks/components/ImageUploader'
 
-const OneImage = ({ block, images }) => {
+const OneImage = ({ block, images, canEdit }) => {
   let image
   if (images.length) {
     const sortedImages = images.sort((imgA, imgB) => {
@@ -15,7 +15,7 @@ const OneImage = ({ block, images }) => {
     image = sortedImages[0]
   }
   return (
-    <ImageUploaderWrapper block={block} scope="image1">
+    <ImageUploaderWrapper block={block} canEdit={canEdit} scope="image1">
       <div className="Image container">
         <div className="row">
           <div className="col-lg-12">

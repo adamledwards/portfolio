@@ -1,7 +1,8 @@
 // @flow
 import React, { Component } from 'react'
-import { blockRendererFn } from '~/Blocks/utils/blockRenderer'
+import { blockRenderMap } from '~/Blocks/utils/blockRenderer'
 import Footer from '~/Blocks/Footer'
+import OtherAricles from '~/Blocks/OtherArticles'
 import { graphql } from 'react-relay'
 
 import './Page.style.scss'
@@ -24,14 +25,19 @@ class Page extends Component {
           projectGoLive
           position
           published
-          blockConnection(first: 10) @connection(key: "Page_blockConnection") {
+          ...OtherArticles_page
+          blockConnection(first: 10) @connection(key: "PageEditor_blockConnection") {
             edges {
-              block: node {
+              node {
                 id
-                title
                 blockType
-                editor
-                date
+                position
+                ...Hero_block
+                ...ProjectInfo_block
+                ...Credits_block
+                ...Text_block
+                ...Images_block
+                ...ImageUploader_block
               }
             }
           }
@@ -40,15 +46,15 @@ class Page extends Component {
     }
   `
   renderBlocks () {
-    const blocks = this.props.page.blocks.edges
-    const validBlocks = blocks.filter(({ block }) => block && typeof blockRendererFn(block.blockType) === 'function')
-    return validBlocks.map(({ block }, i) => {
-      const Block = blockRendererFn(block.blockType)
+    const blocks = this.props.page.blockConnection.edges
+    const validBlocks = blocks.filter(({ node }) => node && typeof blockRenderMap(node.blockType) === 'function')
+    return validBlocks.map(({ node }, i) => {
+      const Block = blockRenderMap(node.blockType)
       return (
         <Block
-          key={block.id + i}
-          data={block}
+          key={node.id}
           canEdit={false}
+          block={node}
         />
       )
     })
@@ -59,6 +65,7 @@ class Page extends Component {
       <section className="Page">
         <section className="Page-container">
           {this.renderBlocks()}
+          <OtherAricles page={this.props.page} />
           <Footer />
         </section>
       </section>

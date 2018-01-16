@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2b80682ae85867e7db866e822fc1b4ca
+ * @relayHash 56f4032278527adf42cf40375ad5121f
  */
 
 /* eslint-disable */
@@ -28,6 +28,7 @@ export type createBlockMutationResponse = {|
       +node: ?{|
         +id: string;
         +blockType: ?string;
+        +position: ?number;
         +metaConnection: ?{|
           +edges: ?$ReadOnlyArray<?{|
             +node: ?{|
@@ -58,6 +59,7 @@ mutation createBlockMutation(
       node {
         id
         blockType
+        position
         metaConnection(first: 10) {
           edges {
             node {
@@ -147,6 +149,13 @@ const batch /*: ConcreteBatch*/ = {
                     "alias": null,
                     "args": null,
                     "name": "blockType",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "position",
                     "storageKey": null
                   },
                   {
@@ -407,6 +416,13 @@ const batch /*: ConcreteBatch*/ = {
                     "storageKey": null
                   },
                   {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "position",
+                    "storageKey": null
+                  },
+                  {
                     "kind": "LinkedField",
                     "alias": null,
                     "args": [
@@ -621,7 +637,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation createBlockMutation(\n  $block: createBlockInput!\n) {\n  createBlock(input: $block) {\n    blockEdge {\n      node {\n        id\n        blockType\n        metaConnection(first: 10) {\n          edges {\n            node {\n              __typename\n              id\n            }\n            cursor\n          }\n          pageInfo {\n            endCursor\n            hasNextPage\n          }\n        }\n        fileConnection(first: 2) {\n          edges {\n            node {\n              __typename\n              id\n            }\n            cursor\n          }\n          pageInfo {\n            endCursor\n            hasNextPage\n          }\n        }\n      }\n    }\n  }\n}\n"
+  "text": "mutation createBlockMutation(\n  $block: createBlockInput!\n) {\n  createBlock(input: $block) {\n    blockEdge {\n      node {\n        id\n        blockType\n        position\n        metaConnection(first: 10) {\n          edges {\n            node {\n              __typename\n              id\n            }\n            cursor\n          }\n          pageInfo {\n            endCursor\n            hasNextPage\n          }\n        }\n        fileConnection(first: 2) {\n          edges {\n            node {\n              __typename\n              id\n            }\n            cursor\n          }\n          pageInfo {\n            endCursor\n            hasNextPage\n          }\n        }\n      }\n    }\n  }\n}\n"
 };
 
 module.exports = batch;
