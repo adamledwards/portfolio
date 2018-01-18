@@ -1,7 +1,7 @@
 // @flow
 import PageEditor from './PageEditor.js'
 import NewPage from './NewPage.js'
-import { addBlock, removeBlock, changeBlock } from '~/editor/store/blocks'
+import { addBlock, removeBlock, changeBlock } from '~/Editor/store/blocks'
 import { connect } from 'react-redux'
 import type { Dispatch } from 'redux'
 import type { State } from '~/utils/store.js'

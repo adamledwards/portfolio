@@ -41,10 +41,6 @@ module.exports = {
       title: 'Ash Dowie',
       template: './app/index.html.ejs'
 
-    }),
-    new RelayCompilerWebpackPlugin({
-      schema: path.resolve(__dirname, './schema.graphql'), // or schema.json
-      src: path.resolve(__dirname, './app')
     })
   ],
   resolve: {
