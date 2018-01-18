@@ -25,6 +25,23 @@ button {
     background-color: #f3f3f3;
   }
 }
+.button-text {
+  color: #fff;
+  background-color: #69B867;
+
+  &:focus,
+  &:hover {
+    background-color: darken($color: #69B867, $amount: 5)
+  }
+
+  &.danger {
+    background-color: #E15E5F;
+    &:focus,
+    &:hover {
+      background-color: darken($color: #E15E5F, $amount: 5)
+    }
+  }
+}
 
 h1 {
   font-family: 'Didot';

@@ -123,7 +123,7 @@ class Sidebar extends Component {
         }
         {
           (sidebar && sidebar.blockId) &&
-          <button onClick={() => handleRemove(sidebar.blockId)}>Remove</button>
+          <button className="button-text danger" onClick={() => handleRemove(sidebar.blockId)}>Remove</button>
         }
       </section>
     )

@@ -16,6 +16,10 @@
   &.show-block {
     height: 200px;
   }
+  &.no-blocks {
+    height: auto;
+    justify-content: flex-start
+  }
 }
 
 .PageEditor-options-wrapper {
@@ -24,10 +28,17 @@
   position: absolute;
   top: 75px;
   opacity: 0;
-  .show-block  & {
+  .show-block & {
     transition: opacity 150ms 200ms ease;
-
     opacity: 1;
+  }
+
+  .no-blocks & {
+    padding: 0 50px;
+    flex: 1;
+    top: 0;
+    position: relative;
+    justify-content: space-between;
   }
   
 }
@@ -46,6 +57,23 @@
     animation-iteration-count: infinite;
     animation-duration: 600ms;
   }
+}
+
+.PageEditor-empty {
+  display: flex;
+  flex-direction: column;
+  
+  button {
+    font-size: 30pt;
+  }
+}
+
+.PageEditor-empty-header {
+  display: block;
+  padding-top: 100px;
+  padding-left: 50px;
+  font-size: 60pt;
+  font-weight: bold;
 }
 
 @keyframes wobble {

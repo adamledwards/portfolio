@@ -38,7 +38,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'React',
+      title: 'Ash Dowie',
       template: './app/index.html.ejs'
 
     }),

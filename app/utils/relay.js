@@ -5,6 +5,8 @@ import {
   Store
 } from 'relay-runtime'
 
+import { GRAPH_URL } from './constants'
+
 function fetchQuery(
   operation,
   variables,
@@ -44,7 +46,7 @@ function fetchQuery(
       })
     }
   }
-  return fetch('http://localhost:4000/graphql', config).then(response => {
+  return fetch(GRAPH_URL, config).then(response => {
     return response.json()
   })
 }

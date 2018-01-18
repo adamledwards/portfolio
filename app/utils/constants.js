@@ -18,3 +18,5 @@ const MONTHS: Array<string> = [
 export default {
   MONTHS
 }
+
+export const GRAPH_URL = process.env.NODE_ENV === 'production' ? '//ad.aewed.io/graphql' : '//localhost:4000/graphql'

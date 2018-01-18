@@ -23,5 +23,17 @@
 .Modal-header {
   font-weight: bold;
   font-size: 20px;
-  margin-bottom: 24px;
+  color: #fff;
+  background-color: #232323;
+  padding: 20px 30px;
+  margin: -30px -30px 0;
+}
+
+.Modal-row {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  input[type="text"] {
+    margin-top: 0;
+  }
 }
