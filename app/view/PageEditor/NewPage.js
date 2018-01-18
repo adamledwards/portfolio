@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import Modal from '~/Editor/toolbar/Modal'
-import SelectInput from '~/Blocks/Components/SelectInput.js'
+import SelectInput from '~/Blocks/components/SelectInput.js'
 import { getYears, getMonth } from '~/utils/inputUtils.js'
 import { createPage } from '~/utils/mutation'
 import { navigate } from '~/utils/history.js'

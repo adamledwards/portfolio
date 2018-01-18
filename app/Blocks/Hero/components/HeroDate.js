@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { getYears, getMonth } from '~/utils/inputUtils.js'
 import CONSTANTS from '~/utils/constants.js'
-import SelectInput from '~/Blocks/Components/SelectInput.js'
+import SelectInput from '~/Blocks/components/SelectInput.js'
 import moment from 'moment'
 
 type EditProps = {

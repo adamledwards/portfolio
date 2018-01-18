@@ -15,8 +15,6 @@ const MONTHS = [
   'December'
 ]
 
-
-
 export function getYears (): Array<{value: number}> {
   const date: Date = new Date()
   let value = date.getFullYear()

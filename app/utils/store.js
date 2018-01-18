@@ -1,7 +1,7 @@
 // @flow
 import { createStore, combineReducers } from 'redux'
-import blockReducers from '~/editor/store/blocks'
-import type { blockState } from '~/editor/store/blocks'
+import blockReducers from '~/Editor/store/blocks'
+import type { blockState } from '~/Editor/store/blocks'
 
 const reducers = {
   blocks: blockReducers
