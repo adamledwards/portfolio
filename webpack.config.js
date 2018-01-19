@@ -1,6 +1,6 @@
 const path = require('path')
-const RelayCompilerWebpackPlugin = require('relay-compiler-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 module.exports = {
   entry: './app/client.js',
@@ -20,11 +20,10 @@ module.exports = {
       },
       {
         test: /\.(scss|css)$/,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' },
-          { loader: 'sass-loader' }
-        ]
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
       },
       {
         test: /\.(eot|ttf|otf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
@@ -37,10 +36,10 @@ module.exports = {
     ]
   },
   plugins: [
+    new ExtractTextPlugin('style.css'),
     new HtmlWebpackPlugin({
       title: 'Ash Dowie',
       template: './app/index.html.ejs'
-
     })
   ],
   resolve: {
