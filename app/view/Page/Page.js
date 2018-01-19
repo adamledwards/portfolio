@@ -13,7 +13,7 @@ type Props = {
 
 class Page extends Component {
   props: Props
-
+  static pageName = 'Page'
   static query = graphql`
     query PageQuery ($id: ID!) {
       page: node(id: $id) {

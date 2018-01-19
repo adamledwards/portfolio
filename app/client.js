@@ -10,7 +10,6 @@ import environment from '~/utils/relay.js'
 import router from './routes.js'
 import './client.style.scss'
 
-
 function mount (component: React$Element<any>) {
   ReactDom.render(
     component,
@@ -19,10 +18,9 @@ function mount (component: React$Element<any>) {
 }
 const store = initStore()
 
-
 class App extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {}
   }
@@ -34,11 +32,11 @@ class App extends React.Component {
     })
   }
 
-  gotoPath(pathname: string) {
+  gotoPath (pathname: string) {
     router.resolve({ path: pathname }).then(route => this.setState(route))
   }
 
-  renderQueryRenderer() {
+  renderQueryRenderer () {
     const { Component, params = {} } = this.state
     return (
       <QueryRenderer
@@ -60,19 +58,16 @@ class App extends React.Component {
   render () {
 
     const { Component, params = {} } = this.state
-    let classname
+    let classname = 'App'
+    debugger
     if (typeof Component === 'function') {
-      if (Component.displayName) {
-        // remove bracket displayName e.g Connect(Component)
-        const displayName = Component.displayName.match(/(?!\()\w+(?=\))/g)
-        classname = displayName === null ? displayName : displayName[0]
-      } else {
-        classname = Component.name
+      if (Component.pageName) {
+        classname = classname + ` App--${Component.pageName}`
       }
 
       return (
         <Provider store={store}>
-          <section className={`App App--${classname}`}>
+          <section className={classname}>
             <Navigation/>
             {Component.query ? this.renderQueryRenderer() : <Component params={params} />}
           </section>
@@ -82,6 +77,5 @@ class App extends React.Component {
     return null
   }
 }
-
 
 mount(<App/>)

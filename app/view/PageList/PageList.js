@@ -5,8 +5,8 @@ import Footer from '~/Blocks/Footer'
 import PageCard from '~/PageCard'
 import './PageList.style.scss'
 
-
 class PageList extends Component {
+  static pageName = 'PageList'
   static query = graphql`
     query PageListQuery {
       pages{
@@ -19,7 +19,7 @@ class PageList extends Component {
     }
   `
 
-  render() {
+  render () {
     console.log(this.props)
     const { pages: { edges } } = this.props
     const card = edges.map(
@@ -38,6 +38,5 @@ class PageList extends Component {
     )
   }
 }
-
 
 export default PageList
