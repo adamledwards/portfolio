@@ -59,7 +59,6 @@ class App extends React.Component {
 
     const { Component, params = {} } = this.state
     let classname = 'App'
-    debugger
     if (typeof Component === 'function') {
       if (Component.pageName) {
         classname = classname + ` App--${Component.pageName}`
