@@ -1,4 +1,4 @@
-# portfolio
+# Portfolio
 
 Front end of project to my WIP that will later become my portfolio site.
 
@@ -7,5 +7,6 @@ Front end of project to my WIP that will later become my portfolio site.
 * Realy
 * Webpack
 * DraftJs 
+* graphQL
 
 ![Screenshot](https://image.ibb.co/k9agYT/Screen_Shot_2018_06_05_at_10_34_02.jpg "Optional title")
