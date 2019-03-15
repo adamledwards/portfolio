@@ -32,7 +32,7 @@ mutation createBlockMutation($block: createBlockInput!) {
 }
 `
 
-export default function createBlock (block: CreateBlockMutationVariables.block.blockInput) {
+export default function createBlock(block: CreateBlockMutationVariables.block.blockInput) {
 
   const configs = [{
     type: 'RANGE_ADD',
@@ -47,7 +47,7 @@ export default function createBlock (block: CreateBlockMutationVariables.block.b
   return new Promise((resolve, reject) => {
     commitMutation(environment, {
       mutation,
-      variables: {block: { blockInput: block }},
+      variables: { block: { blockInput: block } },
       updater: (store) => {
         const createBlockRoot = store.getRootField('createBlock')
         const blockEdge = createBlockRoot.getLinkedRecord('blockEdge')
