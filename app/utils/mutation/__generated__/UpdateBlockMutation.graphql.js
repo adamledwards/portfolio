@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 56f7c0ef661023ae1879cede43f1d0be
+ * @relayHash e5f852fc6e572719bd490ff898a0b1d0
  */
 
 /* eslint-disable */
@@ -8,31 +8,37 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+export type updateBlockInput = {|
+  blockInput?: ?BlockUpdateInput,
+  clientMutationId?: ?string,
+|};
+export type BlockUpdateInput = {|
+  ID?: ?string,
+  editor?: ?any,
+  date?: ?string,
+  blockType?: ?string,
+  title?: ?string,
+  colour?: ?string,
+|};
 export type updateBlockMutationVariables = {|
-  block: {
-    blockInput?: ?{
-      ID?: ?string;
-      editor?: ?any;
-      date?: ?string;
-      blockType?: ?string;
-      title?: ?string;
-      colour?: ?string;
-    };
-    clientMutationId?: ?string;
-  };
+  block: updateBlockInput
 |};
 export type updateBlockMutationResponse = {|
   +updateBlock: ?{|
     +block: ?{|
-      +id: string;
-      +blockType: ?string;
-      +editor: ?any;
-      +date: ?string;
-      +title: ?string;
-      +colour: ?string;
-    |};
-  |};
+      +id: string,
+      +blockType: ?string,
+      +editor: ?any,
+      +date: ?string,
+      +title: ?string,
+      +colour: ?string,
+    |}
+  |}
+|};
+export type updateBlockMutation = {|
+  variables: updateBlockMutationVariables,
+  response: updateBlockMutationResponse,
 |};
 */
 
@@ -54,185 +60,113 @@ mutation updateBlockMutation(
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
-  "fragment": {
-    "argumentDefinitions": [
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "block",
+    "type": "updateBlockInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "updateBlock",
+    "storageKey": null,
+    "args": [
       {
-        "kind": "LocalArgument",
-        "name": "block",
-        "type": "updateBlockInput!",
-        "defaultValue": null
+        "kind": "Variable",
+        "name": "input",
+        "variableName": "block",
+        "type": "updateBlockInput!"
       }
     ],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "updateBlockMutation",
+    "concreteType": "updateBlockPayload",
+    "plural": false,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "block",
-            "type": "updateBlockInput!"
-          }
-        ],
-        "concreteType": "updateBlockPayload",
-        "name": "updateBlock",
-        "plural": false,
-        "selections": [
-          {
-            "kind": "LinkedField",
-            "alias": null,
-            "args": null,
-            "concreteType": "Block",
-            "name": "block",
-            "plural": false,
-            "selections": [
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "id",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "blockType",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "editor",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "date",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "title",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "colour",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "type": "Mutation"
-  },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "updateBlockMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
         "name": "block",
-        "type": "updateBlockInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
-    "name": "updateBlockMutation",
-    "operation": "mutation",
-    "selections": [
-      {
-        "kind": "LinkedField",
-        "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "block",
-            "type": "updateBlockInput!"
-          }
-        ],
-        "concreteType": "updateBlockPayload",
-        "name": "updateBlock",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "Block",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
+            "kind": "ScalarField",
             "alias": null,
+            "name": "id",
             "args": null,
-            "concreteType": "Block",
-            "name": "block",
-            "plural": false,
-            "selections": [
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "id",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "blockType",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "editor",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "date",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "title",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "colour",
-                "storageKey": null
-              }
-            ],
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "blockType",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "editor",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "date",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "title",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "colour",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
+  }
+];
+return {
+  "kind": "Request",
+  "fragment": {
+    "kind": "Fragment",
+    "name": "updateBlockMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
   },
-  "text": "mutation updateBlockMutation(\n  $block: updateBlockInput!\n) {\n  updateBlock(input: $block) {\n    block {\n      id\n      blockType\n      editor\n      date\n      title\n      colour\n    }\n  }\n}\n"
+  "operation": {
+    "kind": "Operation",
+    "name": "updateBlockMutation",
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "updateBlockMutation",
+    "id": null,
+    "text": "mutation updateBlockMutation(\n  $block: updateBlockInput!\n) {\n  updateBlock(input: $block) {\n    block {\n      id\n      blockType\n      editor\n      date\n      title\n      colour\n    }\n  }\n}\n",
+    "metadata": {}
+  }
 };
-
-module.exports = batch;
+})();
+// prettier-ignore
+(node/*: any*/).hash = 'd3b439e0cc6c1b0e781c02aa06da7bba';
+module.exports = node;

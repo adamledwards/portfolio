@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash c4ac0b2a5986b8e5a7357b3892f88f44
+ * @relayHash d18f6b61815572279484287ae5bc5feb
  */
 
 /* eslint-disable */
@@ -8,30 +8,36 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+export type UploadBlockFileInput = {|
+  blockFileInput?: ?BlockFileTypeInput,
+  clientMutationId?: ?string,
+|};
+export type BlockFileTypeInput = {|
+  blockId?: ?string,
+  scope?: ?string,
+|};
 export type uploadBlockFileMutationVariables = {|
-  input: {
-    blockFileInput?: ?{
-      blockId?: ?string;
-      scope?: ?string;
-    };
-    clientMutationId?: ?string;
-  };
+  input: UploadBlockFileInput
 |};
 export type uploadBlockFileMutationResponse = {|
   +uploadBlockFile: ?{|
-    +clientMutationId: ?string;
-    +deletedIds: ?$ReadOnlyArray<?string>;
+    +clientMutationId: ?string,
+    +deletedIds: ?$ReadOnlyArray<?string>,
     +file: ?{|
-      +__typename: string;
-      +cursor: string;
+      +__typename: string,
+      +cursor: string,
       +node: ?{|
-        +id: string;
-        +fullPath: ?string;
-        +scope: ?string;
-      |};
-    |};
-  |};
+        +id: string,
+        +fullPath: ?string,
+        +scope: ?string,
+      |},
+    |},
+  |}
+|};
+export type uploadBlockFileMutation = {|
+  variables: uploadBlockFileMutationVariables,
+  response: uploadBlockFileMutationResponse,
 |};
 */
 
@@ -56,221 +62,131 @@ mutation uploadBlockFileMutation(
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
-  "fragment": {
-    "argumentDefinitions": [
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "UploadBlockFileInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "uploadBlockFile",
+    "storageKey": null,
+    "args": [
       {
-        "kind": "LocalArgument",
+        "kind": "Variable",
         "name": "input",
-        "type": "UploadBlockFileInput!",
-        "defaultValue": null
+        "variableName": "input",
+        "type": "UploadBlockFileInput!"
       }
     ],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "uploadBlockFileMutation",
+    "concreteType": "UploadBlockFilePayload",
+    "plural": false,
     "selections": [
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "clientMutationId",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "deletedIds",
+        "args": null,
+        "storageKey": null
+      },
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "UploadBlockFileInput!"
-          }
-        ],
-        "concreteType": "UploadBlockFilePayload",
-        "name": "uploadBlockFile",
+        "name": "file",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "FileEdge",
         "plural": false,
         "selections": [
           {
             "kind": "ScalarField",
             "alias": null,
+            "name": "__typename",
             "args": null,
-            "name": "clientMutationId",
             "storageKey": null
           },
           {
             "kind": "ScalarField",
             "alias": null,
+            "name": "cursor",
             "args": null,
-            "name": "deletedIds",
             "storageKey": null
           },
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "node",
+            "storageKey": null,
             "args": null,
-            "concreteType": "FileEdge",
-            "name": "file",
+            "concreteType": "File",
             "plural": false,
             "selections": [
               {
                 "kind": "ScalarField",
                 "alias": null,
+                "name": "id",
                 "args": null,
-                "name": "__typename",
                 "storageKey": null
               },
               {
                 "kind": "ScalarField",
                 "alias": null,
+                "name": "fullPath",
                 "args": null,
-                "name": "cursor",
                 "storageKey": null
               },
               {
-                "kind": "LinkedField",
+                "kind": "ScalarField",
                 "alias": null,
+                "name": "scope",
                 "args": null,
-                "concreteType": "File",
-                "name": "node",
-                "plural": false,
-                "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "fullPath",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "scope",
-                    "storageKey": null
-                  }
-                ],
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
-      }
-    ],
-    "type": "Mutation"
-  },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "uploadBlockFileMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "UploadBlockFileInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
-    "name": "uploadBlockFileMutation",
-    "operation": "mutation",
-    "selections": [
-      {
-        "kind": "LinkedField",
-        "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "UploadBlockFileInput!"
-          }
-        ],
-        "concreteType": "UploadBlockFilePayload",
-        "name": "uploadBlockFile",
-        "plural": false,
-        "selections": [
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "clientMutationId",
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "deletedIds",
-            "storageKey": null
-          },
-          {
-            "kind": "LinkedField",
-            "alias": null,
-            "args": null,
-            "concreteType": "FileEdge",
-            "name": "file",
-            "plural": false,
-            "selections": [
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "__typename",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "cursor",
-                "storageKey": null
-              },
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "args": null,
-                "concreteType": "File",
-                "name": "node",
-                "plural": false,
-                "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "fullPath",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "scope",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
+        ]
       }
     ]
+  }
+];
+return {
+  "kind": "Request",
+  "fragment": {
+    "kind": "Fragment",
+    "name": "uploadBlockFileMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
   },
-  "text": "mutation uploadBlockFileMutation(\n  $input: UploadBlockFileInput!\n) {\n  uploadBlockFile(input: $input) {\n    clientMutationId\n    deletedIds\n    file {\n      __typename\n      cursor\n      node {\n        id\n        fullPath\n        scope\n      }\n    }\n  }\n}\n"
+  "operation": {
+    "kind": "Operation",
+    "name": "uploadBlockFileMutation",
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "uploadBlockFileMutation",
+    "id": null,
+    "text": "mutation uploadBlockFileMutation(\n  $input: UploadBlockFileInput!\n) {\n  uploadBlockFile(input: $input) {\n    clientMutationId\n    deletedIds\n    file {\n      __typename\n      cursor\n      node {\n        id\n        fullPath\n        scope\n      }\n    }\n  }\n}\n",
+    "metadata": {}
+  }
 };
-
-module.exports = batch;
+})();
+// prettier-ignore
+(node/*: any*/).hash = '91bcd81907555f945151317d263780d1';
+module.exports = node;

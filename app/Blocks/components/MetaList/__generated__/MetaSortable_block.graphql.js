@@ -7,26 +7,38 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
+import type { FragmentReference } from "relay-runtime";
+declare export opaque type MetaSortable_block$ref: FragmentReference;
 export type MetaSortable_block = {|
-  +id: string;
+  +id: string,
   +metaConnection: ?{|
     +edges: ?$ReadOnlyArray<?{|
       +node: ?{|
-        +id: string;
-        +field1: ?string;
-        +field2: ?string;
-        +position: ?number;
-      |};
-    |}>;
-  |};
+        +id: string,
+        +field1: ?string,
+        +field2: ?string,
+        +position: ?number,
+      |}
+    |}>
+  |},
+  +$refType: MetaSortable_block$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [],
+const node/*: ReaderFragment*/ = (function(){
+var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+};
+return {
   "kind": "Fragment",
+  "name": "MetaSortable_block",
+  "type": "Block",
   "metadata": {
     "connection": [
       {
@@ -39,117 +51,106 @@ const fragment /*: ConcreteFragment*/ = {
       }
     ]
   },
-  "name": "MetaSortable_block",
+  "argumentDefinitions": [],
   "selections": [
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "args": null,
-      "name": "id",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "kind": "LinkedField",
       "alias": "metaConnection",
+      "name": "__PageEditor_metaConnection_connection",
+      "storageKey": null,
       "args": null,
       "concreteType": "MetaConnection",
-      "name": "__PageEditor_metaConnection_connection",
       "plural": false,
       "selections": [
         {
           "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "MetaEdge",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
               "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "Meta",
-              "name": "node",
               "plural": false,
               "selections": [
+                (v0/*: any*/),
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
-                  "name": "id",
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "args": null,
                   "name": "field1",
+                  "args": null,
                   "storageKey": null
                 },
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "field2",
+                  "args": null,
                   "storageKey": null
                 },
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "position",
+                  "args": null,
                   "storageKey": null
                 },
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "__typename",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": null
+              ]
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "cursor",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
           "kind": "LinkedField",
           "alias": null,
+          "name": "pageInfo",
+          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
-          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "endCursor",
+              "args": null,
               "storageKey": null
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "hasNextPage",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Block"
+  ]
 };
-
-module.exports = fragment;
+})();
+// prettier-ignore
+(node/*: any*/).hash = 'a987040c8f3b3de0d26d5b36d9a51707';
+module.exports = node;

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 619b5a2b6ffb5d0d4969159352334cca
+ * @relayHash 5b1ab66fae3fc5c8356668f813463f68
  */
 
 /* eslint-disable */
@@ -8,17 +8,22 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+export type removeBlockInput = {|
+  id?: ?string,
+  clientMutationId?: ?string,
+|};
 export type removeBlockMutationVariables = {|
-  block: {
-    id?: ?string;
-    clientMutationId?: ?string;
-  };
+  block: removeBlockInput
 |};
 export type removeBlockMutationResponse = {|
   +removeBlock: ?{|
-    +deletedId: ?string;
-  |};
+    +deletedId: ?string
+  |}
+|};
+export type removeBlockMutation = {|
+  variables: removeBlockMutationVariables,
+  response: removeBlockMutationResponse,
 |};
 */
 
@@ -33,93 +38,67 @@ mutation removeBlockMutation(
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
-  "fragment": {
-    "argumentDefinitions": [
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "block",
+    "type": "removeBlockInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "removeBlock",
+    "storageKey": null,
+    "args": [
       {
-        "kind": "LocalArgument",
-        "name": "block",
-        "type": "removeBlockInput!",
-        "defaultValue": null
+        "kind": "Variable",
+        "name": "input",
+        "variableName": "block",
+        "type": "removeBlockInput!"
       }
     ],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "removeBlockMutation",
+    "concreteType": "removeBlockPayload",
+    "plural": false,
     "selections": [
       {
-        "kind": "LinkedField",
+        "kind": "ScalarField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "block",
-            "type": "removeBlockInput!"
-          }
-        ],
-        "concreteType": "removeBlockPayload",
-        "name": "removeBlock",
-        "plural": false,
-        "selections": [
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "deletedId",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "type": "Mutation"
-  },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "removeBlockMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "block",
-        "type": "removeBlockInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
-    "name": "removeBlockMutation",
-    "operation": "mutation",
-    "selections": [
-      {
-        "kind": "LinkedField",
-        "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "block",
-            "type": "removeBlockInput!"
-          }
-        ],
-        "concreteType": "removeBlockPayload",
-        "name": "removeBlock",
-        "plural": false,
-        "selections": [
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "deletedId",
-            "storageKey": null
-          }
-        ],
+        "name": "deletedId",
+        "args": null,
         "storageKey": null
       }
     ]
+  }
+];
+return {
+  "kind": "Request",
+  "fragment": {
+    "kind": "Fragment",
+    "name": "removeBlockMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
   },
-  "text": "mutation removeBlockMutation(\n  $block: removeBlockInput!\n) {\n  removeBlock(input: $block) {\n    deletedId\n  }\n}\n"
+  "operation": {
+    "kind": "Operation",
+    "name": "removeBlockMutation",
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "removeBlockMutation",
+    "id": null,
+    "text": "mutation removeBlockMutation(\n  $block: removeBlockInput!\n) {\n  removeBlock(input: $block) {\n    deletedId\n  }\n}\n",
+    "metadata": {}
+  }
 };
-
-module.exports = batch;
+})();
+// prettier-ignore
+(node/*: any*/).hash = '2a8334b6ce15d6a1685ba7ce00e7b10c';
+module.exports = node;

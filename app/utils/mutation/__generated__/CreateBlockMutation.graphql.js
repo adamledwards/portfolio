@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 56f4032278527adf42cf40375ad5121f
+ * @relayHash 89690b55475af2d74ae5a9a93ddc868b
  */
 
 /* eslint-disable */
@@ -8,44 +8,50 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+export type createBlockInput = {|
+  blockInput?: ?BlockInput,
+  clientMutationId?: ?string,
+|};
+export type BlockInput = {|
+  pageId?: ?string,
+  blockType?: ?string,
+  editor?: ?any,
+  date?: ?string,
+  title?: ?string,
+  colour?: ?string,
+|};
 export type createBlockMutationVariables = {|
-  block: {
-    blockInput?: ?{
-      pageId?: ?string;
-      blockType?: ?string;
-      editor?: ?any;
-      date?: ?string;
-      title?: ?string;
-      colour?: ?string;
-    };
-    clientMutationId?: ?string;
-  };
+  block: createBlockInput
 |};
 export type createBlockMutationResponse = {|
   +createBlock: ?{|
     +blockEdge: ?{|
       +node: ?{|
-        +id: string;
-        +blockType: ?string;
-        +position: ?number;
+        +id: string,
+        +blockType: ?string,
+        +position: ?number,
         +metaConnection: ?{|
           +edges: ?$ReadOnlyArray<?{|
             +node: ?{|
-              +id: string;
-            |};
-          |}>;
-        |};
+              +id: string
+            |}
+          |}>
+        |},
         +fileConnection: ?{|
           +edges: ?$ReadOnlyArray<?{|
             +node: ?{|
-              +id: string;
-            |};
-          |}>;
-        |};
-      |};
-    |};
-  |};
+              +id: string
+            |}
+          |}>
+        |},
+      |}
+    |}
+  |}
+|};
+export type createBlockMutation = {|
+  variables: createBlockMutationVariables,
+  response: createBlockMutationResponse,
 |};
 */
 
@@ -63,8 +69,8 @@ mutation createBlockMutation(
         metaConnection(first: 10) {
           edges {
             node {
-              __typename
               id
+              __typename
             }
             cursor
           }
@@ -76,8 +82,8 @@ mutation createBlockMutation(
         fileConnection(first: 2) {
           edges {
             node {
-              __typename
               id
+              __typename
             }
             cursor
           }
@@ -92,552 +98,334 @@ mutation createBlockMutation(
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
-  "fragment": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "block",
-        "type": "createBlockInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "createBlockMutation",
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "block",
+    "type": "createBlockInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "block",
+    "type": "createBlockInput!"
+  }
+],
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "blockType",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "position",
+  "args": null,
+  "storageKey": null
+},
+v5 = [
+  (v2/*: any*/),
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "__typename",
+    "args": null,
+    "storageKey": null
+  }
+],
+v6 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "cursor",
+  "args": null,
+  "storageKey": null
+},
+v7 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "pageInfo",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "PageInfo",
+  "plural": false,
+  "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "endCursor",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "hasNextPage",
+      "args": null,
+      "storageKey": null
+    }
+  ]
+},
+v8 = [
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "edges",
+    "storageKey": null,
+    "args": null,
+    "concreteType": "MetaEdge",
+    "plural": true,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "block",
-            "type": "createBlockInput!"
-          }
-        ],
-        "concreteType": "createBlockPayload",
+        "name": "node",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "Meta",
+        "plural": false,
+        "selections": (v5/*: any*/)
+      },
+      (v6/*: any*/)
+    ]
+  },
+  (v7/*: any*/)
+],
+v9 = [
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "edges",
+    "storageKey": null,
+    "args": null,
+    "concreteType": "FileEdge",
+    "plural": true,
+    "selections": [
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "node",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "File",
+        "plural": false,
+        "selections": (v5/*: any*/)
+      },
+      (v6/*: any*/)
+    ]
+  },
+  (v7/*: any*/)
+],
+v10 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 10,
+    "type": "Int"
+  }
+],
+v11 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 2,
+    "type": "Int"
+  }
+];
+return {
+  "kind": "Request",
+  "fragment": {
+    "kind": "Fragment",
+    "name": "createBlockMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": [
+      {
+        "kind": "LinkedField",
+        "alias": null,
         "name": "createBlock",
+        "storageKey": null,
+        "args": (v1/*: any*/),
+        "concreteType": "createBlockPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "blockEdge",
+            "storageKey": null,
             "args": null,
             "concreteType": "BlocksEdge",
-            "name": "blockEdge",
             "plural": false,
             "selections": [
               {
                 "kind": "LinkedField",
                 "alias": null,
+                "name": "node",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "Block",
-                "name": "node",
                 "plural": false,
                 "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "blockType",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "position",
-                    "storageKey": null
-                  },
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "kind": "LinkedField",
                     "alias": "metaConnection",
+                    "name": "__PageEditor_metaConnection_connection",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "MetaConnection",
-                    "name": "__PageEditor_metaConnection_connection",
                     "plural": false,
-                    "selections": [
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "MetaEdge",
-                        "name": "edges",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "kind": "LinkedField",
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Meta",
-                            "name": "node",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "kind": "ScalarField",
-                                "alias": null,
-                                "args": null,
-                                "name": "id",
-                                "storageKey": null
-                              },
-                              {
-                                "kind": "ScalarField",
-                                "alias": null,
-                                "args": null,
-                                "name": "__typename",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "cursor",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "PageInfo",
-                        "name": "pageInfo",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "endCursor",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "hasNextPage",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
+                    "selections": (v8/*: any*/)
                   },
                   {
                     "kind": "LinkedField",
                     "alias": "fileConnection",
+                    "name": "__Block_fileConnection_connection",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "FileConnection",
-                    "name": "__Block_fileConnection_connection",
                     "plural": false,
-                    "selections": [
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "FileEdge",
-                        "name": "edges",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "kind": "LinkedField",
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "File",
-                            "name": "node",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "kind": "ScalarField",
-                                "alias": null,
-                                "args": null,
-                                "name": "id",
-                                "storageKey": null
-                              },
-                              {
-                                "kind": "ScalarField",
-                                "alias": null,
-                                "args": null,
-                                "name": "__typename",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "cursor",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "PageInfo",
-                        "name": "pageInfo",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "endCursor",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "hasNextPage",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
+                    "selections": (v9/*: any*/)
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
-      }
-    ],
-    "type": "Mutation"
-  },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {
-    "connection": [
-      {
-        "count": null,
-        "cursor": null,
-        "direction": "forward",
-        "path": [
-          "createBlock",
-          "blockEdge",
-          "node",
-          "metaConnection"
-        ]
-      },
-      {
-        "count": null,
-        "cursor": null,
-        "direction": "forward",
-        "path": [
-          "createBlock",
-          "blockEdge",
-          "node",
-          "fileConnection"
         ]
       }
     ]
   },
-  "name": "createBlockMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "block",
-        "type": "createBlockInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
+  "operation": {
+    "kind": "Operation",
     "name": "createBlockMutation",
-    "operation": "mutation",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "block",
-            "type": "createBlockInput!"
-          }
-        ],
-        "concreteType": "createBlockPayload",
         "name": "createBlock",
+        "storageKey": null,
+        "args": (v1/*: any*/),
+        "concreteType": "createBlockPayload",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "blockEdge",
+            "storageKey": null,
             "args": null,
             "concreteType": "BlocksEdge",
-            "name": "blockEdge",
             "plural": false,
             "selections": [
               {
                 "kind": "LinkedField",
                 "alias": null,
+                "name": "node",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "Block",
-                "name": "node",
                 "plural": false,
                 "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "blockType",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "position",
-                    "storageKey": null
-                  },
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "kind": "LinkedField",
                     "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "first",
-                        "value": 10,
-                        "type": "Int"
-                      }
-                    ],
-                    "concreteType": "MetaConnection",
                     "name": "metaConnection",
+                    "storageKey": "metaConnection(first:10)",
+                    "args": (v10/*: any*/),
+                    "concreteType": "MetaConnection",
                     "plural": false,
-                    "selections": [
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "MetaEdge",
-                        "name": "edges",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "kind": "LinkedField",
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Meta",
-                            "name": "node",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "kind": "ScalarField",
-                                "alias": null,
-                                "args": null,
-                                "name": "__typename",
-                                "storageKey": null
-                              },
-                              {
-                                "kind": "ScalarField",
-                                "alias": null,
-                                "args": null,
-                                "name": "id",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "cursor",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "PageInfo",
-                        "name": "pageInfo",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "endCursor",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "hasNextPage",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": "metaConnection{\"first\":10}"
+                    "selections": (v8/*: any*/)
                   },
                   {
                     "kind": "LinkedHandle",
                     "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "first",
-                        "value": 10,
-                        "type": "Int"
-                      }
-                    ],
-                    "handle": "connection",
                     "name": "metaConnection",
+                    "args": (v10/*: any*/),
+                    "handle": "connection",
                     "key": "PageEditor_metaConnection",
                     "filters": null
                   },
                   {
                     "kind": "LinkedField",
                     "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "first",
-                        "value": 2,
-                        "type": "Int"
-                      }
-                    ],
-                    "concreteType": "FileConnection",
                     "name": "fileConnection",
+                    "storageKey": "fileConnection(first:2)",
+                    "args": (v11/*: any*/),
+                    "concreteType": "FileConnection",
                     "plural": false,
-                    "selections": [
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "FileEdge",
-                        "name": "edges",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "kind": "LinkedField",
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "File",
-                            "name": "node",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "kind": "ScalarField",
-                                "alias": null,
-                                "args": null,
-                                "name": "__typename",
-                                "storageKey": null
-                              },
-                              {
-                                "kind": "ScalarField",
-                                "alias": null,
-                                "args": null,
-                                "name": "id",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "cursor",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "PageInfo",
-                        "name": "pageInfo",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "endCursor",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "hasNextPage",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": "fileConnection{\"first\":2}"
+                    "selections": (v9/*: any*/)
                   },
                   {
                     "kind": "LinkedHandle",
                     "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "first",
-                        "value": 2,
-                        "type": "Int"
-                      }
-                    ],
-                    "handle": "connection",
                     "name": "fileConnection",
+                    "args": (v11/*: any*/),
+                    "handle": "connection",
                     "key": "Block_fileConnection",
                     "filters": null
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
-  "text": "mutation createBlockMutation(\n  $block: createBlockInput!\n) {\n  createBlock(input: $block) {\n    blockEdge {\n      node {\n        id\n        blockType\n        position\n        metaConnection(first: 10) {\n          edges {\n            node {\n              __typename\n              id\n            }\n            cursor\n          }\n          pageInfo {\n            endCursor\n            hasNextPage\n          }\n        }\n        fileConnection(first: 2) {\n          edges {\n            node {\n              __typename\n              id\n            }\n            cursor\n          }\n          pageInfo {\n            endCursor\n            hasNextPage\n          }\n        }\n      }\n    }\n  }\n}\n"
+  "params": {
+    "operationKind": "mutation",
+    "name": "createBlockMutation",
+    "id": null,
+    "text": "mutation createBlockMutation(\n  $block: createBlockInput!\n) {\n  createBlock(input: $block) {\n    blockEdge {\n      node {\n        id\n        blockType\n        position\n        metaConnection(first: 10) {\n          edges {\n            node {\n              id\n              __typename\n            }\n            cursor\n          }\n          pageInfo {\n            endCursor\n            hasNextPage\n          }\n        }\n        fileConnection(first: 2) {\n          edges {\n            node {\n              id\n              __typename\n            }\n            cursor\n          }\n          pageInfo {\n            endCursor\n            hasNextPage\n          }\n        }\n      }\n    }\n  }\n}\n",
+    "metadata": {
+      "connection": [
+        {
+          "count": null,
+          "cursor": null,
+          "direction": "forward",
+          "path": [
+            "createBlock",
+            "blockEdge",
+            "node",
+            "metaConnection"
+          ]
+        },
+        {
+          "count": null,
+          "cursor": null,
+          "direction": "forward",
+          "path": [
+            "createBlock",
+            "blockEdge",
+            "node",
+            "fileConnection"
+          ]
+        }
+      ]
+    }
+  }
 };
-
-module.exports = batch;
+})();
+// prettier-ignore
+(node/*: any*/).hash = '2b787d62bf830a97d4d781314d676f5c';
+module.exports = node;

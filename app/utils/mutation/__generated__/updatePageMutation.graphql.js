@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash f1952df83154fa62d0ca52355bfaefd2
+ * @relayHash c0e4430fb0366296a627962c538120cc
  */
 
 /* eslint-disable */
@@ -8,40 +8,46 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+export type UpdatePageInput = {|
+  id?: ?string,
+  pageInput?: ?PageInput,
+  clientMutationId?: ?string,
+|};
+export type PageInput = {|
+  title?: ?string,
+  description?: ?string,
+  projectGoLive?: ?string,
+  client?: ?string,
+  published?: ?boolean,
+  position?: ?number,
+|};
 export type updatePageMutationVariables = {|
-  page: {
-    id?: ?string;
-    pageInput?: ?{
-      title?: ?string;
-      description?: ?string;
-      projectGoLive?: ?string;
-      client?: ?string;
-      published?: ?boolean;
-      position?: ?number;
-    };
-    clientMutationId?: ?string;
-  };
+  page: UpdatePageInput
 |};
 export type updatePageMutationResponse = {|
   +updatePage: ?{|
     +page: ?{|
-      +id: string;
-      +title: ?string;
-      +description: ?string;
-      +client: ?string;
-      +published: ?boolean;
-      +position: ?number;
+      +id: string,
+      +title: ?string,
+      +description: ?string,
+      +client: ?string,
+      +published: ?boolean,
+      +position: ?number,
       +listingImage: ?{|
-        +id: string;
-        +fullPath: ?string;
-      |};
+        +id: string,
+        +fullPath: ?string,
+      |},
       +listingImageSmall: ?{|
-        +id: string;
-        +fullPath: ?string;
-      |};
-    |};
-  |};
+        +id: string,
+        +fullPath: ?string,
+      |},
+    |}
+  |}
+|};
+export type updatePageMutation = {|
+  variables: updatePageMutationVariables,
+  response: updatePageMutationResponse,
 |};
 */
 
@@ -71,285 +77,144 @@ mutation updatePageMutation(
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
-  "fragment": {
-    "argumentDefinitions": [
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "page",
+    "type": "UpdatePageInput!",
+    "defaultValue": null
+  }
+],
+v1 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v2 = [
+  (v1/*: any*/),
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "fullPath",
+    "args": null,
+    "storageKey": null
+  }
+],
+v3 = [
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "updatePage",
+    "storageKey": null,
+    "args": [
       {
-        "kind": "LocalArgument",
-        "name": "page",
-        "type": "UpdatePageInput!",
-        "defaultValue": null
+        "kind": "Variable",
+        "name": "input",
+        "variableName": "page",
+        "type": "UpdatePageInput!"
       }
     ],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "updatePageMutation",
+    "concreteType": "UpdatePagePayload",
+    "plural": false,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "page",
-            "type": "UpdatePageInput!"
-          }
-        ],
-        "concreteType": "UpdatePagePayload",
-        "name": "updatePage",
-        "plural": false,
-        "selections": [
-          {
-            "kind": "LinkedField",
-            "alias": null,
-            "args": null,
-            "concreteType": "Page",
-            "name": "page",
-            "plural": false,
-            "selections": [
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "id",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "title",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "description",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "client",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "published",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "position",
-                "storageKey": null
-              },
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "args": null,
-                "concreteType": "File",
-                "name": "listingImage",
-                "plural": false,
-                "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "fullPath",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "args": null,
-                "concreteType": "File",
-                "name": "listingImageSmall",
-                "plural": false,
-                "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "fullPath",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "type": "Mutation"
-  },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "updatePageMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
         "name": "page",
-        "type": "UpdatePageInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
-    "name": "updatePageMutation",
-    "operation": "mutation",
-    "selections": [
-      {
-        "kind": "LinkedField",
-        "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "page",
-            "type": "UpdatePageInput!"
-          }
-        ],
-        "concreteType": "UpdatePagePayload",
-        "name": "updatePage",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "Page",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "title",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "description",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "client",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "published",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "position",
+            "args": null,
+            "storageKey": null
+          },
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "listingImage",
+            "storageKey": null,
             "args": null,
-            "concreteType": "Page",
-            "name": "page",
+            "concreteType": "File",
             "plural": false,
-            "selections": [
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "id",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "title",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "description",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "client",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "published",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "position",
-                "storageKey": null
-              },
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "args": null,
-                "concreteType": "File",
-                "name": "listingImage",
-                "plural": false,
-                "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "fullPath",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "args": null,
-                "concreteType": "File",
-                "name": "listingImageSmall",
-                "plural": false,
-                "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "fullPath",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
+            "selections": (v2/*: any*/)
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "listingImageSmall",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "File",
+            "plural": false,
+            "selections": (v2/*: any*/)
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
+  }
+];
+return {
+  "kind": "Request",
+  "fragment": {
+    "kind": "Fragment",
+    "name": "updatePageMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v3/*: any*/)
   },
-  "text": "mutation updatePageMutation(\n  $page: UpdatePageInput!\n) {\n  updatePage(input: $page) {\n    page {\n      id\n      title\n      description\n      client\n      published\n      position\n      listingImage {\n        id\n        fullPath\n      }\n      listingImageSmall {\n        id\n        fullPath\n      }\n    }\n  }\n}\n"
+  "operation": {
+    "kind": "Operation",
+    "name": "updatePageMutation",
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v3/*: any*/)
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "updatePageMutation",
+    "id": null,
+    "text": "mutation updatePageMutation(\n  $page: UpdatePageInput!\n) {\n  updatePage(input: $page) {\n    page {\n      id\n      title\n      description\n      client\n      published\n      position\n      listingImage {\n        id\n        fullPath\n      }\n      listingImageSmall {\n        id\n        fullPath\n      }\n    }\n  }\n}\n",
+    "metadata": {}
+  }
 };
-
-module.exports = batch;
+})();
+// prettier-ignore
+(node/*: any*/).hash = 'b9d2ada1cdb59ce768c744fa27a24543';
+module.exports = node;

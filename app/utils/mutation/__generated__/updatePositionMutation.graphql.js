@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 26068c1c2600ae8b2c35b16fbecb2021
+ * @relayHash 611673c256084b95c264edb09d940a40
  */
 
 /* eslint-disable */
@@ -8,21 +8,31 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+type updatePositionQuery$ref = any;
+export type updateBlockPositionInput = {|
+  id?: ?string,
+  position?: ?number,
+  clientMutationId?: ?string,
+|};
 export type updatePositionMutationVariables = {|
-  input: {
-    id?: ?string;
-    position?: ?number;
-    clientMutationId?: ?string;
-  };
+  input: updateBlockPositionInput
 |};
 export type updatePositionMutationResponse = {|
   +updateBlockPosition: ?{|
-    +blockEdge: ?{| |};
+    +blockEdge: ?{|
+      +$fragmentRefs: updatePositionQuery$ref
+    |},
     +blockConnection: ?{|
-      +edges: ?$ReadOnlyArray<?{| |}>;
-    |};
-  |};
+      +edges: ?$ReadOnlyArray<?{|
+        +$fragmentRefs: updatePositionQuery$ref
+      |}>
+    |},
+  |}
+|};
+export type updatePositionMutation = {|
+  variables: updatePositionMutationVariables,
+  response: updatePositionMutationResponse,
 |};
 */
 
@@ -52,225 +62,175 @@ fragment updatePositionQuery on BlocksEdge {
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
-  "fragment": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "updateBlockPositionInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "updatePositionMutation",
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "input",
+    "type": "updateBlockPositionInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input",
+    "type": "updateBlockPositionInput!"
+  }
+],
+v2 = [
+  {
+    "kind": "FragmentSpread",
+    "name": "updatePositionQuery",
+    "args": null
+  }
+],
+v3 = [
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "node",
+    "storageKey": null,
+    "args": null,
+    "concreteType": "Block",
+    "plural": false,
     "selections": [
       {
-        "kind": "LinkedField",
+        "kind": "ScalarField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "updateBlockPositionInput!"
-          }
-        ],
-        "concreteType": "updateBlockPositionPayload",
-        "name": "updateBlockPosition",
-        "plural": false,
-        "selections": [
-          {
-            "kind": "LinkedField",
-            "alias": null,
-            "args": null,
-            "concreteType": "BlocksEdge",
-            "name": "blockEdge",
-            "plural": false,
-            "selections": [
-              {
-                "kind": "FragmentSpread",
-                "name": "updatePositionQuery",
-                "args": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "kind": "LinkedField",
-            "alias": null,
-            "args": null,
-            "concreteType": "BlocksConnection",
-            "name": "blockConnection",
-            "plural": false,
-            "selections": [
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "args": null,
-                "concreteType": "BlocksEdge",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "kind": "FragmentSpread",
-                    "name": "updatePositionQuery",
-                    "args": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
+        "name": "id",
+        "args": null,
         "storageKey": null
-      }
-    ],
-    "type": "Mutation"
-  },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "updatePositionMutation",
-  "query": {
-    "argumentDefinitions": [
+      },
       {
-        "kind": "LocalArgument",
-        "name": "input",
-        "type": "updateBlockPositionInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
-    "name": "updatePositionMutation",
-    "operation": "mutation",
-    "selections": [
-      {
-        "kind": "LinkedField",
+        "kind": "ScalarField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "updateBlockPositionInput!"
-          }
-        ],
-        "concreteType": "updateBlockPositionPayload",
-        "name": "updateBlockPosition",
-        "plural": false,
-        "selections": [
-          {
-            "kind": "LinkedField",
-            "alias": null,
-            "args": null,
-            "concreteType": "BlocksEdge",
-            "name": "blockEdge",
-            "plural": false,
-            "selections": [
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "args": null,
-                "concreteType": "Block",
-                "name": "node",
-                "plural": false,
-                "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "blockType",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "position",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "kind": "LinkedField",
-            "alias": null,
-            "args": null,
-            "concreteType": "BlocksConnection",
-            "name": "blockConnection",
-            "plural": false,
-            "selections": [
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "args": null,
-                "concreteType": "BlocksEdge",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "kind": "InlineFragment",
-                    "type": "BlocksEdge",
-                    "selections": [
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Block",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "id",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "blockType",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "args": null,
-                            "name": "position",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ]
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
+        "name": "blockType",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "position",
+        "args": null,
         "storageKey": null
       }
     ]
+  }
+];
+return {
+  "kind": "Request",
+  "fragment": {
+    "kind": "Fragment",
+    "name": "updatePositionMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": [
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "updateBlockPosition",
+        "storageKey": null,
+        "args": (v1/*: any*/),
+        "concreteType": "updateBlockPositionPayload",
+        "plural": false,
+        "selections": [
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "blockEdge",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "BlocksEdge",
+            "plural": false,
+            "selections": (v2/*: any*/)
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "blockConnection",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "BlocksConnection",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "edges",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "BlocksEdge",
+                "plural": true,
+                "selections": (v2/*: any*/)
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
-  "text": "mutation updatePositionMutation(\n  $input: updateBlockPositionInput!\n) {\n  updateBlockPosition(input: $input) {\n    blockEdge {\n      ...updatePositionQuery\n    }\n    blockConnection {\n      edges {\n        ...updatePositionQuery\n      }\n    }\n  }\n}\n\nfragment updatePositionQuery on BlocksEdge {\n  node {\n    id\n    blockType\n    position\n  }\n}\n"
+  "operation": {
+    "kind": "Operation",
+    "name": "updatePositionMutation",
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": [
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "updateBlockPosition",
+        "storageKey": null,
+        "args": (v1/*: any*/),
+        "concreteType": "updateBlockPositionPayload",
+        "plural": false,
+        "selections": [
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "blockEdge",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "BlocksEdge",
+            "plural": false,
+            "selections": (v3/*: any*/)
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "blockConnection",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "BlocksConnection",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "edges",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "BlocksEdge",
+                "plural": true,
+                "selections": (v3/*: any*/)
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "updatePositionMutation",
+    "id": null,
+    "text": "mutation updatePositionMutation(\n  $input: updateBlockPositionInput!\n) {\n  updateBlockPosition(input: $input) {\n    blockEdge {\n      ...updatePositionQuery\n    }\n    blockConnection {\n      edges {\n        ...updatePositionQuery\n      }\n    }\n  }\n}\n\nfragment updatePositionQuery on BlocksEdge {\n  node {\n    id\n    blockType\n    position\n  }\n}\n",
+    "metadata": {}
+  }
 };
-
-module.exports = batch;
+})();
+// prettier-ignore
+(node/*: any*/).hash = '2b377bd3072218c045e99e1ab34238f7';
+module.exports = node;

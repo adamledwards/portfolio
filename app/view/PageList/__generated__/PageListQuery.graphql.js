@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2bee1ca73c27876bdebb48fb6908df63
+ * @relayHash 28881475677ae6880fa24fdd45bf3514
  */
 
 /* eslint-disable */
@@ -8,13 +8,21 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+type PageCard_page$ref = any;
+export type PageListQueryVariables = {||};
 export type PageListQueryResponse = {|
   +pages: ?{|
     +edges: ?$ReadOnlyArray<?{|
-      +node: ?{| |};
-    |}>;
-  |};
+      +node: ?{|
+        +$fragmentRefs: PageCard_page$ref
+      |}
+    |}>
+  |}
+|};
+export type PageListQuery = {|
+  variables: PageListQueryVariables,
+  response: PageListQueryResponse,
 |};
 */
 
@@ -43,35 +51,48 @@ fragment PageCard_page on Page {
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+};
+return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "PageListQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
+        "name": "pages",
+        "storageKey": null,
         "args": null,
         "concreteType": "PageConnection",
-        "name": "pages",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "edges",
+            "storageKey": null,
             "args": null,
             "concreteType": "PageEdge",
-            "name": "edges",
             "plural": true,
             "selections": [
               {
                 "kind": "LinkedField",
                 "alias": null,
+                "name": "node",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "Page",
-                "name": "node",
                 "plural": false,
                 "selections": [
                   {
@@ -79,117 +100,104 @@ const batch /*: ConcreteBatch*/ = {
                     "name": "PageCard_page",
                     "args": null
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "PageListQuery",
-  "query": {
-    "argumentDefinitions": [],
-    "kind": "Root",
+  "operation": {
+    "kind": "Operation",
     "name": "PageListQuery",
-    "operation": "query",
+    "argumentDefinitions": [],
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
+        "name": "pages",
+        "storageKey": null,
         "args": null,
         "concreteType": "PageConnection",
-        "name": "pages",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "edges",
+            "storageKey": null,
             "args": null,
             "concreteType": "PageEdge",
-            "name": "edges",
             "plural": true,
             "selections": [
               {
                 "kind": "LinkedField",
                 "alias": null,
+                "name": "node",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "Page",
-                "name": "node",
                 "plural": false,
                 "selections": [
+                  (v0/*: any*/),
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
                     "name": "title",
+                    "args": null,
                     "storageKey": null
                   },
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "args": null,
                     "name": "client",
+                    "args": null,
                     "storageKey": null
                   },
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "args": null,
                     "name": "description",
+                    "args": null,
                     "storageKey": null
                   },
                   {
                     "kind": "LinkedField",
                     "alias": null,
+                    "name": "listingImage",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "File",
-                    "name": "listingImage",
                     "plural": false,
                     "selections": [
+                      (v0/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
-                        "args": null,
-                        "name": "id",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
                         "name": "fullPath",
+                        "args": null,
                         "storageKey": null
                       }
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
-  "text": "query PageListQuery {\n  pages {\n    edges {\n      node {\n        ...PageCard_page\n        id\n      }\n    }\n  }\n}\n\nfragment PageCard_page on Page {\n  id\n  title\n  client\n  description\n  listingImage {\n    id\n    fullPath\n  }\n}\n"
+  "params": {
+    "operationKind": "query",
+    "name": "PageListQuery",
+    "id": null,
+    "text": "query PageListQuery {\n  pages {\n    edges {\n      node {\n        ...PageCard_page\n        id\n      }\n    }\n  }\n}\n\nfragment PageCard_page on Page {\n  id\n  title\n  client\n  description\n  listingImage {\n    id\n    fullPath\n  }\n}\n",
+    "metadata": {}
+  }
 };
-
-module.exports = batch;
+})();
+// prettier-ignore
+(node/*: any*/).hash = '81b0aed73aa469b6256944603c4a19df';
+module.exports = node;

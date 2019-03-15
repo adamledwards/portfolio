@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash eb9fb968196fc34405e060eeeaafddae
+ * @relayHash d5df30e924489b0f4a2a1e5d765c6132
  */
 
 /* eslint-disable */
@@ -8,28 +8,34 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+export type createMetaInput = {|
+  metaInput?: ?MetaTypeCreateInput,
+  clientMutationId?: ?string,
+|};
+export type MetaTypeCreateInput = {|
+  blockId?: ?string,
+  field1?: ?string,
+  field2?: ?string,
+  position?: ?number,
+|};
 export type createMetaMutationVariables = {|
-  meta: {
-    metaInput?: ?{
-      blockId?: ?string;
-      field1?: ?string;
-      field2?: ?string;
-      position?: ?number;
-    };
-    clientMutationId?: ?string;
-  };
+  meta: createMetaInput
 |};
 export type createMetaMutationResponse = {|
   +createMeta: ?{|
     +metaEdge: ?{|
       +node: ?{|
-        +id: string;
-        +field1: ?string;
-        +field2: ?string;
-      |};
-    |};
-  |};
+        +id: string,
+        +field1: ?string,
+        +field2: ?string,
+      |}
+    |}
+  |}
+|};
+export type createMetaMutation = {|
+  variables: createMetaMutationVariables,
+  response: createMetaMutationResponse,
 |};
 */
 
@@ -50,165 +56,103 @@ mutation createMetaMutation(
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
-  "fragment": {
-    "argumentDefinitions": [
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "meta",
+    "type": "createMetaInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "createMeta",
+    "storageKey": null,
+    "args": [
       {
-        "kind": "LocalArgument",
-        "name": "meta",
-        "type": "createMetaInput!",
-        "defaultValue": null
+        "kind": "Variable",
+        "name": "input",
+        "variableName": "meta",
+        "type": "createMetaInput!"
       }
     ],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "createMetaMutation",
+    "concreteType": "createMetaPayload",
+    "plural": false,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "meta",
-            "type": "createMetaInput!"
-          }
-        ],
-        "concreteType": "createMetaPayload",
-        "name": "createMeta",
+        "name": "metaEdge",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "MetaEdge",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "node",
+            "storageKey": null,
             "args": null,
-            "concreteType": "MetaEdge",
-            "name": "metaEdge",
+            "concreteType": "Meta",
             "plural": false,
             "selections": [
               {
-                "kind": "LinkedField",
+                "kind": "ScalarField",
                 "alias": null,
+                "name": "id",
                 "args": null,
-                "concreteType": "Meta",
-                "name": "node",
-                "plural": false,
-                "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "field1",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "field2",
-                    "storageKey": null
-                  }
-                ],
                 "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "type": "Mutation"
-  },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "createMetaMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "meta",
-        "type": "createMetaInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
-    "name": "createMetaMutation",
-    "operation": "mutation",
-    "selections": [
-      {
-        "kind": "LinkedField",
-        "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "meta",
-            "type": "createMetaInput!"
-          }
-        ],
-        "concreteType": "createMetaPayload",
-        "name": "createMeta",
-        "plural": false,
-        "selections": [
-          {
-            "kind": "LinkedField",
-            "alias": null,
-            "args": null,
-            "concreteType": "MetaEdge",
-            "name": "metaEdge",
-            "plural": false,
-            "selections": [
+              },
               {
-                "kind": "LinkedField",
+                "kind": "ScalarField",
                 "alias": null,
+                "name": "field1",
                 "args": null,
-                "concreteType": "Meta",
-                "name": "node",
-                "plural": false,
-                "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "id",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "field1",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "field2",
-                    "storageKey": null
-                  }
-                ],
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "field2",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
+  }
+];
+return {
+  "kind": "Request",
+  "fragment": {
+    "kind": "Fragment",
+    "name": "createMetaMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
   },
-  "text": "mutation createMetaMutation(\n  $meta: createMetaInput!\n) {\n  createMeta(input: $meta) {\n    metaEdge {\n      node {\n        id\n        field1\n        field2\n      }\n    }\n  }\n}\n"
+  "operation": {
+    "kind": "Operation",
+    "name": "createMetaMutation",
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "createMetaMutation",
+    "id": null,
+    "text": "mutation createMetaMutation(\n  $meta: createMetaInput!\n) {\n  createMeta(input: $meta) {\n    metaEdge {\n      node {\n        id\n        field1\n        field2\n      }\n    }\n  }\n}\n",
+    "metadata": {}
+  }
 };
-
-module.exports = batch;
+})();
+// prettier-ignore
+(node/*: any*/).hash = '54101c17bd99e2da06153dc5a3e71279';
+module.exports = node;

@@ -7,24 +7,30 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
+type Editor_block$ref = any;
+import type { FragmentReference } from "relay-runtime";
+declare export opaque type Text_block$ref: FragmentReference;
 export type Text_block = {|
-  +colour: ?string;
+  +colour: ?string,
+  +$fragmentRefs: Editor_block$ref,
+  +$refType: Text_block$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [],
+const node/*: ReaderFragment*/ = {
   "kind": "Fragment",
-  "metadata": null,
   "name": "Text_block",
+  "type": "Block",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "colour",
+      "args": null,
       "storageKey": null
     },
     {
@@ -32,8 +38,8 @@ const fragment /*: ConcreteFragment*/ = {
       "name": "Editor_block",
       "args": null
     }
-  ],
-  "type": "Block"
+  ]
 };
-
-module.exports = fragment;
+// prettier-ignore
+(node/*: any*/).hash = '85fc1459ccf52a0af4ae1cc3de3c825d';
+module.exports = node;

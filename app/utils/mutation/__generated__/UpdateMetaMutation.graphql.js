@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 01d4f36a863565846e0613b7a788a1e8
+ * @relayHash a00cd57a3ab5745a6dc56049ef4b7e42
  */
 
 /* eslint-disable */
@@ -8,31 +8,37 @@
 'use strict';
 
 /*::
-import type {ConcreteBatch} from 'relay-runtime';
+import type { ConcreteRequest } from 'relay-runtime';
+export type updateMetaInput = {|
+  metaInput?: ?MetaTypeUpdateInput,
+  clientMutationId?: ?string,
+|};
+export type MetaTypeUpdateInput = {|
+  id?: ?string,
+  field1?: ?string,
+  field2?: ?string,
+  position?: ?number,
+|};
 export type updateMetaMutationVariables = {|
-  meta: {
-    metaInput?: ?{
-      id?: ?string;
-      field1?: ?string;
-      field2?: ?string;
-      position?: ?number;
-    };
-    clientMutationId?: ?string;
-  };
+  meta: updateMetaInput
 |};
 export type updateMetaMutationResponse = {|
   +updateMeta: ?{|
     +metaConnection: ?{|
       +edges: ?$ReadOnlyArray<?{|
         +node: ?{|
-          +id: string;
-          +field1: ?string;
-          +field2: ?string;
-          +position: ?number;
-        |};
-      |}>;
-    |};
-  |};
+          +id: string,
+          +field1: ?string,
+          +field2: ?string,
+          +position: ?number,
+        |}
+      |}>
+    |}
+  |}
+|};
+export type updateMetaMutation = {|
+  variables: updateMetaMutationVariables,
+  response: updateMetaMutationResponse,
 |};
 */
 
@@ -56,201 +62,121 @@ mutation updateMetaMutation(
 }
 */
 
-const batch /*: ConcreteBatch*/ = {
-  "fragment": {
-    "argumentDefinitions": [
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "meta",
+    "type": "updateMetaInput!",
+    "defaultValue": null
+  }
+],
+v1 = [
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "updateMeta",
+    "storageKey": null,
+    "args": [
       {
-        "kind": "LocalArgument",
-        "name": "meta",
-        "type": "updateMetaInput!",
-        "defaultValue": null
+        "kind": "Variable",
+        "name": "input",
+        "variableName": "meta",
+        "type": "updateMetaInput!"
       }
     ],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "updateMetaMutation",
+    "concreteType": "updateMetaPayload",
+    "plural": false,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "meta",
-            "type": "updateMetaInput!"
-          }
-        ],
-        "concreteType": "updateMetaPayload",
-        "name": "updateMeta",
+        "name": "metaConnection",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "MetaConnection",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
+            "name": "edges",
+            "storageKey": null,
             "args": null,
-            "concreteType": "MetaConnection",
-            "name": "metaConnection",
-            "plural": false,
+            "concreteType": "MetaEdge",
+            "plural": true,
             "selections": [
               {
                 "kind": "LinkedField",
                 "alias": null,
+                "name": "node",
+                "storageKey": null,
                 "args": null,
-                "concreteType": "MetaEdge",
-                "name": "edges",
-                "plural": true,
+                "concreteType": "Meta",
+                "plural": false,
                 "selections": [
                   {
-                    "kind": "LinkedField",
+                    "kind": "ScalarField",
                     "alias": null,
+                    "name": "id",
                     "args": null,
-                    "concreteType": "Meta",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "id",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "field1",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "field2",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "position",
-                        "storageKey": null
-                      }
-                    ],
                     "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "type": "Mutation"
-  },
-  "id": null,
-  "kind": "Batch",
-  "metadata": {},
-  "name": "updateMetaMutation",
-  "query": {
-    "argumentDefinitions": [
-      {
-        "kind": "LocalArgument",
-        "name": "meta",
-        "type": "updateMetaInput!",
-        "defaultValue": null
-      }
-    ],
-    "kind": "Root",
-    "name": "updateMetaMutation",
-    "operation": "mutation",
-    "selections": [
-      {
-        "kind": "LinkedField",
-        "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "meta",
-            "type": "updateMetaInput!"
-          }
-        ],
-        "concreteType": "updateMetaPayload",
-        "name": "updateMeta",
-        "plural": false,
-        "selections": [
-          {
-            "kind": "LinkedField",
-            "alias": null,
-            "args": null,
-            "concreteType": "MetaConnection",
-            "name": "metaConnection",
-            "plural": false,
-            "selections": [
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "args": null,
-                "concreteType": "MetaEdge",
-                "name": "edges",
-                "plural": true,
-                "selections": [
+                  },
                   {
-                    "kind": "LinkedField",
+                    "kind": "ScalarField",
                     "alias": null,
+                    "name": "field1",
                     "args": null,
-                    "concreteType": "Meta",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "id",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "field1",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "field2",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "position",
-                        "storageKey": null
-                      }
-                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "field2",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "position",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
+  }
+];
+return {
+  "kind": "Request",
+  "fragment": {
+    "kind": "Fragment",
+    "name": "updateMetaMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
   },
-  "text": "mutation updateMetaMutation(\n  $meta: updateMetaInput!\n) {\n  updateMeta(input: $meta) {\n    metaConnection {\n      edges {\n        node {\n          id\n          field1\n          field2\n          position\n        }\n      }\n    }\n  }\n}\n"
+  "operation": {
+    "kind": "Operation",
+    "name": "updateMetaMutation",
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "updateMetaMutation",
+    "id": null,
+    "text": "mutation updateMetaMutation(\n  $meta: updateMetaInput!\n) {\n  updateMeta(input: $meta) {\n    metaConnection {\n      edges {\n        node {\n          id\n          field1\n          field2\n          position\n        }\n      }\n    }\n  }\n}\n",
+    "metadata": {}
+  }
 };
-
-module.exports = batch;
+})();
+// prettier-ignore
+(node/*: any*/).hash = 'ba0819c347b8d9e8ab903ee3999f974a';
+module.exports = node;

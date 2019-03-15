@@ -7,25 +7,31 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
+type ImageUploader_block$ref = any;
+import type { FragmentReference } from "relay-runtime";
+declare export opaque type Images_block$ref: FragmentReference;
 export type Images_block = {|
-  +blockType: ?string;
+  +blockType: ?string,
   +fileConnection: ?{|
     +edges: ?$ReadOnlyArray<?{|
       +node: ?{|
-        +id: string;
-        +fullPath: ?string;
-        +scope: ?string;
-      |};
-    |}>;
-  |};
+        +id: string,
+        +fullPath: ?string,
+        +scope: ?string,
+      |}
+    |}>
+  |},
+  +$fragmentRefs: ImageUploader_block$ref,
+  +$refType: Images_block$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [],
+const node/*: ReaderFragment*/ = {
   "kind": "Fragment",
+  "name": "Images_block",
+  "type": "Block",
   "metadata": {
     "connection": [
       {
@@ -38,115 +44,115 @@ const fragment /*: ConcreteFragment*/ = {
       }
     ]
   },
-  "name": "Images_block",
+  "argumentDefinitions": [],
   "selections": [
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "blockType",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "LinkedField",
       "alias": "fileConnection",
+      "name": "__Block_fileConnection_connection",
+      "storageKey": null,
       "args": null,
       "concreteType": "FileConnection",
-      "name": "__Block_fileConnection_connection",
       "plural": false,
       "selections": [
         {
           "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "FileEdge",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
               "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "File",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "id",
+                  "args": null,
                   "storageKey": null
                 },
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "fullPath",
+                  "args": null,
                   "storageKey": null
                 },
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "scope",
+                  "args": null,
                   "storageKey": null
                 },
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
                   "name": "__typename",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": null
+              ]
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "cursor",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
           "kind": "LinkedField",
           "alias": null,
+          "name": "pageInfo",
+          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
-          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "endCursor",
+              "args": null,
               "storageKey": null
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "args": null,
               "name": "hasNextPage",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     },
     {
       "kind": "FragmentSpread",
       "name": "ImageUploader_block",
       "args": null
     }
-  ],
-  "type": "Block"
+  ]
 };
-
-module.exports = fragment;
+// prettier-ignore
+(node/*: any*/).hash = '34689ecc8bc15593c7cdcf6b004969f9';
+module.exports = node;

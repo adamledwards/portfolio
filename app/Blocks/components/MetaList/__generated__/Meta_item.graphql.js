@@ -7,52 +7,56 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
+import type { FragmentReference } from "relay-runtime";
+declare export opaque type Meta_item$ref: FragmentReference;
 export type Meta_item = {|
-  +id: string;
-  +field1: ?string;
-  +field2: ?string;
-  +position: ?number;
+  +id: string,
+  +field1: ?string,
+  +field2: ?string,
+  +position: ?number,
+  +$refType: Meta_item$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [],
+const node/*: ReaderFragment*/ = {
   "kind": "Fragment",
-  "metadata": null,
   "name": "Meta_item",
+  "type": "Meta",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "id",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "field1",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "field2",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "args": null,
       "name": "position",
+      "args": null,
       "storageKey": null
     }
-  ],
-  "type": "Meta"
+  ]
 };
-
-module.exports = fragment;
+// prettier-ignore
+(node/*: any*/).hash = '60637f691c2af38023a0f2a85e263282';
+module.exports = node;

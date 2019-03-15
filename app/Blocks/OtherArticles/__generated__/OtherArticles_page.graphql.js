@@ -7,37 +7,80 @@
 'use strict';
 
 /*::
-import type {ConcreteFragment} from 'relay-runtime';
+import type { ReaderFragment } from 'relay-runtime';
+import type { FragmentReference } from "relay-runtime";
+declare export opaque type OtherArticles_page$ref: FragmentReference;
 export type OtherArticles_page = {|
   +previous: ?{|
-    +id: string;
-    +title: ?string;
+    +id: string,
+    +title: ?string,
     +listingImageSmall: ?{|
-      +id: string;
-      +fullPath: ?string;
-    |};
-  |};
+      +id: string,
+      +fullPath: ?string,
+    |},
+  |},
   +next: ?{|
-    +id: string;
-    +title: ?string;
+    +id: string,
+    +title: ?string,
     +listingImageSmall: ?{|
-      +id: string;
-      +fullPath: ?string;
-    |};
-  |};
+      +id: string,
+      +fullPath: ?string,
+    |},
+  |},
+  +$refType: OtherArticles_page$ref,
 |};
 */
 
 
-const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [],
+const node/*: ReaderFragment*/ = (function(){
+var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v1 = [
+  (v0/*: any*/),
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "title",
+    "args": null,
+    "storageKey": null
+  },
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "listingImageSmall",
+    "storageKey": null,
+    "args": null,
+    "concreteType": "File",
+    "plural": false,
+    "selections": [
+      (v0/*: any*/),
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "fullPath",
+        "args": null,
+        "storageKey": null
+      }
+    ]
+  }
+];
+return {
   "kind": "Fragment",
-  "metadata": null,
   "name": "OtherArticles_page",
+  "type": "Page",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
       "kind": "LinkedField",
       "alias": "previous",
+      "name": "nextPage",
+      "storageKey": "nextPage(direction:\"BACKWARDS\")",
       "args": [
         {
           "kind": "Literal",
@@ -47,54 +90,14 @@ const fragment /*: ConcreteFragment*/ = {
         }
       ],
       "concreteType": "Page",
-      "name": "nextPage",
       "plural": false,
-      "selections": [
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "args": null,
-          "name": "id",
-          "storageKey": null
-        },
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "args": null,
-          "name": "title",
-          "storageKey": null
-        },
-        {
-          "kind": "LinkedField",
-          "alias": null,
-          "args": null,
-          "concreteType": "File",
-          "name": "listingImageSmall",
-          "plural": false,
-          "selections": [
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "args": null,
-              "name": "id",
-              "storageKey": null
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "args": null,
-              "name": "fullPath",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "nextPage{\"direction\":\"BACKWARDS\"}"
+      "selections": (v1/*: any*/)
     },
     {
       "kind": "LinkedField",
       "alias": "next",
+      "name": "nextPage",
+      "storageKey": "nextPage(direction:\"FORWARD\")",
       "args": [
         {
           "kind": "Literal",
@@ -104,53 +107,12 @@ const fragment /*: ConcreteFragment*/ = {
         }
       ],
       "concreteType": "Page",
-      "name": "nextPage",
       "plural": false,
-      "selections": [
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "args": null,
-          "name": "id",
-          "storageKey": null
-        },
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "args": null,
-          "name": "title",
-          "storageKey": null
-        },
-        {
-          "kind": "LinkedField",
-          "alias": null,
-          "args": null,
-          "concreteType": "File",
-          "name": "listingImageSmall",
-          "plural": false,
-          "selections": [
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "args": null,
-              "name": "id",
-              "storageKey": null
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "args": null,
-              "name": "fullPath",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "nextPage{\"direction\":\"FORWARD\"}"
+      "selections": (v1/*: any*/)
     }
-  ],
-  "type": "Page"
+  ]
 };
-
-module.exports = fragment;
+})();
+// prettier-ignore
+(node/*: any*/).hash = '697fc51cb7d1154212a8e6f230fdd5a0';
+module.exports = node;
