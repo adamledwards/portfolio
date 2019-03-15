@@ -2,11 +2,11 @@
 import React, { Component } from 'react'
 import Sidebar from './Sidebar'
 import './PageEditor.style.scss'
-import { BlockSortable, blockRendererFn } from '~/Blocks/utils/blockRenderer'
+import { BlockSortable } from '~/Blocks/utils/blockRenderer'
 import Footer from '~/Blocks/Footer'
 import OtherAricles from '~/Blocks/OtherArticles'
 import { graphql } from 'react-relay'
-import type { PageEditorQueryResponse } from './__generated__/PageEditorQuery.graphql.js'
+import { PageEditorQueryResponse } from './__generated__/PageEditorQuery.graphql.js'
 import { createBlock, removeBlock, updateBlock, updatePosition } from '~/utils/mutation'
 
 type Props = {
@@ -47,7 +47,7 @@ class PageEditor extends Component {
     }
   `
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       sorting: false,
@@ -61,43 +61,43 @@ class PageEditor extends Component {
     }
   }
 
-  addBlock (type: string) {
-    createBlock({blockType: type, pageId: this.props.page.id})
-    this.setState({showBlockOptions: false})
+  addBlock(type: string) {
+    createBlock({ blockType: type, pageId: this.props.page.id })
+    this.setState({ showBlockOptions: false })
   }
 
-  updateFn (ID: string, block: string) {
+  updateFn(ID: string, block: string) {
     return (data: Object) => {
-      updateBlock({ID, ...data})
+      updateBlock({ ID, ...data })
     }
   }
 
   handleRemove = (id: string) => {
-    this.setState({sidebar: null}, () => {
+    this.setState({ sidebar: null }, () => {
       removeBlock(id)
     })
   }
 
-  onSortEnd = ({oldIndex, newIndex}) => {
+  onSortEnd = ({ oldIndex, newIndex }) => {
     const blocks = this.getBlock()
     const block = blocks[oldIndex].node
-    this.setState({sorting: false})
+    this.setState({ sorting: false })
     updatePosition(block.id, newIndex, this.props.page.id)
   }
 
-  onSortStart = ({oldIndex, newIndex}) => {
-    this.setState({sorting: true})
+  onSortStart = ({ oldIndex, newIndex }) => {
+    this.setState({ sorting: true })
   }
 
   setSideBar = (sidebarElement: React$Element<*>, blockId: string, title: string) => {
-    this.setState({sidebar: {sidebarElement, blockId, title}})
+    this.setState({ sidebar: { sidebarElement, blockId, title } })
   }
 
-  getBlock () {
+  getBlock() {
     const blocks = this.props.page.blockConnection.edges
     return [...blocks].filter((block) => {
       return block.node
-    }).sort((blockA, blockB) => { 
+    }).sort((blockA, blockB) => {
       if (!blockA.node || !blockB.node) {
         return 0
       }
@@ -105,7 +105,7 @@ class PageEditor extends Component {
     })
   }
 
-  renderBlocks (blocks) {
+  renderBlocks(blocks) {
     return <BlockSortable
       pressDelay={500}
       blocks={this.getBlock()}
@@ -118,7 +118,7 @@ class PageEditor extends Component {
     />
   }
 
-  renderButton () {
+  renderButton() {
     return (
       <div className="PageEditor-options-wrapper">
         <button className="PageEditor-options-btn" onClick={() => this.addBlock('Hero')}>Hero</button>
@@ -129,11 +129,11 @@ class PageEditor extends Component {
       </div>
     )
   }
-  renderEmptyPage () {
+  renderEmptyPage() {
     return (
       <section className="PageEditor-container PageEditor-empty">
         <div>
-          <span className="PageEditor-empty-header">Blank canvas<br/>Add your first block!</span>
+          <span className="PageEditor-empty-header">Blank canvas<br />Add your first block!</span>
         </div>
         <div className="PageEditor-options show-block no-blocks">
           {this.renderButton()}
@@ -142,7 +142,7 @@ class PageEditor extends Component {
     )
   }
 
-  renderBlockPage () {
+  renderBlockPage() {
     const { showBlockOptions } = this.state
     return (
       <section className="PageEditor-container">
@@ -150,23 +150,23 @@ class PageEditor extends Component {
         <div className={`PageEditor-options${showBlockOptions ? ' show-block' : ''}`}>
           <button
             className="PageEditor-options-toggle"
-            onClick={() => this.setState({showBlockOptions: !showBlockOptions})}
+            onClick={() => this.setState({ showBlockOptions: !showBlockOptions })}
           >
             <i className={`fa fa-${showBlockOptions ? 'minus' : 'plus'}`} />
           </button>
           {this.renderButton()}
         </div>
-        <OtherAricles page={this.props.page}/>
+        <OtherAricles page={this.props.page} />
         <Footer />
       </section>
     )
   }
 
-  render () {
+  render() {
     const { sidebar, sorting } = this.state
     return (
       <section className={`PageEditor${sorting ? ' sorting' : ''}`}>
-        <Sidebar sidebar={sidebar} clearSidebar={() => this.setState({sidebar: null})} handleRemove={this.handleRemove} page={this.props.page}/>
+        <Sidebar sidebar={sidebar} clearSidebar={() => this.setState({ sidebar: null })} handleRemove={this.handleRemove} page={this.props.page} />
         {this.getBlock().length ? this.renderBlockPage() : this.renderEmptyPage()}
       </section>
     )
